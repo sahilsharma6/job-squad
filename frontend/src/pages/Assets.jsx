@@ -33,6 +33,20 @@ const AssetsForDesign = () => {
       <p className="font-demi-bold">550 weight</p>
       <p className="font-heavy">850 weight</p>
       <p className="font-extra-black">950 weight</p>
+
+      <div>
+        <p className="font-lato font-normal">Regular Lato text</p>
+        <p className="font-lato font-bold">Bold Lato text</p>
+        <p className="font-lato font-light">Light Lato text</p>
+
+        <p className="font-ubuntu font-normal">Regular Ubuntu text</p>
+        <p className="font-ubuntu font-bold">Bold Ubuntu text</p>
+        <p className="font-ubuntu font-light">Light Ubuntu text</p>
+
+        <p className="font-dancing font-normal">Regular Dancing Script text</p>
+        <p className="font-dancing font-medium">Medium Dancing Script text</p>
+        <p className="font-dancing font-bold">Bold Dancing Script text</p>
+      </div>
     </div>
   );
 };

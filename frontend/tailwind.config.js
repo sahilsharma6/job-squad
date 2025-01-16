@@ -4,6 +4,11 @@ export default {
   content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        lato: ['LatoRegular', 'LatoBold', 'LatoLight', 'sans-serif'],
+        ubuntu: ['UbuntuRegular', 'UbuntuBold', 'UbuntuMedium', 'sans-serif'],
+        dancing: ['DancingScriptRegular', 'DancingScriptBold', 'DancingScriptMedium', 'cursive'],
+      },
       fontSize: {
         "8xl": ["6rem", { lineHeight: "1" }],
         "9xl": ["7rem", { lineHeight: "1" }],
