@@ -14,25 +14,57 @@ const HomePage = () => {
     <div>
       <Hero />
 
-      <SlidingBanner
-        title="Browse by category"
-        subtitle="Find the job that's perfect for you. about 800+ new jobs everyday"
-        items={categories}
-        isVerticalCard={true}
-      />
-      <SlidingBanner
-        title="Top companies hiring now"
-        items={companies}
-        isVerticalCard={false}
-      />
-      <div>
-        <JobsOfTheDay />
-        <TopRecruiters />
-        <HiringBanner />
-        <ExploreMarketplace />
-        <NewsletterSection />
-        <JobMatchHero />
-        {/* <JobsOfTheDay /> */}
+      <div >
+
+        <div className="py-16">
+          <SlidingBanner
+            title="Browse by category"
+            subtitle="Find the job that's perfect for you. about 800+ new jobs everyday"
+            items={categories}
+            isVerticalCard={true}
+          />
+        </div>
+
+        <div>
+          <HiringBanner />
+        </div>
+
+
+        <div className="py-16">
+          <SlidingBanner
+            title="Top companies hiring now"
+            items={companies}
+            isVerticalCard={false}
+          />
+        </div>
+
+        <div>
+          {/* stats */}
+        </div>
+
+        <div className="py-16">
+          <ExploreMarketplace />
+        </div>
+
+        <div>
+          <JobsOfTheDay />
+        </div>
+
+        <div>
+          {/* how it works */}
+        </div>
+
+        <div className="py-16">
+          <TopRecruiters />
+        </div>
+
+        <div>
+          <JobMatchHero />
+        </div>
+
+        <div className="py-16">
+          <NewsletterSection />
+        </div>
       </div>
     </div>
   );
