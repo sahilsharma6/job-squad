@@ -73,7 +73,7 @@ const Footer = () => {
             <p className="text-sm text-gray-600 text-center sm:text-left">
               Copyright © 2022. JobSquad all right reserved
             </p>
-            <div className="flex flex-col xs:flex-row gap-3 justify-center">
+            {/* <div className="flex flex-col xs:flex-row gap-3 justify-center">
               <Button 
                 variant="outline" 
                 className="gap-2 h-11 px-6 hover:bg-gray-50"
@@ -88,7 +88,7 @@ const Footer = () => {
                 <Play className="w-5 h-5" />
                 Google Play
               </Button>
-            </div>
+            </div> */}
           </div>
 
           {/* Bottom Links */}
