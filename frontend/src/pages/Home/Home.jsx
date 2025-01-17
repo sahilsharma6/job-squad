@@ -26,6 +26,7 @@ const HomePage = () => {
 
       <MarketplaceBanner />
 
+      <div>
 
       <JobsOfTheDay />
       <TopRecruiters/>
@@ -33,6 +34,9 @@ const HomePage = () => {
     <ExploreMarketplace/>
     <NewsletterSection/>
     <JobMatchHero/>
+        {/* <JobsOfTheDay /> */}
+
+      </div>
     </div>
   );
 };
