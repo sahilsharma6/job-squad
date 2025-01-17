@@ -25,9 +25,6 @@ const HomePage = () => {
         items={companies}
         isVerticalCard={false}
       />
-
-      <MarketplaceBanner />
-
       <div>
         <JobsOfTheDay />
         <TopRecruiters />
