@@ -7,11 +7,13 @@ import ExploreMarketplace from "@/pages/Home/components/Marketplace";
 import NewsletterSection from "@/pages/Home/components/Newletter";
 import TopRecruiters from "@/pages/Home/components/Recrut";
 import MarketplaceBanner from "./components/MarketplaceBanner";
+import Hero from "@/components/Hero/Hero";
 
 const HomePage = () => {
-
   return (
     <div>
+      <Hero />
+
       <SlidingBanner
         title="Browse by category"
         subtitle="Find the job that's perfect for you. about 800+ new jobs everyday"
@@ -27,15 +29,13 @@ const HomePage = () => {
       <MarketplaceBanner />
 
       <div>
-
-      <JobsOfTheDay />
-      <TopRecruiters/>
-    <HiringBanner/>
-    <ExploreMarketplace/>
-    <NewsletterSection/>
-    <JobMatchHero/>
+        <JobsOfTheDay />
+        <TopRecruiters />
+        <HiringBanner />
+        <ExploreMarketplace />
+        <NewsletterSection />
+        <JobMatchHero />
         {/* <JobsOfTheDay /> */}
-
       </div>
     </div>
   );
