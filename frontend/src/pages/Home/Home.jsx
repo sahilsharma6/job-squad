@@ -1,6 +1,11 @@
 import SlidingBanner from "./components/SlidingBanner";
 import JobsOfTheDay from "./components/JobsOfTheDay";
 import { categories, companies } from "./Home-Data";
+import JobMatchHero from "@/pages/Home/components/Banner1";
+import HiringBanner from "@/pages/Home/components/Hiring";
+import ExploreMarketplace from "@/pages/Home/components/Marketplace";
+import NewsletterSection from "@/pages/Home/components/Newletter";
+import TopRecruiters from "@/pages/Home/components/Recrut";
 import MarketplaceBanner from "./components/MarketplaceBanner";
 
 const HomePage = () => {
@@ -23,7 +28,13 @@ const HomePage = () => {
 
       <div>
 
-        <JobsOfTheDay />
+      <JobsOfTheDay />
+      <TopRecruiters/>
+    <HiringBanner/>
+    <ExploreMarketplace/>
+    <NewsletterSection/>
+    <JobMatchHero/>
+        {/* <JobsOfTheDay /> */}
 
       </div>
     </div>

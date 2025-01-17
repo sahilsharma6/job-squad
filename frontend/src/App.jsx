@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Link, Outlet } from "react-router";
+import Footer from "./components/Footer";
 
 const App = () => {
   return (
@@ -12,8 +13,9 @@ const App = () => {
       </header>
 
       <Outlet />
-      <footer className="bg-gray-900 text-gray-300 py-12 mt-2 px-6 ">
-        footer
+      <footer className="
+       ">
+        <Footer/>
       </footer>
     </div>
   );
