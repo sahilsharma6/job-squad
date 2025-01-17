@@ -5,7 +5,7 @@ const AssetsForDesign = () => {
   return (
     <div className="bg-base-white">
       <Link to="/">
-        <Button className="my-4 mx-4">Back to Home page</Button>
+        <Button varient="ouline" className={'cae'}>Back to Home page</Button>
       </Link>
 
       <h1 className="bg-blue-ultra">Blue</h1>
@@ -36,7 +36,7 @@ const AssetsForDesign = () => {
 
       <div>
         <p className="font-lato font-normal">Regular Lato text</p>
-        <p className="font-lato font-bold">Bold Lato text</p>
+        <p className="font-lato font-heavy">Bold Lato text</p>
         <p className="font-lato font-light">Light Lato text</p>
 
         <p className="font-ubuntu font-normal">Regular Ubuntu text</p>
