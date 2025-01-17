@@ -14,8 +14,7 @@ const HomePage = () => {
     <div>
       <Hero />
 
-      <div >
-
+      <div>
         <div className="py-16">
           <SlidingBanner
             title="Browse by category"
@@ -24,12 +23,9 @@ const HomePage = () => {
             isVerticalCard={true}
           />
         </div>
-
-        <div>
-          <HiringBanner />
+        <div className="py-16">
+          <ExploreMarketplace />
         </div>
-
-
         <div className="py-16">
           <SlidingBanner
             title="Top companies hiring now"
@@ -38,24 +34,20 @@ const HomePage = () => {
           />
         </div>
 
-        <div>
-          {/* stats */}
-        </div>
-
-        <div className="py-16">
-          <ExploreMarketplace />
-        </div>
+        <div>{/* stats */}</div>
 
         <div>
           <JobsOfTheDay />
         </div>
 
-        <div>
-          {/* how it works */}
-        </div>
+        <div>{/* how it works */}</div>
 
         <div className="py-16">
           <TopRecruiters />
+        </div>
+
+        <div>
+          <HiringBanner />
         </div>
 
         <div>
