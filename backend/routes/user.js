@@ -1,8 +1,8 @@
 import express from 'express';
 import { SignIn, SignUp ,LogOut} from '../controllers/UserAuth.js';
-const Userroutes=express.Router();
+const UserRoutes=express.Router();
 
-Userroutes.post('/signup',SignUp)
-Userroutes.post('/signin',SignIn)
-Userroutes.get('/logout',LogOut)
-export default Userroutes
+UserRoutes.post('/signup',SignUp)
+UserRoutes.post('/signin',SignIn)
+UserRoutes.get('/logout',LogOut)
+export default UserRoutes
