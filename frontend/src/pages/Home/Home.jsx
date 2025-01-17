@@ -6,7 +6,7 @@ import HiringBanner from "@/pages/Home/components/Hiring";
 import ExploreMarketplace from "@/pages/Home/components/Marketplace";
 import NewsletterSection from "@/pages/Home/components/Newletter";
 import TopRecruiters from "@/pages/Home/components/Recrut";
-import MarketplaceBanner from "./components/MarketplaceBanner";
+
 
 const HomePage = () => {
 
@@ -23,17 +23,14 @@ const HomePage = () => {
         items={companies}
         isVerticalCard={false}
       />
-
-      <MarketplaceBanner />
-
       <div>
 
-      <JobsOfTheDay />
-      <TopRecruiters/>
-    <HiringBanner/>
-    <ExploreMarketplace/>
-    <NewsletterSection/>
-    <JobMatchHero/>
+        <JobsOfTheDay />
+        <TopRecruiters />
+        <HiringBanner />
+        <ExploreMarketplace />
+        <NewsletterSection />
+        <JobMatchHero />
         {/* <JobsOfTheDay /> */}
 
       </div>
