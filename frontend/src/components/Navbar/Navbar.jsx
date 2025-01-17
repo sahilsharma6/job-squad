@@ -88,7 +88,7 @@ const Navbar = () => {
 
   return (
     <nav className="relative bg-transparent w-full z-10">
-      <div className="container mx-auto flex justify-between items-center py-4 px-6">
+      <div className="container mx-auto flex justify-between items-center py-4 px-6 ">
         {/* Logo */}
         <div className="text-2xl font-bold text-blue-light">JobSquad</div>
 
@@ -178,14 +178,15 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <motion.div
-          className="absolute top-0 left-0 w-full bg-base-white shadow-lg z-20"
+          className="absolute top-0 h-screen left-0 w-full bg-base-white shadow-lg z-20"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
         >
-          <div className="flex flex-col space-y-4 px-6 py-4">
+          <div className="flex flex-col space-y-4 px-6 py-4 z-20">
+            <div className="lg:hidden flex justify-between items-center">
 
-          <div className="lg:hidden flex justify-end items-center">
+            <div className="text-2xl font-bold text-blue-light">JobSquad</div>
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className="text-2xl text-blue-light"

@@ -72,7 +72,7 @@ const Hero = () => {
               className="w-full h-auto object-cover"
             />
           </div>
-          <div className="w-1/3 bg-white shadow-lg rounded-lg overflow-hidden absolute bottom-0 right-0 z-10 transform translate-x-6 translate-y-6">
+          <div className="w-1/3 bg-white shadow-lg rounded-lg overflow-hidden absolute bottom-0 right-0 z-1 transform translate-x-6 translate-y-6">
             <img
               src={HeroImg1}
               alt="Collaboration"

@@ -81,6 +81,10 @@
   }
 }
 
+*{
+  font-family: LatoBold;
+}
+
 
 @font-face {
   font-family: 'LatoReggular';
