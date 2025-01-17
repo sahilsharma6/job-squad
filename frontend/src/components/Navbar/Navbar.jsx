@@ -87,20 +87,24 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="relative bg-transparent w-full z-10">
-      <div className="container mx-auto flex justify-between items-center py-4 px-6 ">
+    <nav
+      className={`relative ${
+        window.location.pathname !== "/" ? "bg-transparent" : "bg-blue-100"
+      }  w-full z-10`}
+    >
+      <div className="container  flex justify-between items-center py-4  w-full max-w-6xl mx-auto px-4 ">
         {/* Logo */}
         <div className="text-2xl font-bold text-blue-light">JobSquad</div>
 
         {/* Desktop Menu */}
         <ul className="hidden lg:flex items-center space-x-8 mx-auto">
           {menuItems.map((item, index) => (
-            <li key={index} className="relative group">
+            <li key={index} className="relative group font-">
               <div className="flex items-center cursor-pointer">
                 {item.link ? (
                   <Link
                     to={item.link}
-                    className="text-lg font-medium hover:text-blue-ultra"
+                    className="text-lg font-medium hover:text-blue-ultra "
                   >
                     {item.label}
                   </Link>
@@ -151,8 +155,8 @@ const Navbar = () => {
         <div className="hidden lg:flex items-center space-x-4">
           <Link to="/register">
             <Button
-              variant="outline"
-              className="text-blue-light border-blue-light"
+              variant="a"
+              className=" underline hover:border-blue-dark hover:no-underline  border"
             >
               Register
             </Button>
@@ -185,8 +189,7 @@ const Navbar = () => {
         >
           <div className="flex flex-col space-y-4 px-6 py-4 z-20">
             <div className="lg:hidden flex justify-between items-center">
-
-            <div className="text-2xl font-bold text-blue-light">JobSquad</div>
+              <div className="text-2xl font-bold text-blue-light">JobSquad</div>
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className="text-2xl text-blue-light"

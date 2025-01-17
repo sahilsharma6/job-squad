@@ -1,27 +1,26 @@
-import React from "react";
 import { Button } from "@/components/ui/button";
-import { Search } from "lucide-react"; 
+import { Search } from "lucide-react";
 import HeroImg1 from "../../assets/hero1.jpg";
 
 const Hero = () => {
   return (
-    <div className="text-gray-800 bg-blue-50 p-4">
-      <div className="container mx-auto flex flex-col-reverse lg:flex-row items-center justify-between px-6 lg:px-16 py-20 gap-12">
+    <div className="text-gray-800 bg-blue-100 w-full ">
+      <div className="container  flex flex-col-reverse lg:flex-row items-center justify-between  lg:px-16 py-20 gap-12 w-full max-w-6xl mx-auto px-4">
         {/* Left Content */}
         <div className="lg:w-1/2 space-y-8">
           <h1 className="text-4xl lg:text-5xl font-extrabold leading-tight">
-            The <span className="text-blue-600">Easiest Way</span> to Get Your New Job
+            The <span className="text-blue-600">Easiest Way</span> to Get Your
+            New Job
           </h1>
           <p className="text-lg text-gray-600 leading-relaxed">
             Each month, more than 3 million job seekers turn to our website in
-            their search for work, making over 140,000 applications every single day.
+            their search for work, making over 140,000 applications every single
+            day.
           </p>
 
           {/* Search Bar */}
           <div className="flex flex-col lg:flex-row items-center bg-white shadow-md rounded-lg p-4 gap-4">
-            <select
-              className="w-full lg:w-1/4 px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-700 focus:outline-none"
-            >
+            <select className="w-full lg:w-1/4 px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-700 focus:outline-none">
               <option value="">Industry</option>
               <option value="it">IT</option>
               <option value="sales">Sales</option>
@@ -31,8 +30,8 @@ const Hero = () => {
               <option value="engineering">Engineering</option>
             </select>
 
-            <select 
-              placeholder = "Select Location"
+            <select
+              placeholder="Select Location"
               className="w-full lg:w-1/4 px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-700 focus:outline-none"
             >
               <option value="">Location</option>
@@ -49,7 +48,7 @@ const Hero = () => {
               className="w-full lg:w-1/2 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none"
             />
             <Button className="bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 flex items-center gap-2">
-              <Search size={20} /> 
+              <Search size={20} />
               Search
             </Button>
           </div>
@@ -63,7 +62,6 @@ const Hero = () => {
           </div>
         </div>
 
- 
         <div className="lg:w-1/2 flex flex-col lg:flex-row gap-6 items-center justify-center relative">
           <div className="w-2/3 bg-white shadow-lg rounded-lg overflow-hidden z-0">
             <img
