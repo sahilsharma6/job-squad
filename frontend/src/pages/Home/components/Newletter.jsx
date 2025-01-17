@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
 import { Mail } from "lucide-react";
-
+import img from '../image3.png'
 const NewsletterSection = () => {
   const floatingImages = [
     { top: "20%", left: "10%" },
@@ -78,7 +78,7 @@ const NewsletterSection = () => {
         >
           <motion.div variants={floatVariants} animate="animate">
             <img
-              src="/api/placeholder/48/48"
+              src={img}
               alt="floating"
               className="w-12 h-12 rounded-lg shadow-lg"
             />

@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { ChevronRight } from "lucide-react";
-import img1 from '../image.png'
+import img1 from '../image2.png'
 const JobMatchHero = () => {
   const containerVariants = {
     hidden: { opacity: 0 },

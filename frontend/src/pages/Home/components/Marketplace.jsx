@@ -1,31 +1,45 @@
 import React, { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { 
+  Code, 
+  LineChart, 
+  Users, 
+  Megaphone, 
+  Palette, 
+  BadgeDollarSign 
+} from "lucide-react";
 
 const categories = [
   {
     title: "Software",
     jobs: "55 Jobs Available",
+    icon: Code
   },
   {
     title: "Finance",
     jobs: "35 Jobs Available",
+    icon: LineChart
   },
   {
     title: "Recruiting",
     jobs: "20 Jobs Available",
+    icon: Users
   },
   {
     title: "Marketing",
     jobs: "45 Jobs Available",
+    icon: Megaphone
   },
   {
     title: "Design",
     jobs: "30 Jobs Available",
+    icon: Palette
   },
   {
     title: "Sales",
     jobs: "25 Jobs Available",
+    icon: BadgeDollarSign
   },
 ];
 
@@ -53,8 +67,8 @@ const ExploreMarketplace = () => {
   };
 
   return (
-    <div className="bg-blue-ultra py-8 sm:py-12 px-4 sm:px-6 lg:px-8 font-ubuntu font-normal">
-      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-8">
+    <div className="bg-blue-ultra py-8 sm:py-12 px-4 sm:px-6 lg:px-8 font-ubuntu font-normal ">
+      <div className=" mx-auto flex flex-col lg:flex-row items-center gap-8 max-w-6xl">
         {/* Text Section */}
         <div className="text-white flex-shrink-0 lg:w-1/3 text-center lg:text-left">
           <h2 className="text-2xl sm:text-3xl font-semibold animate-fade-in">
@@ -107,13 +121,12 @@ const ExploreMarketplace = () => {
               >
                 <div className="h-64 sm:h-72 rounded-xl bg-white/10 backdrop-blur-sm p-6 transform transition-all duration-300 hover:translate-y--1 hover:shadow-xl">
                   <div className="h-full flex flex-col justify-between">
-                    {/* Placeholder image area */}
-                    <div className="w-16 h-16 rounded-lg bg-white/20 mb-4 transform transition-transform duration-300 group-hover:scale-110">
-                      <img
-                        src="/api/placeholder/64/64"
-                        alt={category.title}
-                        className="w-full h-full object-cover rounded-lg"
-                      />
+                    {/* Icon area */}
+                    <div className="w-16 h-16 rounded-lg bg-white/20 mb-4 transform transition-transform duration-300 group-hover:scale-110 flex items-center justify-center">
+                      {React.createElement(category.icon, {
+                        size: 32,
+                        className: "text-white"
+                      })}
                     </div>
                     
                     {/* Content */}

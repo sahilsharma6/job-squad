@@ -19,10 +19,10 @@ const Footer = () => {
           <div className="col-span-2 sm:col-span-3 lg:col-span-2">
             <div className="flex items-center gap-2 mb-4">
               <div className="w-2 h-2 rounded-full bg-blue-600"></div>
-              <span className="text-xl font-bold">JobBox</span>
+              <span className="text-xl font-bold">JobSquad</span>
             </div>
             <p className="text-gray-600 text-sm mb-6 max-w-md">
-              JobBox is the heart of the design community and the best resource to discover and connect with designers worldwide.
+              JobSquad is the heart of the design community and the best resource to discover and connect with designers worldwide.
             </p>
             <div className="flex gap-3">
               <a 
@@ -71,7 +71,7 @@ const Footer = () => {
           {/* Download Section - Stack on mobile */}
           <div className="flex flex-col gap-6 sm:flex-row sm:justify-between sm:items-center">
             <p className="text-sm text-gray-600 text-center sm:text-left">
-              Copyright © 2022. JobBox all right reserved
+              Copyright © 2022. JobSquad all right reserved
             </p>
             <div className="flex flex-col xs:flex-row gap-3 justify-center">
               <Button 
