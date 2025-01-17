@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react"; 
-import HeroImg1 from "../../assets/Hero1.jpg";
+import HeroImg1 from "../../assets/hero1.jpg";
 
 const Hero = () => {
   return (
