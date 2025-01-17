@@ -1,9 +1,17 @@
-import React from 'react';
+import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { motion } from "framer-motion";
-import { Mail } from "lucide-react";
-import img from '../image3.png'
+import { motion } from "framer-motion"; // Import the IconMap
+import img from "../image3.png";
+import { Mail, Check, User, AlertCircle, Star } from "lucide-react";
+
+const IconMap = {
+  Mail: Mail,
+  Check: Check,
+  User: User,
+  AlertCircle: AlertCircle,
+  Star: Star,
+};
 const NewsletterSection = () => {
   const floatingImages = [
     { top: "20%", left: "10%" },
@@ -87,27 +95,37 @@ const NewsletterSection = () => {
       ))}
 
       {/* Main Content */}
-      <motion.div className="max-w-2xl mx-auto text-center relative z-10 font-ubuntu font-normal" variants={containerVariants}>
-        <motion.h2 className="text-white text-2xl md:text-3xl font-bold mb-8" variants={itemVariants}>
+      <motion.div
+        className="mx-auto text-center relative z-10 font-ubuntu font-normal w-full"
+        variants={containerVariants}
+      >
+        <motion.h2
+          className="text-white text-2xl md:text-3xl font-bold mb-8"
+          variants={itemVariants}
+        >
           New Things Will Always
           <br />
           Update Regularly
         </motion.h2>
 
-        <motion.div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" variants={itemVariants}>
-          <motion.div className="relative flex-1" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+        <motion.div
+          className="flex flex-col gap-3 max-w-md mx-auto"
+          variants={itemVariants}
+        >
+          <motion.div className="relative flex-1">
             <Input
               type="email"
               placeholder="Enter your email here"
-              className="bg-white/90 backdrop-blur-sm rounded-full px-6 pl-12 pr-6 h-12 w-full"
+              className="bg-white/90 backdrop-blur-sm rounded-full px-6 pl-12 pr-[6rem] h-14 w-full text-lg"
             />
-            <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-blue-600 w-5 h-5" />
-          </motion.div>
-
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            <Button className="bg-white text-blue-600 rounded-full hover:bg-blue-50 px-8 h-12 font-semibold">
-              Subscribe
-            </Button>
+            <IconMap.Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-blue-600 w-6 h-6" />
+            <motion.div
+              className="absolute right-2 top-1/2 transform -translate-y-1/2"
+            >
+              <Button className="bg-blue-600 text-white rounded-full hover:bg-blue-700 px-6 h-10 text-sm font-semibold">
+                Subscribe
+              </Button>
+            </motion.div>
           </motion.div>
         </motion.div>
 

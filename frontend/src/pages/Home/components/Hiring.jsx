@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Linkedin } from 'lucide-react';
+import { Linkedin, Briefcase, Users } from "lucide-react"; 
 
 const HiringBanner = () => {
   return (
@@ -26,7 +26,7 @@ const HiringBanner = () => {
           </Button>
 
           {/* Illustration Images - Using placeholder images */}
-          <div className="hidden md:flex gap-4">
+          {/* <div className="hidden md:flex gap-4">
             <img
               src="/api/placeholder/80/80"
               alt="Left illustration"
@@ -37,6 +37,10 @@ const HiringBanner = () => {
               alt="Right illustration"
               className="w-16 h-16 sm:w-20 sm:h-20 object-contain rounded-lg"
             />
+          </div> */}
+          <div className="hidden md:flex gap-4">
+            <Briefcase className="w-16 h-16 sm:w-20 sm:h-20 text-blue-500" />
+            <Users className="w-16 h-16 sm:w-20 sm:h-20 text-blue-400" />
           </div>
         </div>
       </div>
