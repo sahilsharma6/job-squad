@@ -21,8 +21,11 @@ const HomePage = () => {
 
       <MarketplaceBanner />
 
+      <div>
 
-      <JobsOfTheDay />
+        <JobsOfTheDay />
+
+      </div>
     </div>
   );
 };
