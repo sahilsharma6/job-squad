@@ -28,7 +28,7 @@ const AboutUs = () => {
       {/* Main Content */}
       <div className="max-w-6xl mx-auto px-4 py-12">
         <div className="text-center mb-12">
-            <h2 className="text-2xl font-bold text-grey-muted font-ubuntu">OUR COMPANY</h2>
+            <h2 className="text-2xl font-bold text-grey-muted font-ubuntu opacity-15">OUR COMPANY</h2>
           <h2 className="text-4xl font-semibold text-gray-900 mb-4 font-ubuntu ">About Our Company</h2>
           <p className="text-gray-600 max-w-2xl mx-auto font-lato font-normal">
             Connect with over 80,000 expert freelancers and talented professionals on our platform. 
@@ -75,7 +75,7 @@ const AboutUs = () => {
                   <span className="text-gray-600">Professional payment experts</span>
                 </li>
               </ul>
-              <Button className="bg-blue-ultra hover:bg-blue-light text-white px-6">
+              <Button className="bg-blue-light hover:bg-blue-dark text-white px-6">
                 Learn More
               </Button>
 
