@@ -87,17 +87,19 @@ const Navbar = () => {
     }));
   };
 
-  // Detect screen width and adjust menu state
+
+
+  // close mobile menu when screen size is greater than 768px
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768); // Check for mobile screen width
+      setIsMobile(window.innerWidth < 768); 
       if (window.innerWidth >= 768) {
-        setIsMobileMenuOpen(false); // Close menu if screen width is >= 768
+        setIsMobileMenuOpen(false); 
       }
     };
 
     window.addEventListener("resize", handleResize);
-    handleResize(); // Initial check
+    handleResize(); 
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
