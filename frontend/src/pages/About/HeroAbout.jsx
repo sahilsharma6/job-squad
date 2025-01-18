@@ -1,38 +1,48 @@
-import React from 'react';
+import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import img from '../Home/image2.png'
-import img2 from '../Home/image.png'
+import img from "../Home/image2.png";
+import img2 from "../Home/image.png";
+import HowItWorks from "./HowItWorks";
+import WhoLoveUs from "./WhoLoveUs";
 const AboutUs = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
       <div className="relative h-48 bg-gray-900">
-  <div className="absolute inset-0">
-    <img
-      src={img2}
-      alt="Office space"
-      className="w-full h-full object-cover opacity-50"
-    />
-  </div>
-  <div className="relative flex items-center justify-start pl-10 h-full max-w-6xl">
-    <div className='max-w-6xl'>
-      <h1 className="text-4xl font-bold text-white font-ubuntu">About Us</h1>
-      <h2 className="text-white pt-3">Get latest Updates and News Here</h2>
-    </div>
-  </div>
-</div>
-
+        <div className="absolute inset-0">
+          <img
+            src={img2}
+            alt="Office space"
+            className="w-full h-full object-cover opacity-50"
+          />
+        </div>
+        <div className="relative flex items-center justify-start pl-10 h-full max-w-6xl">
+          <div className="max-w-6xl">
+            <h1 className="text-4xl font-bold text-white font-ubuntu">
+              About Us
+            </h1>
+            <h2 className="text-white pt-3">
+              Get latest Updates and News Here
+            </h2>
+          </div>
+        </div>
+      </div>
 
       {/* Main Content */}
       <div className="max-w-6xl mx-auto px-4 py-12">
         <div className="text-center mb-12">
-            <h2 className="text-2xl font-bold text-grey-muted font-ubuntu">OUR COMPANY</h2>
-          <h2 className="text-4xl font-semibold text-gray-900 mb-4 font-ubuntu ">About Our Company</h2>
+          <h2 className="text-2xl font-bold text-grey-muted font-ubuntu">
+            OUR COMPANY
+          </h2>
+          <h2 className="text-4xl font-semibold text-gray-900 mb-4 font-ubuntu ">
+            About Our Company
+          </h2>
           <p className="text-gray-600 max-w-2xl mx-auto font-lato font-normal">
-            Connect with over 80,000 expert freelancers and talented professionals on our platform. 
-            We help businesses find the perfect match for their project needs.
+            Connect with over 80,000 expert freelancers and talented
+            professionals on our platform. We help businesses find the perfect
+            match for their project needs.
           </p>
         </div>
 
@@ -47,32 +57,67 @@ const AboutUs = () => {
             </div>
             <div className="w-full md:w-1/2 space-y-6">
               <h3 className="text-2xl font-semibold text-gray-900">
-                Get over 80,000 expert & talented freelancers in Hi!Jobs platform.
+                Get over 80,000 expert & talented freelancers in Hi!Jobs
+                platform.
               </h3>
               <ul className="space-y-4">
                 <li className="flex items-center gap-3">
                   <div className="h-6 w-6 rounded-full bg-blue-100 flex items-center justify-center">
-                    <svg className="h-4 w-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    <svg
+                      className="h-4 w-4 text-blue-600"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
                     </svg>
                   </div>
                   <span className="text-gray-600">Superior sourcing</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <div className="h-6 w-6 rounded-full bg-blue-100 flex items-center justify-center">
-                    <svg className="h-4 w-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    <svg
+                      className="h-4 w-4 text-blue-600"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
                     </svg>
                   </div>
-                  <span className="text-gray-600">Fast tax & support for your projects</span>
+                  <span className="text-gray-600">
+                    Fast tax & support for your projects
+                  </span>
                 </li>
                 <li className="flex items-center gap-3">
                   <div className="h-6 w-6 rounded-full bg-blue-100 flex items-center justify-center">
-                    <svg className="h-4 w-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    <svg
+                      className="h-4 w-4 text-blue-600"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
                     </svg>
                   </div>
-                  <span className="text-gray-600">Professional payment experts</span>
+                  <span className="text-gray-600">
+                    Professional payment experts
+                  </span>
                 </li>
               </ul>
               <Button className="bg-blue-ultra hover:bg-blue-light text-white px-6">
@@ -94,6 +139,12 @@ const AboutUs = () => {
           </CardContent>
         </Card>
       </div>
+      
+      {/* How it Works */}  
+      <HowItWorks />
+
+      {/* Who Love Us */}
+      <WhoLoveUs />
     </div>
   );
 };

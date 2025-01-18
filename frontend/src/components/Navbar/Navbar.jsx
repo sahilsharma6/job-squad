@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
@@ -7,8 +7,10 @@ import { Menu, X, ChevronDown } from "lucide-react";
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [mobileDropdownOpen, setMobileDropdownOpen] = useState({});
+  const [isMobile, setIsMobile] = useState(false); // Track screen size
 
   const menuItems = [
+    { label: "Home", link: "/" },
     {
       label: "Find a Job",
       dropdown: [
@@ -75,7 +77,6 @@ const Navbar = () => {
         },
       ],
     },
-    { label: "Blog", link: "/blog" },
     { label: "Contact", link: "/contact" },
   ];
 
@@ -86,38 +87,48 @@ const Navbar = () => {
     }));
   };
 
+  // Detect screen width and adjust menu state
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768); // Check for mobile screen width
+      if (window.innerWidth >= 768) {
+        setIsMobileMenuOpen(false); // Close menu if screen width is >= 768
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize(); // Initial check
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <nav
-      className={`relative ${
-        window.location.pathname !== "/" ? "bg-transparent" : "bg-blue-100"
-      }  w-full z-10`}
+      className={`relative ${window.location.pathname !== "/" ? "bg-transparent" : "bg-blue-100"} w-full z-10`}
     >
-      <div className="container  flex justify-between items-center py-4  w-full max-w-6xl mx-auto px-4 ">
+      <div className="container flex justify-between items-center py-4 w-full max-w-6xl mx-auto px-4 ">
         {/* Logo */}
-        <div className="text-2xl font-bold text-blue-light">JobSquad</div>
+        <div className="text-2xl font-bold text-blue-light">
+          <a href="/">JobSquad</a>
+        </div>
 
         {/* Desktop Menu */}
         <ul className="hidden lg:flex items-center space-x-8 mx-auto">
           {menuItems.map((item, index) => (
-            <li key={index} className="relative group font-">
+            <li key={index} className="relative group">
               <div className="flex items-center cursor-pointer">
                 {item.link ? (
-                  <Link
-                    to={item.link}
-                    className="text-lg font-medium hover:text-blue-ultra "
-                  >
+                  <Link to={item.link} className="text-lg font-medium hover:text-blue-ultra ">
                     {item.label}
                   </Link>
                 ) : (
-                  <span className="text-lg font-medium hover:text-blue-ultra">
-                    {item.label}
-                  </span>
+                  <span className="text-lg font-medium hover:text-blue-ultra">{item.label}</span>
                 )}
                 {item.dropdown && <ChevronDown className="ml-2 w-4 h-4" />}
               </div>
               {item.dropdown && (
                 <motion.div
-                  className="absolute top-5 left-0 bg-base-white shadow-lg rounded-lg py-4 invisible group-hover:visible group-hover:opacity-100 opacity-0 transition-opacity duration-300"
+                  className="absolute top-6 left-0 bg-base-white shadow-lg rounded-lg py-4 invisible group-hover:visible group-hover:opacity-100 opacity-0 transition-opacity duration-300"
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
@@ -126,16 +137,15 @@ const Navbar = () => {
                     {item.dropdown.map((section, sectionIdx) => (
                       <div key={sectionIdx}>
                         {section.title && (
-                          <h3 className="font-bold text-blue-dark mb-2">
-                            {section.title}
-                          </h3>
+                          <h3 className="font-bold text-blue-dark mb-2">{section.title}</h3>
                         )}
                         <ul>
                           {section.items.map((dropdownItem, idx) => (
                             <li key={idx}>
                               <Link
+                                onClick={() => setIsMobileMenuOpen(false)}
                                 to={dropdownItem.link}
-                                className="text-gray-700 hover:text-white hover:bg-grey-muted rounded-md px-2 py-1 block"
+                                className="text-sm hover:text-white hover:bg-grey-muted rounded-md px-2 py-1 block"
                               >
                                 {dropdownItem.label}
                               </Link>
@@ -154,10 +164,7 @@ const Navbar = () => {
         {/* Desktop Buttons */}
         <div className="hidden lg:flex items-center space-x-4">
           <Link to="/register">
-            <Button
-              variant="a"
-              className=" underline hover:border-blue-dark hover:no-underline  border"
-            >
+            <Button variant="a" className="underline hover:border-blue-dark hover:no-underline border">
               Register
             </Button>
           </Link>
@@ -169,27 +176,33 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Menu Toggle */}
-        <div className="lg:hidden">
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="text-2xl text-blue-light"
-          >
-            {isMobileMenuOpen ? <X /> : <Menu />}
-          </button>
-        </div>
+        {!isMobileMenuOpen && (
+          <div className="lg:hidden">
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="text-2xl text-blue-light"
+            >
+              {isMobileMenuOpen ? <X /> : <Menu />}
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <motion.div
-          className="absolute top-0 h-screen left-0 w-full bg-base-white shadow-lg z-20"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
+          className="absolute top-0 left-0 h-screen bg-base-white rounded-tr-3xl shadow-lg z-20"
+          initial={{ opacity: 0, x: "-100%" }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: "-100%" }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+          style={{ width: "75%" }}
         >
           <div className="flex flex-col space-y-4 px-6 py-4 z-20">
             <div className="lg:hidden flex justify-between items-center">
-              <div className="text-2xl font-bold text-blue-light">JobSquad</div>
+              <a href="/" className="text-2xl font-bold text-blue-light">
+                JobSquad
+              </a>
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className="text-2xl text-blue-light"
@@ -206,6 +219,7 @@ const Navbar = () => {
                   {item.link ? (
                     <Link
                       to={item.link}
+                      onClick={() => setIsMobileMenuOpen(false)} 
                       className="text-lg font-medium hover:text-blue-ultra"
                     >
                       {item.label}
@@ -223,6 +237,7 @@ const Navbar = () => {
                           <Link
                             to={nestedItem.link}
                             className="text-gray-700 hover:text-blue-ultra hover:bg-grey-muted rounded-md px-2 py-1 block"
+                            onClick={() => setIsMobileMenuOpen(false)}
                           >
                             {nestedItem.label}
                           </Link>
@@ -233,6 +248,22 @@ const Navbar = () => {
                 )}
               </div>
             ))}
+            {/* Mobile Buttons */}
+            <div className="flex flex-col space-y-4 mt-4">
+              <Link to="/register">
+                <Button
+                  variant="a"
+                  className="underline hover:border-blue-dark hover:no-underline border"
+                >
+                  Register
+                </Button>
+              </Link>
+              <Link to="/signin">
+                <Button className="bg-blue-light text-white hover:bg-blue-dark">
+                  Sign in
+                </Button>
+              </Link>
+            </div>
           </div>
         </motion.div>
       )}
