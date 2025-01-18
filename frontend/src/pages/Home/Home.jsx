@@ -8,6 +8,7 @@ import NewsletterSection from "@/pages/Home/components/Newletter";
 import TopRecruiters from "@/pages/Home/components/Recrut";
 import MarketplaceBanner from "./components/MarketplaceBanner";
 import Hero from "@/components/Hero/Hero";
+import FAQSection from "./components/Faq";
 
 const HomePage = () => {
   return (
@@ -53,8 +54,10 @@ const HomePage = () => {
         <div>
           <JobMatchHero />
         </div>
-
-        <div className="py-16">
+        <div>
+          <FAQSection/>
+        </div>
+                <div className="py-16">
           <NewsletterSection />
         </div>
       </div>
