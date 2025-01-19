@@ -4,7 +4,6 @@ import {verify} from 'jsonwebtoken'
 const isAuthenticated = (req, res, next) => {
     const token = req.cookies.sid; // Retrieve token from cookies
 
-    // Allow access to specific routes without authentication
     const openRoutes = ['/signin', '/signup'];
     if (openRoutes.includes(req.url)) {
         if (token) {
@@ -14,7 +13,6 @@ const isAuthenticated = (req, res, next) => {
                     return res.status(403).json({ success: false, message: "You are already logged in." });
                 }
             } catch (error) {
-                // Proceed to login/create if token is invalid
                 return next();
             }
         }
@@ -27,7 +25,7 @@ const isAuthenticated = (req, res, next) => {
 
     try {
         // Decrypt and verify the token
-        const decoded = Decrypte(token);
+        const decoded = verify(token, process.env.JWT);
 
         if (!decoded) {
             throw new Error("Token decryption failed");
@@ -40,4 +38,4 @@ const isAuthenticated = (req, res, next) => {
     }
 };
 
-module.exports = isAuthenticated;
+export default isAuthenticated;
