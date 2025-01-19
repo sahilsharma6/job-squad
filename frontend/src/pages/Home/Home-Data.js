@@ -217,7 +217,6 @@ export const JobsCategories = [
       description: "Build the future of technology with top-tier developers and engineers.",
       jobs: "55 Jobs Available",
       icon: "Code",
-      bgGradient: "from-blue-ultra to-blue-light",
       image: "https://cdn.dokan.co/2022/05/20171922/Market-a-Marketplace-1024x559.png"
     },
     {
@@ -226,7 +225,6 @@ export const JobsCategories = [
       description: "Connect with expert financial analysts and consultants.",
       jobs: "35 Jobs Available",
       icon: "DollarSign",
-      bgGradient: "from-green-ultra to-green-light",
       image: "https://cdn.dokan.co/2022/05/20171922/Market-a-Marketplace-1024x559.png"
     },
     {
@@ -235,7 +233,6 @@ export const JobsCategories = [
       description: "Find specialized recruiters for your industry needs.",
       jobs: "20 Jobs Available",
       icon: "Users",
-      bgGradient: "from-blue-light to-blue-dark",
       image: "https://cdn.dokan.co/2022/05/20171922/Market-a-Marketplace-1024x559.png"
     },
     {
@@ -244,7 +241,6 @@ export const JobsCategories = [
       description: "Scale your brand with experienced marketing professionals.",
       jobs: "40 Jobs Available",
       icon: "TrendingUp",
-      bgGradient: "from-green-light to-green-dark",
       image: "https://cdn.dokan.co/2022/05/20171922/Market-a-Marketplace-1024x559.png"
     }
   ];
