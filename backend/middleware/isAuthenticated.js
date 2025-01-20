@@ -1,5 +1,5 @@
 
-import {verify} from 'jsonwebtoken'
+import jsonwebtoken from 'jsonwebtoken'
 // Middleware to check authentication
 const isAuthenticated = (req, res, next) => {
     const token = req.cookies.sid; // Retrieve token from cookies
@@ -8,7 +8,7 @@ const isAuthenticated = (req, res, next) => {
     if (openRoutes.includes(req.url)) {
         if (token) {
             try {
-                const decoded = verify(token,process.env.JWT);
+                const decoded =jsonwebtoken. verify(token,process.env.JWT);
                 if (decoded) {
                     return res.status(403).json({ success: false, message: "You are already logged in." });
                 }
@@ -25,7 +25,7 @@ const isAuthenticated = (req, res, next) => {
 
     try {
         // Decrypt and verify the token
-        const decoded = verify(token, process.env.JWT);
+        const decoded = jsonwebtoken.verify(token, process.env.JWT);
 
         if (!decoded) {
             throw new Error("Token decryption failed");

@@ -6,7 +6,7 @@ import { isAccess } from '../middleware/isAccess.js';
 // Routes
 ApplicationRouter.get('/applications',isAuthenticated,isAccess(['candidate','company','admin']),getApplications);
 ApplicationRouter.get('/applications/:id',isAuthenticated,isAccess(['candidate','company','admin']), getApplicationById);
-ApplicationRouter.post('/apply',isAuthenticated,isAccess(['candidate','admin']), createApplication);
+ApplicationRouter.post('/apply/:jobId',isAuthenticated,isAccess(['candidate','admin']), createApplication);
 ApplicationRouter.put('/applications/:id',isAuthenticated,isAccess(['candidate','admin']),updateApplication);
 ApplicationRouter.delete('/applications/:id',isAuthenticated,isAccess(['candidate','admin']),deleteApplication);
 

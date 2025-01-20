@@ -7,6 +7,6 @@ const routes=express.Router();
 
 routes.use('/candidate',UserRoutes)
 routes.use('/company',CompanyRoutes)
-routes.use('/job',JobRoutes)
+routes.use('/jobs',JobRoutes)
 routes.use('/job-application',ApplicationRouter)
 export default routes
