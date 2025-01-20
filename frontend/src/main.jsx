@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router";
 import AssetsForDesign from "./pages/Assets";
 import HomePage from "./pages/Home/Home";
 import AboutUs from "./pages/About/HeroAbout";
+import BlogPage from "./pages/Blogs/BlogPage";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -15,6 +16,7 @@ createRoot(document.getElementById("root")).render(
           <Route index element={<HomePage />} />
           <Route path='/about' element={<AboutUs/>}/>
           <Route path="/our/assets" element={<AssetsForDesign />} />
+          <Route path="/blogs" element={<BlogPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

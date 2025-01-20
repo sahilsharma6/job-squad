@@ -6,6 +6,8 @@ import img from "../Home/image2.png";
 import img2 from "../Home/image.png";
 import HowItWorks from "./HowItWorks";
 import WhoLoveUs from "./WhoLoveUs";
+import AboutBanner from "./AboutBanner";
+
 const AboutUs = () => {
   return (
     <div className="min-h-screen bg-gray-50">
@@ -145,6 +147,9 @@ const AboutUs = () => {
 
       {/* Who Love Us */}
       <WhoLoveUs />
+
+      {/* About Banner */}
+      <AboutBanner />
     </div>
   );
 };
