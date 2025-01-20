@@ -88,7 +88,7 @@ const StatCard = ({ number, label, description }) => {
       ref={cardRef}
       className="flex flex-col items-center p-6 text-center"
     >
-      <div className="text-blue-500 mb-2">
+      <div className="text-blue-light mb-2">
         <SlotCounter value={number} />
       </div>
       
