@@ -36,9 +36,9 @@ const Hero = () => {
           </p>
           </div>
           {/* Search Bar */}
-          <div className="flex flex-col lg:flex-row w-full lg:items-center bg-white shadow-md rounded-lg p-4 gap-4">
+          <div className="flex flex-col lg:flex-row w-full  lg:items-center bg-white shadow-md rounded-lg p-4 gap-4">
             <Select onValueChange={setSelectedIndustry}>
-              <SelectTrigger className="w-full max-w-[140px] px-4 py-3 bg-white text-gray-700 focus:outline-none border-none">
+              <SelectTrigger className="w-full lg:max-w-[140px] px-4 py-3 bg-white text-gray-700 focus:outline-none border-none">
                 {selectedIndustry || "Industry"}
               </SelectTrigger>
               <SelectContent className="bg-white shadow-lg">
@@ -52,7 +52,7 @@ const Hero = () => {
             </Select>
 
             <Select onValueChange={setSelectedLocation}>
-              <SelectTrigger className="w-full max-w-[140px] px-4 py-3 bg-white text-gray-700 border-none focus:outline-none">
+              <SelectTrigger className="w-full lg:max-w-[140px] px-4 py-3 bg-white text-gray-700 border-none focus:outline-none">
                 {selectedLocation || "Location"}
               </SelectTrigger>
               <SelectContent className="bg-white shadow-lg">
