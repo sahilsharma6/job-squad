@@ -1,7 +1,5 @@
-import React from "react";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
 const truncateText = (text, wordLimit) => {
   const words = text.split(" ");
@@ -12,6 +10,9 @@ const truncateText = (text, wordLimit) => {
 };
 
 const WhoLoveUs = () => {
+  const [xPosition, setXPosition] = useState(0);
+  const [scrolling, setScrolling] = useState(true);
+
   const testimonials = [
     {
       id: 1,
@@ -55,67 +56,74 @@ const WhoLoveUs = () => {
     },
   ];
 
-  const settings = {
-    infinite: true,
-    slidesToShow: 2,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
-    dots: true,
-    speed: 500,
-    centerMode: true,
-    focusOnSelect: true,
-    responsive: [
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 1,
-        },
-      },
-    ],
+  const cardWidth = 320; 
+  const totalWidth = cardWidth * testimonials.length;
+  
+  const handleHoverStart = () => {
+    setScrolling(false);
   };
+
+  const handleHoverEnd = () => {
+    setScrolling(true);
+  };
+
+  useEffect(() => {
+    if (scrolling) {
+      const interval = setInterval(() => {
+        setXPosition((prev) => {
+          const newPos = prev - 1;
+      
+          if (newPos <= -totalWidth) {
+            return 0;
+          }
+          return newPos;
+        });
+      }, 16);
+
+      return () => clearInterval(interval);
+    }
+  }, [scrolling]);
 
   return (
     <div className="bg-primary-100 py-16 px-8">
-      <h3 className="text-primary-500 text-lg text-center mb-4">
-        Company Feedbacks
-      </h3>
+      <h3 className="text-primary-500 text-lg text-center mb-4">Company Feedbacks</h3>
 
-      <h2 className="text-4xl font-bold text-center mb-12">
-        People Who Already Love Us
-      </h2>
-
-      <div className="max-w-6xl w-full mx-auto ">
-        <Slider {...settings}>
-          {testimonials.map((testimonial) => (
+      <h2 className="text-4xl font-bold text-center mb-12">People Who Already Love Us</h2>
+ 
+      <div className="max-w-6xl   w-full mx-auto overflow-hidden relative">
+        <motion.div
+          className="flex shadow-lg gap-6"
+          style={{
+            transform: `translateX(${xPosition}px)`,
+          }}
+          onMouseEnter={handleHoverStart}
+          onMouseLeave={handleHoverEnd}
+        >
+          {[...testimonials, ...testimonials , ...testimonials].map((testimonial, index) => (
             <div
-              key={testimonial.id}
-              className="bg-white shadow-md rounded-md p-6 h-[250px]  flex flex-col justify-between mx-10 px-8"
+              key={index}
+              className="bg-white shadow-xl rounded-xl p-6 flex-shrink-0 w-80 lg:w-[30rem]"
             >
-              <p className="text-gray-600 mb-4 flex-grow">
-                {truncateText(testimonial.feedback, 30)}
-              </p>
+              <p className="text-gray-600 mb-4">{truncateText(testimonial.feedback, 30)}</p>
 
               <div className="border-t border-gray-300 my-4"></div>
 
-              <div className="flex flex-col items-start">
-                <div className="flex items-center space-x-4">
-                  <img
-                    src={testimonial.profileIcon}
-                    alt="profile"
-                    className="w-16 h-16 rounded-full object-cover"
-                  />
-                  <div className="flex flex-col">
-                    <h4 className="font-bold text-lg">{testimonial.name}</h4>
-                    <p className="text-sm text-gray-500">
-                      {testimonial.position} @ {testimonial.company}
-                    </p>
-                  </div>
+              <div className="flex items-center space-x-4">
+                <img
+                  src={testimonial.profileIcon}
+                  alt="profile"
+                  className="w-16 h-16 rounded-full object-cover"
+                />
+                <div className="flex flex-col">
+                  <h4 className="font-bold text-lg">{testimonial.name}</h4>
+                  <p className="text-sm text-gray-500">
+                    {testimonial.position} @ {testimonial.company}
+                  </p>
                 </div>
               </div>
             </div>
           ))}
-        </Slider>
+        </motion.div>
       </div>
     </div>
   );
