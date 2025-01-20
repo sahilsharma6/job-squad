@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { motion, useInView, useAnimationControls } from 'framer-motion';
+import React, { useEffect } from 'react';
+import { motion, useAnimationControls } from 'framer-motion';
 
 const DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
@@ -8,7 +8,7 @@ const SlotDigit = ({ digit, delay = 0 }) => {
   
   useEffect(() => {
     controls.start({
-      y: [-40 * DIGITS.length, -40 * (parseInt(digit))], // Modified to stop at the target digit
+      y: [-40 * DIGITS.length, -40 * (parseInt(digit))],
       transition: {
         duration: 2,
         delay,
@@ -37,34 +37,16 @@ const SlotDigit = ({ digit, delay = 0 }) => {
 };
 
 const SlotCounter = ({ value, suffix = "+" }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { 
-    margin: "-100px",
-    amount: "some" 
-  });
-  const [hasAnimated, setHasAnimated] = React.useState(false);
-
   // Extract actual number and handle K suffix
   const numberStr = value.replace(/[^0-9]/g, '');
   const hasK = value.includes('K');
   
-  useEffect(() => {
-    if (isInView && !hasAnimated) {
-      setHasAnimated(true);
-    } else if (!isInView && hasAnimated) {
-      setHasAnimated(false);
-    }
-  }, [isInView, hasAnimated]);
-
   return (
-    <motion.div
-      ref={ref}
-      className="flex items-center text-4xl md:text-5xl font-bold"
-    >
+    <div className="flex items-center text-4xl md:text-5xl font-bold">
       <div className="flex">
         {numberStr.split('').map((digit, idx) => (
           <SlotDigit 
-            key={`${idx}-${digit}-${hasAnimated}`}
+            key={idx}
             digit={digit}
             delay={idx * 0.2}
           />
@@ -72,29 +54,20 @@ const SlotCounter = ({ value, suffix = "+" }) => {
       </div>
       {hasK && <span className="ml-1">K</span>}
       <span>{suffix}</span>
-    </motion.div>
+    </div>
   );
 };
 
 const StatCard = ({ number, label, description }) => {
-  const cardRef = useRef(null);
-  const isInView = useInView(cardRef, {
-    margin: "-100px",
-    amount: "some"
-  });
-
   return (
-    <div 
-      ref={cardRef}
-      className="flex flex-col items-center p-6 text-center"
-    >
-      <div className="text-blue-light mb-2">
+    <div className="flex flex-col items-center p-6 text-center">
+      <div className="text-blue-500 mb-2">
         <SlotCounter value={number} />
       </div>
       
       <motion.h3
         initial={{ opacity: 0 }}
-        animate={{ opacity: isInView ? 1 : 0 }}
+        animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.2 }}
         className="text-xl font-semibold text-gray-800 mb-2"
       >
@@ -103,7 +76,7 @@ const StatCard = ({ number, label, description }) => {
       
       <motion.p
         initial={{ opacity: 0 }}
-        animate={{ opacity: isInView ? 1 : 0 }}
+        animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.4 }}
         className="text-sm text-gray-600 max-w-xs"
       >
