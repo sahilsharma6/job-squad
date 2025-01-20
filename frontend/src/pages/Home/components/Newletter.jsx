@@ -1,8 +1,12 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { motion } from "framer-motion"; // Import the IconMap
-import img from "../image3.png";
+import { motion } from "framer-motion";
+import img1 from "../../../assets/hero1.jpg";
+import img2 from "../../../assets/image.png";
+import img3 from "../../../assets/image2.png";
+import img4 from "../../../assets/hero1.jpg";
+import img5 from "../../../assets/image2.png";
 import { Mail, Check, User, AlertCircle, Star } from "lucide-react";
 
 const IconMap = {
@@ -12,13 +16,14 @@ const IconMap = {
   AlertCircle: AlertCircle,
   Star: Star,
 };
+
 const NewsletterSection = () => {
   const floatingImages = [
-    { top: "20%", left: "10%" },
-    { top: "30%", left: "85%" },
-    { top: "65%", left: "15%" },
-    { top: "25%", left: "75%" },
-    { top: "60%", left: "80%" },
+    { top: "20%", left: "10%", src: img1 },
+    { top: "30%", left: "85%", src: img2 },
+    { top: "65%", left: "15%", src: img3 },
+    { top: "25%", left: "75%", src: img4 },
+    { top: "60%", left: "80%", src: img5 },
   ];
 
   const containerVariants = {
@@ -43,26 +48,26 @@ const NewsletterSection = () => {
     },
   };
 
-  const floatVariants = {
-    animate: {
-      y: [-10, 10],
-      rotate: [-5, 5],
-      transition: {
-        y: {
-          duration: 2,
-          repeat: Infinity,
-          repeatType: "reverse",
-          ease: "easeInOut",
-        },
-        rotate: {
-          duration: 3,
-          repeat: Infinity,
-          repeatType: "reverse",
-          ease: "easeInOut",
-        },
-      },
-    },
-  };
+  // const floatVariants = {
+  //   animate: {
+  //     y: [-10, 10],
+  //     rotate: [-5, 5],
+  //     transition: {
+  //       y: {
+  //         duration: 2,
+  //         repeat: Infinity,
+  //         repeatType: "reverse",
+  //         ease: "easeInOut",
+  //       },
+  //       rotate: {
+  //         duration: 3,
+  //         repeat: Infinity,
+  //         repeatType: "reverse",
+  //         ease: "easeInOut",
+  //       },
+  //     },
+  //   },
+  // };
 
   return (
     <motion.div
@@ -77,18 +82,20 @@ const NewsletterSection = () => {
       {/* Floating Images */}
       {floatingImages.map((position, index) => (
         <motion.div
-          key={index}
+          //key={index}
           className="absolute"
           initial={{ opacity: 0, scale: 0 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: index * 0.2 }}
-          style={position}
+          style={{ top: position.top, left: position.left }}
         >
-          <motion.div variants={floatVariants} animate="animate">
+          <motion.div 
+          //variants={floatVariants} 
+          animate="animate">
             <img
-              src={img}
-              alt="floating"
-              className="w-12 h-12 rounded-lg shadow-lg"
+              src={position.src}
+              alt={`floating-${index}`}
+              className="w-24 h-16 rounded-lg shadow-lg"
             />
           </motion.div>
         </motion.div>
@@ -116,13 +123,13 @@ const NewsletterSection = () => {
             <Input
               type="email"
               placeholder="Enter your email here"
-              className="bg-white/90 backdrop-blur-sm rounded-full px-6 pl-12 pr-[6rem] h-14 w-full text-lg"
+              className="bg-white/90 backdrop-blur-sm rounded-md px-6 pl-12 pr-[6rem] h-14 w-full text-lg border-x-blue-ultra"
             />
             <IconMap.Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-blue-600 w-6 h-6" />
             <motion.div
               className="absolute right-2 top-1/2 transform -translate-y-1/2"
             >
-              <Button className="bg-blue-600 text-white rounded-full hover:bg-blue-700 px-6 h-10 text-sm font-semibold">
+              <Button className="bg-blue-600 text-white rounded-md hover:bg-blue-700 px-6 h-10 text-sm font-semibold">
                 Subscribe
               </Button>
             </motion.div>
