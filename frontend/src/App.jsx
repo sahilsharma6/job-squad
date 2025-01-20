@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Link, Outlet } from "react-router";
-import Navbar from "./components/Navbar/Navbar";
+import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
 const App = () => {

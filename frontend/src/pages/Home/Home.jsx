@@ -7,7 +7,7 @@ import ExploreMarketplace from "@/pages/Home/components/Marketplace";
 import NewsletterSection from "@/pages/Home/components/Newletter";
 import TopRecruiters from "@/pages/Home/components/Recrut";
 import MarketplaceBanner from "./components/MarketplaceBanner";
-import Hero from "@/components/Hero/Hero";
+import Hero from "@/pages/Home/components/Hero";
 import FAQSection from "./components/Faq";
 import StatsSection from "./components/StatsSection";
 
