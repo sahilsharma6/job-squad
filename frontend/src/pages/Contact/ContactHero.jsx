@@ -28,7 +28,7 @@ const ContactSection = () => {
       </div>
 
       {/* Centered Contact Section */}
-      <div className="text-blue-light text-3xl font-medium font-lato my-6 text-center rounded-sm">
+      <div className="text-primary-light text-3xl font-medium font-lato my-6 text-center rounded-sm">
         CONTACT WITH US
       </div>
 
@@ -43,25 +43,25 @@ const ContactSection = () => {
                 <div className="grid md:grid-cols-2 gap-4">
                   <Input
                     placeholder="Your Name"
-                    className="border border-gray-300 rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 focus:outline-none p-2"
+                    className="border border-gray-300 rounded-lg focus-visible:ring-2 focus-visible:ring-primary-500 focus:outline-none p-2"
                   />
                   <Input
                     placeholder="Your Email Address"
-                    className="border border-gray-300 rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 focus:outline-none p-2"
+                    className="border border-gray-300 rounded-lg focus-visible:ring-2 focus-visible:ring-primary-500 focus:outline-none p-2"
                   />
                 </div>
 
                 <Input
                   placeholder="Subject"
-                  className="border border-gray-300 rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 focus:outline-none p-2"
+                  className="border border-gray-300 rounded-lg focus-visible:ring-2 focus-visible:ring-primary-500 focus:outline-none p-2"
                 />
 
                 <Textarea
                   placeholder="Write here your message"
-                  className="border border-gray-300 rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 focus:outline-none p-2 min-h-[120px] resize-none"
+                  className="border border-gray-300 rounded-lg focus-visible:ring-2 focus-visible:ring-primary-500 focus:outline-none p-2 min-h-[120px] resize-none"
                 />
 
-                <Button className="w-full bg-blue-light hover:bg-blue-dark text-white rounded-lg">
+                <Button className="w-full bg-primary-light hover:bg-primary-dark text-white rounded-lg">
                   Send Message
                 </Button>
               </CardContent>
@@ -75,7 +75,7 @@ const ContactSection = () => {
               are many variations of passages of Lorem Ipsum. Falsify injected
               humour, or randomised covek casing.
             </div>
-            <div className="aspect-video bg-blue-100 rounded-lg overflow-hidden">
+            <div className="aspect-video bg-primary-100 rounded-lg overflow-hidden">
               <iframe
                 className="w-full h-full"
                 frameBorder="0"

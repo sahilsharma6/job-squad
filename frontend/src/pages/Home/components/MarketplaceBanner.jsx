@@ -52,11 +52,11 @@ const MarketplaceBanner = () => {
           ];
 
     return (
-        <div className="w-full relative overflow-hidden bg-gradient-to-br from-blue-dark via-green-ultra to-blue-light">
+        <div className="w-full relative overflow-hidden bg-gradient-to-br from-primary-dark via-secondary-ultra to-primary-light">
             {/* Background Decoration */}
             <div className="absolute inset-0">
-                <div className="absolute top-0 left-0 w-48 sm:w-96 h-48 sm:h-96 bg-blue-ultra/20 rounded-full filter blur-3xl -translate-x-1/2 -translate-y-1/2" />
-                <div className="absolute bottom-0 right-0 w-48 sm:w-96 h-48 sm:h-96 bg-green-ultra/20 rounded-full filter blur-3xl translate-x-1/2 translate-y-1/2" />
+                <div className="absolute top-0 left-0 w-48 sm:w-96 h-48 sm:h-96 bg-primary-ultra/20 rounded-full filter blur-3xl -translate-x-1/2 -translate-y-1/2" />
+                <div className="absolute bottom-0 right-0 w-48 sm:w-96 h-48 sm:h-96 bg-secondary-ultra/20 rounded-full filter blur-3xl translate-x-1/2 translate-y-1/2" />
             </div>
 
             <div className="container mx-auto px-4 py-8 sm:py-16 relative z-10">
@@ -73,7 +73,7 @@ const MarketplaceBanner = () => {
                             </p>
                         </div>
                         <Button 
-                            className="group bg-base-white text-blue-dark hover:bg-blue-dark hover:text-base-white transition-all duration-300 
+                            className="group bg-base-white text-primary-dark hover:bg-primary-dark hover:text-base-white transition-all duration-300 
                                 text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 rounded-xl w-full sm:w-auto"
                             size="lg"
                         >
@@ -101,7 +101,7 @@ const MarketplaceBanner = () => {
                                     />
                                     
                                     {/* Gradient Overlay */}
-                                    <div className="absolute inset-0 bg-gradient-to-t from-blue-dark/90 via-blue-dark/50 to-transparent" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-primary-dark/90 via-primary-dark/50 to-transparent" />
                                     
                                     {/* Content Overlay */}
                                     <div className="absolute inset-0 p-4 sm:p-6 flex flex-col justify-between">
@@ -140,7 +140,7 @@ const MarketplaceBanner = () => {
                             <Button
                                 variant="outline"
                                 size="icon"
-                                className="w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-base-white/90 backdrop-blur-sm text-blue-dark hover:bg-blue-dark hover:text-base-white border-none shadow-lg"
+                                className="w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-base-white/90 backdrop-blur-sm text-primary-dark hover:bg-primary-dark hover:text-base-white border-none shadow-lg"
                                 onClick={prevSlide}
                             >
                                 <ChevronLeft className="h-4 w-4 sm:h-6 sm:w-6" />
@@ -150,7 +150,7 @@ const MarketplaceBanner = () => {
                             <Button
                                 variant="outline"
                                 size="icon"
-                                className="w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-base-white/90 backdrop-blur-sm text-blue-dark hover:bg-blue-dark hover:text-base-white border-none shadow-lg"
+                                className="w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-base-white/90 backdrop-blur-sm text-primary-dark hover:bg-primary-dark hover:text-base-white border-none shadow-lg"
                                 onClick={nextSlide}
                             >
                                 <ChevronRight className="h-4 w-4 sm:h-6 sm:w-6" />

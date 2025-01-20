@@ -9,6 +9,7 @@ import TopRecruiters from "@/pages/Home/components/Recrut";
 import MarketplaceBanner from "./components/MarketplaceBanner";
 import Hero from "@/components/Hero/Hero";
 import FAQSection from "./components/Faq";
+import StatsSection from "./components/StatsSection";
 
 const HomePage = () => {
   return (
@@ -24,9 +25,11 @@ const HomePage = () => {
             isVerticalCard={true}
           />
         </div>
-        <div className="py-16">
-          <ExploreMarketplace />
+
+        <div>
+          <HiringBanner />
         </div>
+
         <div className="py-16">
           <SlidingBanner
             title="Top companies hiring now"
@@ -34,8 +37,15 @@ const HomePage = () => {
             isVerticalCard={false}
           />
         </div>
+       
+        <div>
+          <StatsSection />
+        </div>
 
-        <div>{/* stats */}</div>
+        <div className="py-16">
+          <ExploreMarketplace />
+        </div>
+
 
         <div>
           <JobsOfTheDay />
@@ -47,9 +57,6 @@ const HomePage = () => {
           <TopRecruiters />
         </div>
 
-        <div>
-          <HiringBanner />
-        </div>
 
         <div>
           <JobMatchHero />

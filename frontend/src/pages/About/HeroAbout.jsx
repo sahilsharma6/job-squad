@@ -6,6 +6,8 @@ import img from "../Home/image2.png";
 import img2 from "../Home/image.png";
 import HowItWorks from "./HowItWorks";
 import WhoLoveUs from "./WhoLoveUs";
+import AboutBanner from "./AboutBanner";
+
 const AboutUs = () => {
   return (
     <div className="min-h-screen bg-gray-50">
@@ -58,9 +60,9 @@ const AboutUs = () => {
               </h3>
               <ul className="space-y-4">
                 <li className="flex items-center gap-3">
-                  <div className="h-6 w-6 rounded-full bg-blue-100 flex items-center justify-center">
+                  <div className="h-6 w-6 rounded-full bg-primary-100 flex items-center justify-center">
                     <svg
-                      className="h-4 w-4 text-blue-600"
+                      className="h-4 w-4 text-primary-600"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -76,9 +78,9 @@ const AboutUs = () => {
                   <span className="text-gray-600">Superior sourcing</span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <div className="h-6 w-6 rounded-full bg-blue-100 flex items-center justify-center">
+                  <div className="h-6 w-6 rounded-full bg-primary-100 flex items-center justify-center">
                     <svg
-                      className="h-4 w-4 text-blue-600"
+                      className="h-4 w-4 text-primary-600"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -96,9 +98,9 @@ const AboutUs = () => {
                   </span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <div className="h-6 w-6 rounded-full bg-blue-100 flex items-center justify-center">
+                  <div className="h-6 w-6 rounded-full bg-primary-100 flex items-center justify-center">
                     <svg
-                      className="h-4 w-4 text-blue-600"
+                      className="h-4 w-4 text-primary-600"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -116,7 +118,7 @@ const AboutUs = () => {
                   </span>
                 </li>
               </ul>
-              <Button className="bg-blue-light hover:bg-blue-dark text-white px-6">
+              <Button className="bg-primary-light hover:bg-primary-dark text-white px-6">
                 Learn More
               </Button>
 
@@ -141,6 +143,9 @@ const AboutUs = () => {
 
       {/* Who Love Us */}
       <WhoLoveUs />
+
+      {/* About Banner */}
+      <AboutBanner />
     </div>
   );
 };

@@ -12,7 +12,7 @@ const FAQSection = () => {
       <div className="md:grid md:grid-cols-2 md:gap-12">
         {/* Left Column - Title Section */}
         <div className="mb-8 md:mb-0">
-          <div className="text-blue-light font-medium mb-2 font-lato uppercase tracking-wide">
+          <div className="text-primary-light font-medium mb-2 font-lato uppercase tracking-wide">
             WHY CHOOSE US?
           </div>
           <h2 className="text-4xl font-bold text-gray-900 font-ubuntu leading-tight">
@@ -25,7 +25,7 @@ const FAQSection = () => {
         <div>
           <Accordion type="single" collapsible className="space-y-4">
             <AccordionItem value="item-1" className="border rounded-lg bg-white shadow-sm">
-              <AccordionTrigger className="px-6 hover:no-underline data-[state=open]:text-blue-600">
+              <AccordionTrigger className="px-6 hover:no-underline data-[state=open]:text-primary-600">
                 <span className="text-left font-medium font-lato">
                   Can I apply for a job listing?
                 </span>
@@ -38,7 +38,7 @@ const FAQSection = () => {
             </AccordionItem>
 
             <AccordionItem value="item-2" className="border rounded-lg bg-white shadow-sm">
-              <AccordionTrigger className="px-6 hover:no-underline data-[state=open]:text-blue-600">
+              <AccordionTrigger className="px-6 hover:no-underline data-[state=open]:text-primary-600">
                 <span className="text-left font-medium font-lato">
                   Can I apply for multiple job listings?
                 </span>
@@ -50,7 +50,7 @@ const FAQSection = () => {
             </AccordionItem>
 
             <AccordionItem value="item-3" className="border rounded-lg bg-white shadow-sm">
-              <AccordionTrigger className="px-6 hover:no-underline data-[state=open]:text-blue-600">
+              <AccordionTrigger className="px-6 hover:no-underline data-[state=open]:text-primary-600">
                 <span className="text-left font-medium font-lato">
                   Can I get feedback on my job application?
                 </span>
