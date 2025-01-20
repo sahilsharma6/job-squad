@@ -46,7 +46,7 @@ const JobMatchHero = () => {
   return (
     <div className="w-full py-8 px-4 sm:px-6 lg:px-8 font-ubuntu font-bold">
       <motion.div 
-        className="max-w-6xl mx-auto rounded-[32px] bg-blue-50/50 backdrop-blur-sm overflow-hidden"
+        className="max-w-6xl mx-auto rounded-[32px] bg-primary-50/50 backdrop-blur-sm overflow-hidden"
         initial="hidden"
         animate="visible"
         variants={containerVariants}
@@ -66,7 +66,7 @@ const JobMatchHero = () => {
                 <br />
                 Matched Jobs in
                 <br />
-                <span className="text-blue-light">a Few Minutes</span>
+                <span className="text-primary-light">a Few Minutes</span>
               </motion.h1>
               
               <motion.p 
@@ -85,7 +85,7 @@ const JobMatchHero = () => {
               >
                 <Button
                   size="lg"
-                  className="bg-blue-light hover:bg-blue-700 text-white rounded-full px-8 h-12 md:h-14 text-base md:text-lg font-medium"
+                  className="bg-primary-light hover:bg-primary-700 text-white rounded-full px-8 h-12 md:h-14 text-base md:text-lg font-medium"
                 >
                   Upload Your CV 
                   <ChevronRight className="ml-2 w-5 h-5" />
@@ -112,7 +112,7 @@ const JobMatchHero = () => {
                   {[0, 1, 2].map((index) => (
                     <motion.div
                       key={index}
-                      className="absolute left-0 w-3 h-3 bg-blue-500 rounded-full"
+                      className="absolute left-0 w-3 h-3 bg-primary-500 rounded-full"
                       custom={index}
                       variants={waveVariants}
                       animate="animate"
@@ -121,7 +121,7 @@ const JobMatchHero = () => {
                 </div> */}
 
                 {/* Decorative Gradient */}
-                <div className="absolute inset-0 rounded-3xl bg-gradient-to-tr from-blue-600/10 to-transparent pointer-events-none" />
+                <div className="absolute inset-0 rounded-3xl bg-gradient-to-tr from-primary-600/10 to-transparent pointer-events-none" />
               </div>
             </motion.div>
           </div>

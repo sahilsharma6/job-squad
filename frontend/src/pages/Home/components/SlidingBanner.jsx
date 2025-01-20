@@ -132,7 +132,7 @@ const SlidingBanner = ({
                         onClick={handlePrev}
                         className={`p-1 sm:p-2 rounded-full mr-1 sm:mr-2 ${
                             canSlidePrev
-                                ? 'hover:bg-gray-100 bg-blue-ultra/20'
+                                ? 'hover:bg-gray-100 bg-primary-ultra/20'
                                 : 'cursor-not-allowed text-grey-muted'
                         }`}
                         disabled={!canSlidePrev}
@@ -165,7 +165,7 @@ const SlidingBanner = ({
                         onClick={handleNext}
                         className={`p-1 sm:p-2 rounded-full ml-1 sm:ml-2 ${
                             canSlideNext
-                                ? 'hover:bg-gray-100 bg-blue-ultra/20'
+                                ? 'hover:bg-gray-100 bg-primary-ultra/20'
                                 : 'cursor-not-allowed text-grey-muted'
                         }`}
                         disabled={!canSlideNext}

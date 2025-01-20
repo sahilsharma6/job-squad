@@ -20,13 +20,13 @@ const Hero = () => {
   };
 
   return (
-    <div className="bg-blue-100 w-full">
+    <div className="bg-primary-ultra/30 w-full">
       <div className="container flex flex-col-reverse lg:flex-row items-center justify-between  py-20 gap-12 w-full max-w-6xl mx-auto px-4">
         {/* Left Content */}
         <div className="lg:w-[60%] space-y-12">
           <div  className="lg:w-[75%]" >
           <h1 className="text-4xl lg:text-5xl font-extrabold leading-tight">
-            The <span className="text-blue-light">Easiest Way</span> to Get Your
+            The <span className="text-primary-light">Easiest Way</span> to Get Your
             New Job
           </h1>
           <p className="text-md text-grey-muted leading-relaxed">
@@ -77,7 +77,7 @@ const Hero = () => {
               />
             </div>
             <Button
-              className="bg-blue-dark text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-black flex items-center gap-2"
+              className="bg-primary-dark text-white px-6 py-3 rounded-lg shadow-md hover:bg-primary-black flex items-center gap-2"
               onClick={handleSearch}
             >
               <Search size={20} />
@@ -88,7 +88,7 @@ const Hero = () => {
           {/* Popular Searches */}
           <div >
             <strong>Popular Searches:</strong>{" "}
-            <span className="text-blue-light underline cursor-pointer">
+            <span className="text-primary-light underline cursor-pointer">
               Designer, Web, iOS, Developer, PHP, Senior, Engineer
             </span>
           </div>
@@ -97,7 +97,7 @@ const Hero = () => {
         {/* Images */}
         <div className="lg:w-[35%] flex flex-col lg:flex-row gap-4 items-center justify-center relative">
           <div
-            className="w-full max-w-sm bg-white shadow-lg rounded-lg overflow-hidden z-0 border-l-4 border-b-4 border-blue-light"
+            className="w-full max-w-sm bg-white shadow-lg rounded-lg overflow-hidden z-0 border-l-4 border-b-4 border-primary-light"
             style={{
               borderLeftWidth: "6px",
               borderBottomWidth: "6px",
@@ -111,7 +111,7 @@ const Hero = () => {
             />
           </div>
           <div
-            className="hidden lg:block w-full max-w-[200px] bg-white shadow-lg rounded-lg overflow-hidden absolute -bottom-16 -right-16 z-1 transform translate-x-4 translate-y-4 border-l-4 border-b-4 border-blue-light"
+            className="hidden lg:block w-full max-w-[200px] bg-white shadow-lg rounded-lg overflow-hidden absolute -bottom-16 -right-16 z-1 transform translate-x-4 translate-y-4 border-l-4 border-b-4 border-primary-light"
             style={{
               borderLeftWidth: "6px",
               borderBottomWidth: "6px",

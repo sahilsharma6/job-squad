@@ -85,8 +85,8 @@ const WhoLoveUs = () => {
   }, [scrolling]);
 
   return (
-    <div className="bg-blue-100 py-16 px-8">
-      <h3 className="text-blue-500 text-lg text-center mb-4">Company Feedbacks</h3>
+    <div className="bg-primary-100 py-16 px-8">
+      <h3 className="text-primary-500 text-lg text-center mb-4">Company Feedbacks</h3>
 
       <h2 className="text-4xl font-bold text-center mb-12">People Who Already Love Us</h2>
  

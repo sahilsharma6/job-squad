@@ -65,13 +65,13 @@ export default {
         ring: "hsl(var(--ring))",
 
         // New custom color palette
-        blue: {
+        primary: {
           ultra: "#609dd9",
           light: "#1c73c9",
           dark: "#14518d",
           black: "#020a12",
         },
-        green: {
+        secondary: {
           ultra: "#60d99f",
           light: "#1cc975",
           dark: "#148d53",

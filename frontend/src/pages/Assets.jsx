@@ -8,15 +8,15 @@ const AssetsForDesign = () => {
         <Button varient="ouline" className={'cae'}>Back to Home page</Button>
       </Link>
 
-      <h1 className="bg-blue-ultra">Blue</h1>
-      <h1 className="bg-blue-light">Blue</h1>
-      <h1 className="bg-blue-dark">Blue</h1>
-      <h1 className="bg-blue-black text-white">Blue</h1>
+      <h1 className="bg-primary-ultra">primary</h1>
+      <h1 className="bg-primary-light">primary</h1>
+      <h1 className="bg-primary-dark">primary</h1>
+      <h1 className="bg-primary-black text-white">primary</h1>
 
-      <h1 className="bg-green-ultra">Green</h1>
-      <h1 className="bg-green-light">Green</h1>
-      <h1 className="bg-green-dark">Green</h1>
-      <h1 className="bg-green-black text-white">Green</h1>
+      <h1 className="bg-secondary-ultra">secondary</h1>
+      <h1 className="bg-secondary-light">secondary</h1>
+      <h1 className="bg-secondary-dark">secondary</h1>
+      <h1 className="bg-secondary-black text-white">secondary</h1>
 
       <h1 className="bg-grey-muted ">grey</h1>
 

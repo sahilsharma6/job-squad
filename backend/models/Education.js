@@ -6,7 +6,7 @@ const educationSchema = new mongoose.Schema({
         ref: 'Applicant',
         required: true
     },
-    degreeName: {
+    desecondaryame: {
         type: String,
         required: true
     },
