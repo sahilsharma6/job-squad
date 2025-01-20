@@ -61,7 +61,7 @@ const SlotCounter = ({ value, suffix = "+" }) => {
 const StatCard = ({ number, label, description }) => {
   return (
     <div className="flex flex-col items-center p-6 text-center">
-      <div className="text-blue-500 mb-2">
+      <div className="text-primary-500 mb-2">
         <SlotCounter value={number} />
       </div>
       

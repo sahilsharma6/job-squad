@@ -141,7 +141,7 @@ const CompanyCard = ({ company }) => {
               />
             </div>
             <div className="flex-1 min-w-0">
-              <h3 className="font-semibold text-sm truncate group-hover:text-blue-600 transition-colors">
+              <h3 className="font-semibold text-sm truncate group-hover:text-primary-600 transition-colors">
                 {company.name}
               </h3>
               <div className="flex items-center gap-1 mt-1">

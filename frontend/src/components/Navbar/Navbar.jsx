@@ -106,11 +106,11 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`relative ${window.location.pathname !== "/" ? "bg-transparent" : "bg-blue-100"} w-full z-10`}
+      className={`relative ${window.location.pathname !== "/" ? "bg-transparent" : "bg-primary-ultra/30"} w-full z-10`}
     >
       <div className="container flex justify-between items-center py-4 w-full max-w-6xl mx-auto px-4 ">
         {/* Logo */}
-        <div className="text-2xl font-bold text-blue-light">
+        <div className="text-2xl font-bold text-primary-light">
           <a href="/">JobSquad</a>
         </div>
 
@@ -120,11 +120,11 @@ const Navbar = () => {
             <li key={index} className="relative group">
               <div className="flex items-center cursor-pointer">
                 {item.link ? (
-                  <Link to={item.link} className="text-lg font-medium hover:text-blue-ultra ">
+                  <Link to={item.link} className="text-lg font-medium hover:text-primary-ultra ">
                     {item.label}
                   </Link>
                 ) : (
-                  <span className="text-lg font-medium hover:text-blue-ultra">{item.label}</span>
+                  <span className="text-lg font-medium hover:text-primary-ultra">{item.label}</span>
                 )}
                 {item.dropdown && <ChevronDown className="ml-2 w-4 h-4" />}
               </div>
@@ -139,7 +139,7 @@ const Navbar = () => {
                     {item.dropdown.map((section, sectionIdx) => (
                       <div key={sectionIdx}>
                         {section.title && (
-                          <h3 className="font-bold text-blue-dark mb-2">{section.title}</h3>
+                          <h3 className="font-bold text-primary-dark mb-2">{section.title}</h3>
                         )}
                         <ul>
                           {section.items.map((dropdownItem, idx) => (
@@ -166,12 +166,12 @@ const Navbar = () => {
         {/* Desktop Buttons */}
         <div className="hidden lg:flex items-center space-x-4">
           <Link to="/register">
-            <Button variant="a" className="underline hover:border-blue-dark hover:no-underline border">
+            <Button variant="a" className="underline hover:border-primary-dark hover:no-underline border">
               Register
             </Button>
           </Link>
           <Link to="/signin">
-            <Button className="bg-blue-light text-white hover:bg-blue-dark">
+            <Button className="bg-primary-light text-white hover:bg-primary-dark">
               Sign in
             </Button>
           </Link>
@@ -182,7 +182,7 @@ const Navbar = () => {
           <div className="lg:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-2xl text-blue-light"
+              className="text-2xl text-primary-light"
             >
               {isMobileMenuOpen ? <X /> : <Menu />}
             </button>
@@ -202,12 +202,12 @@ const Navbar = () => {
         >
           <div className="flex flex-col space-y-4 px-6 py-4 z-20">
             <div className="lg:hidden flex justify-between items-center">
-              <a href="/" className="text-2xl font-bold text-blue-light">
+              <a href="/" className="text-2xl font-bold text-primary-light">
                 JobSquad
               </a>
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="text-2xl text-blue-light"
+                className="text-2xl text-primary-light"
               >
                 {isMobileMenuOpen ? <X /> : <Menu />}
               </button>
@@ -222,7 +222,7 @@ const Navbar = () => {
                     <Link
                       to={item.link}
                       onClick={() => setIsMobileMenuOpen(false)} 
-                      className="text-lg font-medium hover:text-blue-ultra"
+                      className="text-lg font-medium hover:text-primary-ultra"
                     >
                       {item.label}
                     </Link>
@@ -238,7 +238,7 @@ const Navbar = () => {
                         <li key={nestedIdx}>
                           <Link
                             to={nestedItem.link}
-                            className="text-gray-700 hover:text-blue-ultra hover:bg-grey-muted rounded-md px-2 py-1 block"
+                            className="text-gray-700 hover:text-primary-ultra hover:bg-grey-muted rounded-md px-2 py-1 block"
                             onClick={() => setIsMobileMenuOpen(false)}
                           >
                             {nestedItem.label}
@@ -255,13 +255,13 @@ const Navbar = () => {
               <Link to="/register">
                 <Button
                   variant="a"
-                  className="underline hover:border-blue-dark hover:no-underline border"
+                  className="underline hover:border-primary-dark hover:no-underline border"
                 >
                   Register
                 </Button>
               </Link>
               <Link to="/signin">
-                <Button className="bg-blue-light text-white hover:bg-blue-dark">
+                <Button className="bg-primary-light text-white hover:bg-primary-dark">
                   Sign in
                 </Button>
               </Link>

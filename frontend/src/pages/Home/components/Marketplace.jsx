@@ -35,7 +35,7 @@ const ExploreMarketplace = () => {
   };
 
   return ( 
-    <div className="bg-blue-ultra py-8 sm:py-12 px-4 sm:px-6 lg:px-8 font-ubuntu font-normal ">       
+    <div className="bg-primary-ultra py-8 sm:py-12 px-4 sm:px-6 lg:px-8 font-ubuntu font-normal ">       
       <div className=" mx-auto flex flex-col lg:flex-row items-center gap-8 max-w-6xl">         
         {/* Text Section */}         
         <div className="text-white flex-shrink-0 lg:w-1/3 text-center lg:text-left">           
@@ -45,7 +45,7 @@ const ExploreMarketplace = () => {
           <p className="mt-4 text-base sm:text-lg opacity-90 font-lato font-normal">             
             Search and connect with the right candidates faster. Tell us what you are looking for, and we will get to work for you.           
           </p>           
-          <Button className="mt-6 bg-white text-blue-ultra hover:bg-blue-light hover:text-white transition-all duration-300 group">             
+          <Button className="mt-6 bg-white text-primary-ultra hover:bg-primary-light hover:text-white transition-all duration-300 group">             
             Explore             
             <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>           
           </Button>         
@@ -60,7 +60,7 @@ const ExploreMarketplace = () => {
               className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-lg transition-all duration-300 h-12 w-12 p-0"               
               onClick={() => scroll('left')}             
             >               
-              <ChevronLeft className="h-6 w-6 text-blue-ultra" />             
+              <ChevronLeft className="h-6 w-6 text-primary-ultra" />             
             </Button>           
           )}                      
 
@@ -70,7 +70,7 @@ const ExploreMarketplace = () => {
               className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-lg transition-all duration-300 h-12 w-12 p-0"               
               onClick={() => scroll('right')}             
             >               
-              <ChevronRight className="h-6 w-6 text-blue-ultra" />             
+              <ChevronRight className="h-6 w-6 text-primary-ultra" />             
             </Button>           
           )}            
 

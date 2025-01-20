@@ -18,7 +18,7 @@ const Footer = () => {
           {/* Logo and Description - Full width on mobile */}
           <div className="col-span-2 sm:col-span-3 lg:col-span-2">
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-2 h-2 rounded-full bg-blue-600"></div>
+              <div className="w-2 h-2 rounded-full bg-primary-600"></div>
               <span className="text-xl font-bold">JobSquad</span>
             </div>
             <p className="text-gray-600 text-sm mb-6 max-w-md">
@@ -27,19 +27,19 @@ const Footer = () => {
             <div className="flex gap-3">
               <a 
                 href="#" 
-                className="w-8 h-8 rounded-full bg-gray-100 hover:bg-blue-100 flex items-center justify-center text-gray-600 hover:text-blue-600 transition-colors"
+                className="w-8 h-8 rounded-full bg-gray-100 hover:bg-primary-100 flex items-center justify-center text-gray-600 hover:text-primary-600 transition-colors"
               >
                 <Facebook className="w-4 h-4" />
               </a>
               <a 
                 href="#" 
-                className="w-8 h-8 rounded-full bg-gray-100 hover:bg-blue-100 flex items-center justify-center text-gray-600 hover:text-blue-600 transition-colors"
+                className="w-8 h-8 rounded-full bg-gray-100 hover:bg-primary-100 flex items-center justify-center text-gray-600 hover:text-primary-600 transition-colors"
               >
                 <Twitter className="w-4 h-4" />
               </a>
               <a 
                 href="#" 
-                className="w-8 h-8 rounded-full bg-gray-100 hover:bg-blue-100 flex items-center justify-center text-gray-600 hover:text-blue-600 transition-colors"
+                className="w-8 h-8 rounded-full bg-gray-100 hover:bg-primary-100 flex items-center justify-center text-gray-600 hover:text-primary-600 transition-colors"
               >
                 <Linkedin className="w-4 h-4" />
               </a>
@@ -55,7 +55,7 @@ const Footer = () => {
                   <li key={link}>
                     <a 
                       href="#" 
-                      className="text-gray-600 hover:text-blue-600 text-sm block py-1 transition-colors"
+                      className="text-gray-600 hover:text-primary-600 text-sm block py-1 transition-colors"
                     >
                       {link}
                     </a>
@@ -93,9 +93,9 @@ const Footer = () => {
 
           {/* Bottom Links */}
           <div className="flex flex-wrap justify-center sm:justify-end gap-x-6 gap-y-2 mt-6 text-sm text-gray-600">
-            <a href="#" className="hover:text-blue-600 transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-blue-600 transition-colors">Terms & Conditions</a>
-            <a href="#" className="hover:text-blue-600 transition-colors">Security</a>
+            <a href="#" className="hover:text-primary-600 transition-colors">Privacy Policy</a>
+            <a href="#" className="hover:text-primary-600 transition-colors">Terms & Conditions</a>
+            <a href="#" className="hover:text-primary-600 transition-colors">Security</a>
           </div>
         </div>
       </div>

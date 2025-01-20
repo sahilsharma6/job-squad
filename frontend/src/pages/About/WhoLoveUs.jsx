@@ -76,8 +76,8 @@ const WhoLoveUs = () => {
   };
 
   return (
-    <div className="bg-blue-100 py-16 px-8">
-      <h3 className="text-blue-500 text-lg text-center mb-4">
+    <div className="bg-primary-100 py-16 px-8">
+      <h3 className="text-primary-500 text-lg text-center mb-4">
         Company Feedbacks
       </h3>
 

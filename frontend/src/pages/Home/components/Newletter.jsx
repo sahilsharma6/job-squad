@@ -71,13 +71,13 @@ const NewsletterSection = () => {
 
   return (
     <motion.div
-      className="w-full bg-blue-ultra overflow-hidden relative p-12 my-8 max-w-6xl mx-auto flex justify-center items-center rounded-md"
+      className="w-full bg-primary-ultra overflow-hidden relative p-12 my-8 max-w-6xl mx-auto flex justify-center items-center rounded-md"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
     >
       {/* Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-ultra to-blue-600 opacity-50" />
+      <div className="absolute inset-0 bg-gradient-to-br from-primary-ultra to-primary-600 opacity-50" />
 
       {/* Floating Images */}
       {floatingImages.map((position, index) => (
@@ -123,13 +123,13 @@ const NewsletterSection = () => {
             <Input
               type="email"
               placeholder="Enter your email here"
-              className="bg-white/90 backdrop-blur-sm rounded-md px-6 pl-12 pr-[6rem] h-14 w-full text-lg border-x-blue-ultra"
+              className="bg-white/90 backdrop-blur-sm rounded-md px-6 pl-12 pr-[6rem] h-14 w-full text-lg border-x-primary-ultra"
             />
-            <IconMap.Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-blue-600 w-6 h-6" />
+            <IconMap.Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-primary-600 w-6 h-6" />
             <motion.div
               className="absolute right-2 top-1/2 transform -translate-y-1/2"
             >
-              <Button className="bg-blue-600 text-white rounded-md hover:bg-blue-700 px-6 h-10 text-sm font-semibold">
+              <Button className="bg-primary-600 text-white rounded-md hover:bg-primary-700 px-6 h-10 text-sm font-semibold">
                 Subscribe
               </Button>
             </motion.div>
@@ -149,8 +149,8 @@ const NewsletterSection = () => {
             ease: "easeInOut",
           }}
         >
-          <div className="w-64 h-64 rounded-full bg-blue-400/20 blur-3xl absolute -top-32 -left-32" />
-          <div className="w-64 h-64 rounded-full bg-blue-400/20 blur-3xl absolute -bottom-32 -right-32" />
+          <div className="w-64 h-64 rounded-full bg-primary-400/20 blur-3xl absolute -top-32 -left-32" />
+          <div className="w-64 h-64 rounded-full bg-primary-400/20 blur-3xl absolute -bottom-32 -right-32" />
         </motion.div>
       </motion.div>
     </motion.div>

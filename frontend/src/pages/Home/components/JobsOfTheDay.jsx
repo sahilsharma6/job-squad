@@ -99,7 +99,7 @@ const JobsOfTheDay = () => {
         <div className="w-full max-w-6xl mx-auto px-4 py-6 md:py-8">
             <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 md:mb-8">
                 <div className="mb-4 md:mb-0">
-                    <h2 className="text-2xl md:text-4xl font-semibold text-blue-black mb-2">Jobs of the day</h2>
+                    <h2 className="text-2xl md:text-4xl font-semibold text-primary-black mb-2">Jobs of the day</h2>
                     <p className="text-gray-600 text-xs md:text-sm">Find your favourite jobs and get the benefits of yourself</p>
                 </div>
                 <Button className="w-full md:w-auto">
@@ -142,8 +142,8 @@ const JobsOfTheDay = () => {
                                 className={`rounded-full px-3 md:px-4 py-1 md:py-2 flex items-center gap-1 md:gap-2 
                                 whitespace-nowrap text-xs md:text-sm transition-all duration-200
                                 ${selectedCategory === category.id
-                                    ? 'bg-blue-light hover:text-white text-white hover:bg-blue-dark border-transparent'
-                                    : 'bg-white hover:bg-gray-50 text-blue-black border-gray-200'
+                                    ? 'bg-primary-light hover:text-white text-white hover:bg-primary-dark border-transparent'
+                                    : 'bg-white hover:bg-gray-50 text-primary-black border-gray-200'
                                 }`}
                                 onClick={() => handleCategorySelect(category.id)}
                             >
@@ -183,8 +183,8 @@ const JobsOfTheDay = () => {
                                                 <Building2 className='w-6 h-6 md:w-8 md:h-8' />
                                             </div>
                                             <div>
-                                                <p className="text-xs md:text-sm text-blue-dark mb-1">{job.company.name}</p>
-                                                <h3 className="text-base md:text-lg font-medium text-blue-black">{job.position}</h3>
+                                                <p className="text-xs md:text-sm text-primary-dark mb-1">{job.company.name}</p>
+                                                <h3 className="text-base md:text-lg font-medium text-primary-black">{job.position}</h3>
                                                 <div className="flex items-center gap-1 md:gap-2 text-gray-600 text-xs md:text-sm mt-1">
                                                     <MapPin className="w-3 h-3 md:w-4 md:h-4" />
                                                     {job.location}
@@ -193,7 +193,7 @@ const JobsOfTheDay = () => {
                                         </div>
                                         <Button
                                             variant="ghost"
-                                            className="hover:text-blue-dark border bg-blue-dark text-base-white border-blue-ultra/30 hover:bg-transparent text-xs md:text-sm px-2 md:px-3 py-1 md:py-2"
+                                            className="hover:text-primary-dark border bg-primary-dark text-base-white border-primary-ultra/30 hover:bg-transparent text-xs md:text-sm px-2 md:px-3 py-1 md:py-2"
                                         >
                                             Save this job
                                         </Button>
@@ -204,7 +204,7 @@ const JobsOfTheDay = () => {
                                             <Badge
                                                 key={tag}
                                                 variant="secondary"
-                                                className="bg-grey-muted/10 rounded-md text-xs md:text-sm text-blue-dark hover:bg-blue-ultra/20 px-2 py-1"
+                                                className="bg-grey-muted/10 rounded-md text-xs md:text-sm text-primary-dark hover:bg-primary-ultra/20 px-2 py-1"
                                             >
                                                 {tag}
                                             </Badge>
@@ -214,10 +214,10 @@ const JobsOfTheDay = () => {
                                     <div className="flex items-center justify-between text-xs md:text-sm">
                                         <div className="flex items-center gap-1 md:gap-2">
                                             <Clock className="w-3 h-3 md:w-4 md:h-4 text-gray-400" />
-                                            <span className="text-blue-black font-medium">${job.salary}</span>
+                                            <span className="text-primary-black font-medium">${job.salary}</span>
                                         </div>
                                         <div className="text-gray-600">
-                                            Deadline: <span className="text-blue-black">{job.deadline}</span>
+                                            Deadline: <span className="text-primary-black">{job.deadline}</span>
                                         </div>
                                     </div>
                                 </CardContent>
@@ -232,8 +232,8 @@ const JobsOfTheDay = () => {
                             <button
                                 key={index}
                                 className={`w-2 h-2 rounded-full transition-all ${currentPage === index
-                                        ? 'bg-blue-light w-4'
-                                        : 'bg-gray-300 hover:bg-blue-ultra'
+                                        ? 'bg-primary-light w-4'
+                                        : 'bg-gray-300 hover:bg-primary-ultra'
                                     }`}
                                 onClick={() => setCurrentPage(index)}
                             />
