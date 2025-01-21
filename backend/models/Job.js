@@ -13,6 +13,11 @@ const jobSchema = new mongoose.Schema({
         required: true
         // enum: ['Full Time', 'Part Time', 'Internship']
     },
+    jobSector: {
+        type: String,
+        required: true,
+        ref: 'JobSector'
+    },
     jobRole: {
         type: String,
         required: true
@@ -77,7 +82,7 @@ const jobSchema = new mongoose.Schema({
         // enum: ['active', 'inactive']
     },
     jobQuestions: {
-        type: [String],
+        type: [Object],//{question:String,required:Boolean}
     }
 });
 

@@ -11,10 +11,14 @@ const applicationSchema = new mongoose.Schema({
         ref: 'Job',
         required: true
     },
+    companyId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Company',
+    },
     status: {
         type: String,
         default: 'pending',
-        enum: ['pending', 'accepted', 'rejected']
+        enum: ['pending', 'accepted', 'rejected','view']
     },
     resume: {
         type: String,

@@ -1,4 +1,4 @@
-export const isAccess=(roles)=>{
+export  const isAccess=(roles)=>{
     return (req,res,next)=>{
         const userData=req.user.data;
         if (!roles.includes(userData.role)) {
