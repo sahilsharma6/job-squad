@@ -123,13 +123,13 @@ const NewsletterSection = () => {
             <Input
               type="email"
               placeholder="Enter your email here"
-              className="bg-white/90 backdrop-blur-sm rounded-md px-6 pl-12 pr-[6rem] h-14 w-full text-lg border-x-primary-ultra"
+              className="bg-white/90 backdrop-blur-sm rounded-md px-6 pl-12  h-14 w-full text-lg"
             />
             <IconMap.Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-primary-600 w-6 h-6" />
             <motion.div
               className="absolute right-2 top-1/2 transform -translate-y-1/2"
             >
-              <Button className="bg-primary-600 text-white rounded-md hover:bg-primary-700 px-6 h-10 text-sm font-semibold">
+              <Button className="bg-primary-ultra text-white rounded-md hover:bg-primary-700 px-6 h-10 text-sm font-semibold">
                 Subscribe
               </Button>
             </motion.div>
