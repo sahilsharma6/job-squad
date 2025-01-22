@@ -9,6 +9,9 @@ import AboutUs from "./pages/About/HeroAbout";
 import BlogPage from "./pages/Blogs/BlogPage";
 import ContactSection from "./pages/Contact/ContactHero";
 import JobSection from "./pages/Jobs/JobSection";
+import SignupForm from "./pages/SignIn/Signin";
+import LoginPage from "./pages/Login/login";
+import ResetPasswordPage from "./pages/Reset/Reset";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -21,6 +24,9 @@ createRoot(document.getElementById("root")).render(
           <Route path="/our/assets" element={<AssetsForDesign />} />
           <Route path="/blogs" element={<BlogPage />} />
           <Route path="/jobs" element={<JobSection />} />
+          <Route path="/signin" element={<SignupForm />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/reset" element={<ResetPasswordPage/>} />
         </Route>
       </Routes>
     </BrowserRouter>
