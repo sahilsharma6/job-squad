@@ -2,7 +2,7 @@
 import jsonwebtoken from 'jsonwebtoken'
 // Middleware to check authentication
 const isAuthenticated = (req, res, next) => {
-    const token = req.cookies.sid; // Retrieve token from cookies
+    const token = req.cookies.token; // Retrieve token from cookies
 
     const openRoutes = ['/signin', '/signup'];
     if (openRoutes.includes(req.url)) {

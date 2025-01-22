@@ -1,6 +1,7 @@
 import e from "express";
 import JobSchema from "../models/Job.js";
 import JobSector from "../models/JobSector.js";
+import Pagination from "../services/Pagination.js";
 //get all jobs, get job by id, create job, update job, delete job
 export async function getAllJobs(req, res) {
     try {
@@ -8,8 +9,8 @@ export async function getAllJobs(req, res) {
         const getAll = await JobSchema.find()
             .skip((page - 1) * limit)
             .limit(parseInt(limit));
-        const total = await JobSchema.countDocuments();
-        res.status(200).json({ getAll, total, page, pages: Math.ceil(total / limit), success: true });
+        const total = await Pagination.paginate(JobSchema, {}, { page, limit });
+        res.status(200).json(total);
     } catch (err) {
         res.status(500).json({ message: err, success: false });
     };
@@ -17,21 +18,21 @@ export async function getAllJobs(req, res) {
 
 export async function getJobByFilter(req, res) {
     try {
-        const { 
-            companyId, 
-            jobTitle, 
-            jobSector, 
-            jobRole, 
-            jobType, 
-            minSalary, 
-            maxSalary, 
-            jobStatus, 
-            jobLocation, 
-            skillsRequired, 
-            sortField, 
+        const {
+            companyId,
+            jobTitle,
+            jobSector,
+            jobRole,
+            jobType,
+            minSalary,
+            maxSalary,
+            jobStatus,
+            jobLocation,
+            skillsRequired,
+            sortField,
             sortOrder,
-            page = 1, 
-            limit = 10 
+            page = 1,
+            limit = 10
         } = req.query;
 
         // Construct query object
@@ -41,9 +42,9 @@ export async function getJobByFilter(req, res) {
 
         // Enhanced search on jobTitle with case-insensitive regex
         if (jobTitle) {
-            query.jobTitle = { 
-                $regex: `^${jobTitle.trim()}`, 
-                $options: 'i' 
+            query.jobTitle = {
+                $regex: `^${jobTitle.trim()}`,
+                $options: 'i'
             };
         }
 
@@ -66,7 +67,7 @@ export async function getJobByFilter(req, res) {
             const order = sortOrder === 'desc' ? -1 : 1;
             sortOptions[sortField] = order;
         } else {
-            sortOptions = { jobTitle: 1 }; 
+            sortOptions = { jobTitle: 1 };
         }
         const pageNum = parseInt(page, 10);
         const limitNum = parseInt(limit, 10);
@@ -74,11 +75,11 @@ export async function getJobByFilter(req, res) {
 
         // Execute query with sorting, pagination, and population
         const jobs = await JobSchema.find(query)
-                              .populate('companyId')
-                              .populate('jobSector')
-                              .sort(sortOptions)
-                              .skip(skip)
-                              .limit(limitNum);
+            .populate('companyId')
+            .populate('jobSector')
+            .sort(sortOptions)
+            .skip(skip)
+            .limit(limitNum);
 
         const totalCount = await JobSchema.countDocuments(query);
 
@@ -96,8 +97,8 @@ export async function getJobByFilter(req, res) {
 export async function getJobById(req, res) {
     try {
         const { jobdId } = req.params;
-        const getJob=await JobSchema.findById({_id:jobdId})
-        res.status(200).json({getJob, success: true});
+        const getJob = await Pagination.paginate(JobSchema, { _id: jobdId }, { page, limit });
+        res.status(200).json({ getJob, success: true });
     } catch (err) {
         res.status(500).json({ message: err, success: false });
     }
@@ -105,42 +106,8 @@ export async function getJobById(req, res) {
 
 export async function createJob(req, res) {
     try {
-        const { 
-            companyId, 
-            jobTitle, 
-            jobSector, 
-            jobRole, 
-            jobDescription, 
-            jobType, 
-            jobLocation, 
-            jobCity, 
-            jobState, 
-            jobCountry, 
-            jobZipCode, 
-            minSalary, 
-            maxSalary, 
-            jobVacancy, 
-            skillsRequired, 
-            jobDeadline, 
-            jobStatus, 
-            jobQuestions 
-        } = req.body;
-
-        if (  !jobTitle ||  !jobRole || !jobDescription || !jobType || !jobVacancy || !skillsRequired || !jobDeadline) {
-            return res.status(400).json({ message: 'Missing required fields' });
-        }
-        if(jobSector){
-          const isJobSector=await JobSector({name:jobSector});
-           if(isJobSector._id){
-            jobSector=isJobSector.name;
-           }
-           else{
-            return res.status(400).json({ message: 'Job Sector not found',success:false });
-           }
-        }
-
-        const newJob = new Job({
-            companyId:req.userId,
+        const {
+            companyId,
             jobTitle,
             jobSector,
             jobRole,
@@ -156,12 +123,46 @@ export async function createJob(req, res) {
             jobVacancy,
             skillsRequired,
             jobDeadline,
-            jobStatus: jobStatus || 'active', 
+            jobStatus,
+            jobQuestions
+        } = req.body;
+
+        if (!jobTitle || !jobRole || !jobDescription || !jobType || !jobVacancy || !skillsRequired || !jobDeadline) {
+            return res.status(400).json({ message: 'Missing required fields' });
+        }
+        if (jobSector) {
+            const isJobSector = await JobSector({ name: jobSector });
+            if (isJobSector._id) {
+                jobSector = isJobSector.name;
+            }
+            else {
+                return res.status(400).json({ message: 'Job Sector not found', success: false });
+            }
+        }
+
+        const newJob = new Job({
+            companyId: req.user.userId,
+            jobTitle,
+            jobSector,
+            jobRole,
+            jobDescription,
+            jobType,
+            jobLocation,
+            jobCity,
+            jobState,
+            jobCountry,
+            jobZipCode,
+            minSalary,
+            maxSalary,
+            jobVacancy,
+            skillsRequired,
+            jobDeadline,
+            jobStatus: jobStatus || 'active',
             jobQuestions
         });
 
         await newJob.save();
-        res.status(201).json({ job:newJob, success: true });
+        res.status(201).json({ job: newJob, success: true });
     } catch (err) {
         res.status(500).json({ message: err, success: false });
     }
@@ -169,7 +170,7 @@ export async function createJob(req, res) {
 
 export async function updateJob(req, res) {
     try {
-        const { jobId } = req.params; 
+        const { jobId } = req.params;
         const {
             jobTitle,
             jobSector,
@@ -189,20 +190,20 @@ export async function updateJob(req, res) {
             jobStatus,
             jobQuestions
         } = req.body;
-        if ( !jobTitle  || !jobRole || !jobDescription || !jobType || !jobVacancy || !skillsRequired || !jobDeadline) {
+        if (!jobTitle || !jobRole || !jobDescription || !jobType || !jobVacancy || !skillsRequired || !jobDeadline) {
             return res.status(400).json({ message: 'Missing required fields' });
         }
-        if(jobSector){
-            const isJobSector=await JobSector({name:jobSector});
-             if(isJobSector._id){
-              jobSector=isJobSector.name;
-             }
-             else{
-              return res.status(400).json({ message: 'Job Sector not found',success:false });
-             }
-          }
+        if (jobSector) {
+            const isJobSector = await JobSector({ name: jobSector });
+            if (isJobSector._id) {
+                jobSector = isJobSector.name;
+            }
+            else {
+                return res.status(400).json({ message: 'Job Sector not found', success: false });
+            }
+        }
         const updatedJob = await Job.findByIdAndUpdate(
-            {_id:jobId,companyId:req.userId},
+            { _id: jobId, companyId: req.user.userId },
             {
                 jobTitle,
                 jobSector,
@@ -219,10 +220,10 @@ export async function updateJob(req, res) {
                 jobVacancy,
                 skillsRequired,
                 jobDeadline,
-                jobStatus: jobStatus || 'active', 
+                jobStatus: jobStatus || 'active',
                 jobQuestions
             },
-            { new: true } 
+            { new: true }
         );
 
         if (!updatedJob) {
@@ -237,8 +238,8 @@ export async function updateJob(req, res) {
 export async function deleteJob(req, res) {
     try {
         const { jobId } = req.params;
-        const deleteJob = await JobSchema.findByIdAndDelete({ _id: jobId });    
-        if(!deleteJob){
+        const deleteJob = await JobSchema.findOneAndDelete({ _id: jobId, companyId: req.user.userId });
+        if (!deleteJob) {
             return res.status(404).json({ message: "Job not found", success: false });
         }
         res.status(200).json({ message: "Job deleted successfully", success: true });
