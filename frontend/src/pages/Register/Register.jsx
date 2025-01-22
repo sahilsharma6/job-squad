@@ -5,15 +5,18 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { motion } from "framer-motion";
-import img from "../SignIn/img.png";
-import img1 from "../SignIn/image.png";
+import img from "./img.png";
+import img1 from "./image.png";
+import { useNavigate } from "react-router";
+
 
 const SignupPage = () => {
+  const navigate=useNavigate();
   return (
-    <div className="relative min-h-screen overflow-hidden  ">
+    <div className="relative min-h-screen overflow-hidden">
       {/* Animated gradient background */}
       <motion.div
-        className="absolute inset-0 z-0 bg-gradient-to-br from-primary-ultra  to-primary-ultra"
+        className="absolute inset-0 bg-gradient-to-br from-primary-ultra to-primary-ultra"
         animate={{
           backgroundPosition: ["0% 0%", "100% 100%"],
         }}
@@ -51,11 +54,11 @@ const SignupPage = () => {
       ))}
 
       {/* Main Signup Card Section */}
-      <div className="flex items-center justify-center min-h-screen relative z-10">
+      <div className="flex items-center justify-center min-h-screen relative z-5">
         <div className="w-full max-w-md space-y-8 relative">
           {/* Top animation */}
           <motion.div
-            className="absolute right-[-180px]  w-40"
+            className="absolute right-[-180px] w-40 z-0"
             animate={{ y: [0, 20, 0], rotate: [0, 5, 0] }}
             transition={{
               duration: 4,
@@ -66,24 +69,13 @@ const SignupPage = () => {
           >
             <img src={img} alt="Right decoration" className="w-full" />
           </motion.div>
-          {/* <motion.div
-        className="absolute bottom-0 left-10 w-full"
-        initial={{ opacity: 1, y: 50  }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.2 }}
-      >
-        <div className="container mx-auto relative">
-          <div className="absolute left-10 bottom-0 w-96">
-            <img src={img1} alt="Left decoration" className="w-full" />
-          </div>
-        </div>
-      </motion.div> */}
+
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
           >
-            <Card className="w-full relative z-10 bg-white/95 backdrop-blur-md transform transition-all duration-300 hover:shadow-xl">
+            <Card className="w-full relative bg-white/95 backdrop-blur-md transform transition-all duration-300 hover:shadow-xl z-1">
               <CardHeader className="space-y-1 text-center">
                 <motion.h2
                   className="text-2xl font-semibold text-primary-light"
@@ -153,7 +145,7 @@ const SignupPage = () => {
                     />
                   </motion.div>
 
-                  <div className="flex items-center">
+                  {/* <div className="flex items-center">
                     <Checkbox id="terms" />
                     <Label
                       htmlFor="terms"
@@ -167,7 +159,7 @@ const SignupPage = () => {
                         Terms and Conditions
                       </Button>
                     </Label>
-                  </div>
+                  </div> */}
                 </div>
               </CardContent>
 
@@ -183,17 +175,18 @@ const SignupPage = () => {
                   </Button>
                 </motion.div>
                 <motion.div
-                  className="text-sm text-center text-gray-500"
+                  className="text-sm text-center text-black"
                   whileHover={{ scale: 1.02 }}
                   transition={{ type: "spring", stiffness: 400 }}
                 >
                   Already have an account?
                   <Button
-                    variant="link"
-                    className="pl-1 font-normal hover:text-primary-light"
-                  >
-                    Log In
-                  </Button>
+      variant="link"
+      className="pl-1 font-normal text-primary-light"
+      onClick={() => navigate("/signin")}
+    >
+      Sign In
+    </Button>
                 </motion.div>
               </CardFooter>
             </Card>
@@ -203,18 +196,17 @@ const SignupPage = () => {
 
       {/* Bottom image animation */}
       <motion.div
-  className="absolute  left-0 w-full"
-  initial={{ opacity: 1, y: 50 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.8, delay: 0.2 }}
->
-  <div className="container mx-auto relative">
-    <div className="absolute left-10 bottom-0">
-      <img src={img1} alt="Left decoration" className="w-[600px]" />
-    </div>
-  </div>
-</motion.div>
-
+        className="absolute left-0 w-full z-0"
+        initial={{ opacity: 1, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+      >
+        <div className="container mx-auto relative">
+          <div className="absolute left-10 bottom-0">
+            <img src={img1} alt="Left decoration" className="w-[600px]" />
+          </div>
+        </div>
+      </motion.div>
     </div>
   );
 };

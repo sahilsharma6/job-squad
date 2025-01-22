@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
 import { Label } from "@/components/ui/label";
-import img from "../SignIn/img.png";
-import img1 from "../SignIn/image.png";
+import img from "../Register/img.png";
+import img1 from "../Register/image.png";
 
 const ResetPasswordPage = () => {
   return (
