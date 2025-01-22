@@ -13,6 +13,7 @@ import SignupForm from "./pages/Register/Register";
 import LoginPage from "./pages/Login/login";
 import ResetPasswordPage from "./pages/Reset/Reset";
 
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>

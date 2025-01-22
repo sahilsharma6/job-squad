@@ -13,6 +13,21 @@ import { useNavigate } from "react-router";
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate=useNavigate();
+
+  async function auth(){
+    try{
+      
+      const base_url =  import.meta.env.VITE_BASE_URL;
+    const response =await fetch(`${base_url}/api/v1/user/request`,{method:'post'});
+    if (!response.ok) throw new Error('Network response was not ok');
+    const data = await response.json();
+    window.location.href = data.url;
+  } catch (error) {
+    console.error('Authentication failed:', error);
+    alert('Failed to authenticate. Please try again.');
+  }
+}
+  
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-primary-light via-primary-ultra to-primary-light overflow-hidden">
       {/* Animated gradient background */}
@@ -94,6 +109,7 @@ const LoginPage = () => {
                     variant="outline"
                     className="w-full flex items-center justify-center"
                     type="button"
+                    onClick={()=>auth()}
                   >
                     <img
                       src="/api/placeholder/20/20"
