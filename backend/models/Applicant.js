@@ -11,7 +11,7 @@ const applicantSchema = new mongoose.Schema({
     },
     userName: {
         type: String,
-        required: true
+        // required: true
     },
     phoneNo: {
         type: String,
@@ -23,7 +23,7 @@ const applicantSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true
+        // required: true
     },
     role: {
         type: String,
