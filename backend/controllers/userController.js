@@ -43,7 +43,7 @@ export const SignIn = async (req, res) => {
         if(!isPasswordCorrect){
             return res.status(400).json({message: 'Invalid credentials'});
         }
-        const token = jwt.sign({id: user._id ,role: user.role}, process.env.JWT, { expiresIn: '1h' });
+        const token = jwt.sign({userId: user._id ,role: user.role}, process.env.JWT, { expiresIn: '1h' });
        
         res.cookie('token', token, {
             httpOnly: process.env.NODE_ENV === 'production',
@@ -51,6 +51,16 @@ export const SignIn = async (req, res) => {
             maxAge: 36000000, 
             sameSite: 'Lax', 
           });
+
+
+         const encodeddata = Buffer.from(JSON.stringify({id: user._id, role: user.role})).toString('base64');
+         
+            res.cookie('user', encodeddata, {
+                httpOnly: false,
+                secure: process.env.NODE_ENV === 'production',
+                maxAge: 36000000,
+                sameSite: 'Lax',
+            });
 
           user.password = undefined;
           res.status(200).json({  success: true ,message: "Login successful.",  token, user});
@@ -127,14 +137,23 @@ export const googleSignIn = async (req, res) => {
 
         const user = await Applicant({ email, firstName: given_name, lastName: family_name, role: 'applicant' });
         await user.save();
-        const token = jwt.sign({id: user._id ,role: user.role}, process.env.JWT, { expiresIn: '1h' });
+        const token = jwt.sign({userId: user._id ,role: user.role}, process.env.JWT, { expiresIn: '1h' });
+
+
         res.cookie('token', token, {
             httpOnly: process.env.NODE_ENV === 'production',
             secure: process.env.NODE_ENV === 'production',
             maxAge: 36000000, 
             sameSite: 'Lax', 
           });
-          
+
+        const encodeddata = Buffer.from(JSON.stringify({id: user._id, role: user.role})).toString('base64');  
+        res.cookie('user', encodeddata, {
+            httpOnly: false,
+            secure: process.env.NODE_ENV === 'production',
+            maxAge: 36000000,
+            sameSite: 'Lax',
+        }); 
             res.status(200).redirect(`${process.env.CLIENT_URL}`);
 
     }
@@ -147,6 +166,7 @@ export const googleSignIn = async (req, res) => {
  export const signOut = async (req, res) => {
         try{
             res.clearCookie('token');
+            res.clearCookie('user');
             res.status(200).json({message: 'Signout successfully'})
         }
         catch(err){

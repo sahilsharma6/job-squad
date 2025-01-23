@@ -27,7 +27,7 @@ const applicantSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        default: 'applicant',
+        default: 'candidate',
         // enum: ['applicant', 'admin'],
     },
     bio: {
