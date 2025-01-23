@@ -8,7 +8,7 @@ import HomePage from "./pages/Home/Home";
 import AboutUs from "./pages/About/HeroAbout";
 import BlogPage from "./pages/Blogs/BlogPage";
 import ContactSection from "./pages/Contact/ContactHero";
-import JobSection from "./pages/Jobs/JobSection";
+import JobSection from "./pages/Jobs/JobLayout";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
