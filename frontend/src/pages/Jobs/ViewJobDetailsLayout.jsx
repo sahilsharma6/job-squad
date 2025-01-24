@@ -3,7 +3,7 @@ import { useParams } from 'react-router';
 import { jobData } from './jobs-data';
 import JobDetailsPage from './JobDetailsPage';
 import SimilarJobs from './components/SimilarJobs';
-import FeaturedJobs from './components/FeaturedJobs';
+import FeaturedJobs from './components/featureJob/FeaturedJobs';
 import NewsletterSection from '../Home/components/Newletter';
 
 const ViewJobDetailsLayout = () => {

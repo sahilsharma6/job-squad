@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import ApplyNowButton from '@/components/ApplyNowButton';
 
 const JobDetailsPage = ({job}) => {
     return (
@@ -36,9 +37,7 @@ const JobDetailsPage = ({job}) => {
                                 </div>
                             </div>
                         </div>
-                        <div className='self-start sm:self-center'>
-                            <Button className="bg-primary-light hover:bg-primary-ultra w-full sm:w-auto">Apply now</Button>
-                        </div>
+                        <ApplyNowButton isModal={true} job={job} />
                     </div>
                     <Separator className="my-4" />
                     <div className='w-full h-auto max-h-[500px]'>
@@ -167,7 +166,7 @@ const JobDetailsPage = ({job}) => {
                     </div>
                     <div className='flex flex-col sm:flex-row gap-2 w-full sm:justify-end'>
                         <Button variant="outlineSecondary" className="w-full sm:w-auto mb-2 sm:mb-0">Save this job</Button>
-                        <Button className="bg-primary-light hover:bg-primary-ultra w-full sm:w-auto">Apply now</Button>
+                        <ApplyNowButton isModal={true} />
                     </div>
                 </div>
             </div>

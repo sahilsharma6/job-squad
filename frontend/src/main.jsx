@@ -12,13 +12,14 @@ import JobLayout from "./pages/Jobs/JobLayout";
 import SignupForm from "./pages/Register/Register";
 import LoginPage from "./pages/Login/login";
 import ResetPasswordPage from "./pages/Reset/Reset";
-import JobDetailsPage from "./pages/Jobs/JobDetailsPage";
 import ViewJobDetailsLayout from "./pages/Jobs/ViewJobDetailsLayout";
+import ScrollToTop from "./components/ScrollToTop";
 
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
+    <ScrollToTop />
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<HomePage />} />
