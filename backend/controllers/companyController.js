@@ -66,8 +66,8 @@ export const signIn = async (req, res) => {
             return res.status(400).json({message: 'Company not approved yet'})
         }
 
-        const token = jwt.sign({id: company._id, role: company.role}, process.env.JWT, {expiresIn: '24h'});
-
+        const token = jwt.sign({userId: company._id, role: company.role }, process.env.JWT, {expiresIn: '24h'});
+       
         res.cookie('token', token, {
             httpOnly: process.env.NODE_ENV === 'production',
             secure: process.env.NODE_ENV === 'production',
@@ -75,6 +75,21 @@ export const signIn = async (req, res) => {
             sameSite: 'Lax', 
           });
           company.password = undefined;
+
+     const companyData = {
+        id: company._id,
+        role: company.role,
+        isValide: company.isValide
+    }
+    
+    const encodedData = Buffer.from(JSON.stringify(companyData)).toString('base64');
+    res.cookie('company', encodedData, {
+      httpOnly: false,
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 36000000,
+      sameSite: 'Lax',
+    });
+
           res.status(200).json({  success: true ,message: "Login successful.",  token, company});
     }
     catch(err){
@@ -84,9 +99,11 @@ export const signIn = async (req, res) => {
 };
 
 
+
 export const signOut = async (req, res) => {
     try{
         res.clearCookie('token');
+        res.clearCookie('company');
         res.status(200).json({message: 'Signout successfully'})
     }
     catch(err){
