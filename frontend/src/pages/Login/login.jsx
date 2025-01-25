@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import  { useState } from "react";
 import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,18 +9,16 @@ import { motion } from "framer-motion";
 import img from "../Login/image.png";
 import img1 from "../Login/img.png";
 import img2 from "../Login/google.png";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from 'js-cookie';
-import Loader from "../Register/loader";
+
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
-  const [loading, setLoading] = useState(false);
-
   const [errors, setErrors] = useState({});
   const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
@@ -48,47 +46,45 @@ const LoginPage = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-   // Import the js-cookie library
-   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 3000); // Simulate a 3-second loading delay
-
-    return () => clearTimeout(timer);
-  }, []);
-   const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    
     if (validateForm()) {
-      setLoading(true); // Show loader
       try {
         const base_url = import.meta.env.VITE_BASE_URL;
-        const response = await axios.post(`http://localhost:3300/api/v1/user/signin`, {
+        const response = await axios.post(`${base_url}/api/v1/user/signin`, {
           email: formData.email,
           password: formData.password,
-          rememberMe: rememberMe,
+          rememberMe: rememberMe
         });
-  
+
         // Handle successful login
         console.log('Login successful', response.data);
+        
+        // Store token in a cookie
         const token = response.data.token;
-        Cookies.set('token', token, { expires: rememberMe ? 7 : undefined, path: '/' });
+        const options = {
+          expires: rememberMe ? 7 : undefined,
+          path: '/'
+        };
+        Cookies.set('token', token, options);
+        
+        // Redirect to dashboard or home
         navigate('/');
       } catch (error) {
         console.error('Login failed', error.response?.data);
         setErrors(prevErrors => ({
           ...prevErrors,
-          submit: error.response?.data?.message || 'Login failed',
+          submit: error.response?.data?.message || 'Login failed'
         }));
-      } finally {
-        setLoading(false); // Hide loader
       }
     }
   };
-  
-  async function auth(){
+
+  const auth = async () => {
     try {
       const base_url = import.meta.env.VITE_BASE_URL;
-      const response = await fetch(`${base_url}/api/v1/user/request`,{method:'post'});
+      const response = await fetch(`${base_url}/api/v1/user/request`, { method: 'post' });
       if (!response.ok) throw new Error('Network response was not ok');
       const data = await response.json();
       window.location.href = data.url;
@@ -96,17 +92,12 @@ const LoginPage = () => {
       console.error('Authentication failed:', error);
       alert('Failed to authenticate. Please try again.');
     }
-  }
+  };
 
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-primary-light via-primary-ultra to-primary-light overflow-hidden">
       {/* Animated gradient background */}
-      {loading ? (
-      <Loader /> // Replace this with your actual loader component
-    ) : (
-      <div>
-        {/* Rest of your LoginPage JSX */}
-        <motion.div
+      <motion.div
         className="absolute inset-0"
         animate={{ backgroundPosition: ["0% 0%", "100% 100%"] }}
         transition={{
@@ -146,7 +137,7 @@ const LoginPage = () => {
           <motion.img
             src={img}
             alt="Right decoration"
-            className="absolute hidden md:block right-[-100px] top-[-60px] w-32 md:w-40 lg:w-48 "
+            className="absolute hidden md:block right-[-100px] top-[-60px] w-32 md:w-40 lg:w-48"
             animate={{ y: [0, 20, 0], rotate: [0, 5, 0] }}
             transition={{
               duration: 4,
@@ -179,20 +170,19 @@ const LoginPage = () => {
                 <motion.div
                   whileHover={{ scale: 1.02 }}
                   transition={{ type: "spring", stiffness: 400 }}
-                  
                 >
                   <Button
                     variant="outline"
                     className="w-full flex items-center justify-center hover:bg-white"
                     type="button"
-                    onClick={()=>auth()}
+                    onClick={auth}
                   >
                     <img
                       src={img2}
                       alt="Google logo"
                       className="mr-2 h-4 w-4"
                     />
-                    <span className="text-primary-ultra ">Sign in with Google</span>
+                    <span className="text-primary-ultra">Sign in with Google</span>
                   </Button>
                 </motion.div>
 
@@ -314,9 +304,6 @@ const LoginPage = () => {
           </div>
         </div>
       </motion.div>
-      </div>
-    )}
-      
     </div>
   );
 };
