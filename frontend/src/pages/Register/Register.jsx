@@ -1,19 +1,95 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { motion } from "framer-motion";
 import img from "./img.png";
 import img1 from "./image.png";
 import { useNavigate } from "react-router";
-
+import axios from "axios";
 
 const SignupPage = () => {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phoneNumber: '',
+    password: '',
+    confirmPassword: ''
+  });
+  const [errors, setErrors] = useState({});
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [id]: value
+    }));
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    
+    if (!formData.firstName.trim()) newErrors.firstName = "First name is required";
+    if (!formData.lastName.trim()) newErrors.lastName = "Last name is required";
+    
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!emailRegex.test(formData.email)) {
+      newErrors.email = "Invalid email format";
+    }
+
+    const phoneRegex = /^[0-9]{10}$/;
+    if (!formData.phoneNumber.trim()) {
+      newErrors.phoneNumber = "Phone number is required";
+    } else if (!phoneRegex.test(formData.phoneNumber)) {
+      newErrors.phoneNumber = "Invalid phone number (10 digits required)";
+    }
+
+    if (!formData.password) {
+      newErrors.password = "Password is required";
+    } else if (formData.password.length < 8) {
+      newErrors.password = "Password must be at least 8 characters";
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = "Passwords do not match";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (validateForm()) {
+      try {
+        const response = await axios.post('http://localhost:3300/api/v1/user/signup', {
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          phoneNo: formData.phoneNumber,
+          password: formData.password
+        });
+
+        console.log('Signup successful', response.data);
+        navigate('/signin');
+      } catch (error) {
+        console.error('Signup failed', error.response?.data);
+        setErrors(prevErrors => ({
+          ...prevErrors,
+          submit: error.response?.data?.message || 'Signup failed'
+        }));
+      }
+    }
+  };
+
   return (
-    <div className="relative min-h-screen overflow-hidden">
+    <div className="relative min-h-screen overflow-hidden pb-5">
       {/* Animated gradient background */}
       <motion.div
         className="absolute inset-0 bg-gradient-to-br from-primary-ultra to-primary-ultra"
@@ -90,20 +166,42 @@ const SignupPage = () => {
               </CardHeader>
 
               <CardContent className="space-y-6">
-                <div className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  {/* First Name */}
                   <motion.div
                     className="space-y-2"
                     whileHover={{ scale: 1.01 }}
                     transition={{ type: "spring", stiffness: 400 }}
                   >
-                    <Label htmlFor="name">Full Name *</Label>
+                    <Label htmlFor="firstName">First Name *</Label>
                     <Input
-                      id="name"
-                      placeholder="John Doe"
-                      className="transition-all duration-300 hover:border-primary-ultra focus:border-primary-light"
+                      id="firstName"
+                      placeholder="John"
+                      value={formData.firstName}
+                      onChange={handleChange}
+                      className={`transition-all duration-300 border ${errors.firstName ? 'border-red-500' : 'border-gray-300'} focus:border-primary-light focus:ring focus:ring-primary-light`}
                     />
+                    {errors.firstName && <p className="text-red-500 text-sm">{errors.firstName}</p>}
                   </motion.div>
 
+                  {/* Last Name */}
+                  <motion.div
+                    className="space-y-2"
+                    whileHover={{ scale: 1.01 }}
+                    transition={{ type: "spring", stiffness: 400 }}
+                  >
+                    <Label htmlFor="lastName">Last Name *</Label>
+                    <Input
+                      id="lastName"
+                      placeholder="Doe"
+                      value={formData.lastName}
+                      onChange={handleChange}
+                      className={`transition-all duration-300 border ${errors.lastName ? 'border-red-500' : 'border-gray-300'} focus:border-primary-light focus:ring focus:ring-primary-light`}
+                    />
+                    {errors.lastName && <p className="text-red-500 text-sm">{errors.lastName}</p>}
+                  </motion.div>
+
+                  {/* Email */}
                   <motion.div
                     className="space-y-2"
                     whileHover={{ scale: 1.01 }}
@@ -113,10 +211,31 @@ const SignupPage = () => {
                     <Input
                       id="email"
                       placeholder="johndoe@example.com"
-                      className="transition-all duration-300 hover:border-primary-ultra focus:border-primary-light"
+                      value={formData.email}
+                      onChange={handleChange}
+                      className={`transition-all duration-300 border ${errors.email ? 'border-red-500' : 'border-gray-300'} focus:border-primary-light focus:ring focus:ring-primary-light`}
                     />
+                    {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
                   </motion.div>
 
+                  {/* Phone Number */}
+                  <motion.div
+                    className="space-y-2"
+                    whileHover={{ scale: 1.01 }}
+                    transition={{ type: "spring", stiffness: 400 }}
+                  >
+                    <Label htmlFor="phoneNumber">Phone Number *</Label>
+                    <Input
+                      id="phoneNumber"
+                      placeholder="1234567890"
+                      value={formData.phoneNumber}
+                      onChange={handleChange}
+                      className={`transition-all duration-300 border ${errors.phoneNumber ? 'border-red-500' : 'border-gray-300'} focus:border-primary-light focus:ring focus:ring-primary-light`}
+                    />
+                    {errors.phoneNumber && <p className="text-red-500 text-sm">{errors.phoneNumber}</p>}
+                  </motion.div>
+
+                  {/* Password */}
                   <motion.div
                     className="space-y-2"
                     whileHover={{ scale: 1.01 }}
@@ -127,53 +246,52 @@ const SignupPage = () => {
                       type="password"
                       id="password"
                       placeholder="********"
-                      className="transition-all duration-300 hover:border-primary-ultra focus:border-primary-light"
+                      value={formData.password}
+                      onChange={handleChange}
+                      className={`transition-all duration-300 border ${errors.password ? 'border-red-500' : 'border-gray-300'} focus:border-primary-light focus:ring focus:ring-primary-light`}
                     />
+                    {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
                   </motion.div>
 
+                  {/* Confirm Password */}
                   <motion.div
                     className="space-y-2"
                     whileHover={{ scale: 1.01 }}
                     transition={{ type: "spring", stiffness: 400 }}
                   >
-                    <Label htmlFor="confirm-password">Confirm Password *</Label>
+                    <Label htmlFor="confirmPassword">Confirm Password *</Label>
                     <Input
                       type="password"
-                      id="confirm-password"
+                      id="confirmPassword"
                       placeholder="********"
-                      className="transition-all duration-300 hover:border-primary-ultra focus:border-primary-light"
+                      value={formData.confirmPassword}
+                      onChange={handleChange}
+                      className={`transition-all duration-300 border ${errors.confirmPassword ? 'border-red-500' : 'border-gray-300'} focus:border-primary-light focus:ring focus:ring-primary-light`}
                     />
+                    {errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword}</p>}
                   </motion.div>
 
-                  {/* <div className="flex items-center">
-                    <Checkbox id="terms" />
-                    <Label
-                      htmlFor="terms"
-                      className="text-sm pl-2 text-gray-600"
+                  {errors.submit && (
+                    <div className="text-red-500 text-sm text-center">{errors.submit}</div>
+                  )}
+
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ type: "spring", stiffness: 400 }}
+                    className="w-full mt-4"
+                  >
+                    <Button 
+                      type="submit" 
+                      className="w-full bg-primary-light hover:bg-primary-dark transition-colors"
                     >
-                      I agree to the{" "}
-                      <Button
-                        variant="link"
-                        className="font-medium text-primary-ultra hover:underline"
-                      >
-                        Terms and Conditions
-                      </Button>
-                    </Label>
-                  </div> */}
-                </div>
+                      Sign Up
+                    </Button>
+                  </motion.div>
+                </form>
               </CardContent>
 
               <CardFooter className="flex flex-col space-y-4">
-                <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  transition={{ type: "spring", stiffness: 400 }}
-                  className="w-full"
-                >
-                  <Button className="w-full bg-primary-light hover:bg-primary-dark transition-colors">
-                    Sign Up
-                  </Button>
-                </motion.div>
                 <motion.div
                   className="text-sm text-center text-black"
                   whileHover={{ scale: 1.02 }}
@@ -181,12 +299,12 @@ const SignupPage = () => {
                 >
                   Already have an account?
                   <Button
-      variant="link"
-      className="pl-1 font-normal text-primary-light"
-      onClick={() => navigate("/signin")}
-    >
-      Sign In
-    </Button>
+                    variant="link"
+                    className="pl-1 font-normal text-primary-light"
+                    onClick={() => navigate("/signin")}
+                  >
+                    Sign In
+                  </Button>
                 </motion.div>
               </CardFooter>
             </Card>
@@ -196,14 +314,14 @@ const SignupPage = () => {
 
       {/* Bottom image animation */}
       <motion.div
-        className="absolute left-0 w-full z-0"
+        className="absolute left-0 w-full z-0 hidden md:block"
         initial={{ opacity: 1, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
       >
         <div className="container mx-auto relative">
           <div className="absolute left-10 bottom-0">
-            <img src={img1} alt="Left decoration" className="w-[600px]" />
+            <img src={ img1} alt="Left decoration" className="w-[600px]" />
           </div>
         </div>
       </motion.div>
