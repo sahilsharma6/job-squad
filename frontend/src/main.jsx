@@ -8,17 +8,20 @@ import HomePage from "./pages/Home/Home";
 import AboutUs from "./pages/About/HeroAbout";
 import BlogPage from "./pages/Blogs/BlogPage";
 import ContactSection from "./pages/Contact/ContactHero";
-import JobSection from "./pages/Jobs/JobSection";
+import JobLayout from "./pages/Jobs/JobLayout";
 import SignupForm from "./pages/Register/Register";
 import LoginPage from "./pages/Login/login";
 import ResetPasswordPage from "./pages/Reset/Reset";
 import Company from "./pages/Company/Company";
 import Loader from "./pages/Register/Loader";
+import ViewJobDetailsLayout from "./pages/Jobs/ViewJobDetailsLayout";
+import ScrollToTop from "./components/ScrollToTop";
 
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
+    <ScrollToTop />
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<HomePage />} />
@@ -26,7 +29,10 @@ createRoot(document.getElementById("root")).render(
           <Route path='/contact' element={<ContactSection/>}/>
           <Route path="/our/assets" element={<AssetsForDesign />} />
           <Route path="/blogs" element={<BlogPage />} />
-          <Route path="/jobs" element={<JobSection />} />
+
+          <Route path="/jobs" element={<JobLayout />} />
+          <Route path="/jobs/:jobId" element={<ViewJobDetailsLayout />} />
+
           <Route path="/register" element={<SignupForm />} />
           <Route path="/signin" element={<LoginPage />} />
           <Route path="/reset" element={<ResetPasswordPage/>} />
