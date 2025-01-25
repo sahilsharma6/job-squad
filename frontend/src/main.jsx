@@ -13,7 +13,7 @@ import SignupForm from "./pages/Register/Register";
 import LoginPage from "./pages/Login/login";
 import ResetPasswordPage from "./pages/Reset/Reset";
 import Company from "./pages/Company/Company";
-import Loader from "./pages/Register/Loader";
+// import Loader from "./pages/Register/Loader";
 import ViewJobDetailsLayout from "./pages/Jobs/ViewJobDetailsLayout";
 import ScrollToTop from "./components/ScrollToTop";
 
@@ -37,7 +37,7 @@ createRoot(document.getElementById("root")).render(
           <Route path="/signin" element={<LoginPage />} />
           <Route path="/reset" element={<ResetPasswordPage/>} />
           <Route path="/company" element={<Company/>} />
-          <Route path="/loader" element={<Loader/>} />
+          {/* <Route path="/loader" element={<Loader/>} /> */}
         </Route>
       </Routes>
     </BrowserRouter>
