@@ -1,5 +1,7 @@
 import express from 'express'
 import Applicant from '../models/Applicant.js'
+import Address from '../models/Address.js'
+import Experience from '../models/Experience.js'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { OAuth2Client } from 'google-auth-library';
@@ -176,5 +178,267 @@ export const googleSignIn = async (req, res) => {
     };
 
 
+    export const setAddress = async (req, res) => {
+        try {
+            const {type , location, city, state, country, zipCode} = req.body;
+            if( !type || !city || !state || !country || !zipCode){
+                return res.status(400).json({message: 'All fields are required'});
+            }
+            const user = req.user;
+            const address = new Address({applicantId: user._id, type, location, city, state, country, zipCode});
+            await address.save();
+            res.status(200).json({message: 'Address added successfully'});
+        }
+        catch(err){
+            console.log(err);
+            res.status(500).json({message: 'Internal server error'});
+        }
+    }
+
+    export const getAddress = async (req, res) => {
+        try{
+            const user = req.user;
+            const address = await Address.find({applicantId: user._id});
+            res.status(200).json({address});
+        }
+        catch(err){
+            console.log(err);
+            res.status(500).json({message: 'Internal server error'});
+        }
+    }
+
+
+    export const updateAddress = async (req, res) => {
+        try{
+            const {type , location, city, state, country, zipCode} = req.body;
+            if( !type || !city || !state || !country || !zipCode){
+                return res.status(400).json({message: 'All fields are required'});
+            }
+            const user = req.user;
+            const address = await Address.findOneAndUpdate({applicantId: user._id}, {type, location, city, state, country, zipCode});
+            res.status(200).json({message: 'Address updated successfully'});
+        }
+        catch(err){
+            console.log(err);
+            res.status(500).json({message: 'Internal server error'});
+        }
+    }
+
+    export const deleteAddress = async (req, res) => {
+        try{
+            const user = req.user;
+            const address = await Address.findOneAndDelete({applicantId: user._id});
+            res.status(200).json({message: 'Address deleted successfully'});
+        }
+        catch(err){
+            console.log(err);
+            res.status(500).json({message: 'Internal server error'});
+        }
+    }
+
+    export const addExperience = async (req, res) => {
+        try {
+            const {
+                companyName,
+                jobTitle,
+                startingDate,
+                endingDate,
+                jobDescription,
+                jobRole,
+                currentlyWorking
+            } = req.body;
+    
+            // Validate required fields
+            if (!companyName || !startingDate  || !jobDescription || !jobRole || !jobTitle ) {
+                return res.status(400).json({ message: 'Required fields are missing' });
+            }
+    
+           
+            const applicantId = req.user._id; 
+            if (!applicantId) {
+                return res.status(401).json({ message: 'Unauthorized' });
+            }
+    
+            
+            const newExperience = new Experience({
+                applicantId,
+                companyName,
+                jobTitle,
+                startingDate,
+                endingDate,
+                jobDescription,
+                jobRole,
+                currentlyWorking
+            });
+    
+            await newExperience.save();
+    
+            res.status(201).json({ message: 'Experience added successfully', experience: newExperience });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ message: 'Internal server error' });
+        }
+    };
+    
+    export const updateExperience = async (req, res) => {
+        try {
+            const { id } = req.params; 
+           const updates = req.body;
+    
+            
+            const experience = await Experience.findById(id);
+            if (!experience) {
+                return res.status(404).json({ message: 'Experience not found' });
+            }
+    
+            Object.assign(experience, updates);
+            await experience.save();
+    
+            res.status(200).json({ message: 'Experience updated successfully', experience });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ message: 'Internal server error' });
+        }
+    };
+    
+
+    export const deleteExperience = async (req, res) => {
+        try {
+            const { id } = req.params; 
+    
+            const experience = await Experience.findById(id);
+            if (!experience) {
+                return res.status(404).json({ message: 'Experience not found' });
+            }
+
+            await experience.remove();
+    
+            res.status(200).json({ message: 'Experience deleted successfully' });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ message: 'Internal server error' });
+        }
+    };
+
+    export const getExperience = async (req, res) => {
+        try {
+            const applicantId = req.user._id;
+            if (!applicantId) {
+                return res.status(401).json({ message: 'Unauthorized' });
+            }
+    
+            const experience = await Experience.find({ applicantId });
+    
+            res.status(200).json({ experience });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ message: 'Internal server error' });
+        }
+    };
+
+
+
+    // Add a new education entry
+    export const addEducation = async (req, res) => {
+        try {
+            const {
+                desecondaryame,
+                instituteName,
+                startingDate,
+                endingDate,
+                percentage,
+                cgpa,
+            } = req.body;
+    
+            if (!desecondaryame || !instituteName || !startingDate || !endingDate) {
+                return res.status(400).json({ message: 'Required fields are missing' });
+            }
+    
+            const applicantId = req.user._id;
+            if (!applicantId) {
+                return res.status(401).json({ message: 'Unauthorized' });
+            }
+    
+            const newEducation = new Education({
+                applicantId,
+                desecondaryame,
+                instituteName,
+                startingDate,
+                endingDate,
+                percentage,
+                cgpa,
+            });
+    
+            await newEducation.save();
+            res.status(201).json({ message: 'Education added successfully', education: newEducation });
+        } catch (error) {
+            res.status(500).json({ message: 'Internal server error', error: error.message });
+        }
+    };
+    
+   // get all education entries
+
+    export const getEducation = async (req, res) => {
+        try {
+            const applicantId = req.user._id;
+            if (!applicantId) {
+                return res.status(401).json({ message: 'Unauthorized' });
+            }
+    
+            const education = await Education.find({ applicantId });
+    
+            res.status(200).json({ education });
+        } catch (error) {
+            res.status(500).json({ message: 'Internal server error', error: error.message });
+        }
+    }
+
+    
+
+
+    // Update an education entry
+    export const updateEducation = async (req, res) => {
+        try {
+            const { id } = req.params;
+            const updates = req.body;
+    
+            const education = await Education.findById(id);
+            if (!education) {
+                return res.status(404).json({ message: 'Education entry not found' });
+            }
+    
+            if (education.applicantId.toString() !== req.user._id.toString()) {
+                return res.status(403).json({ message: 'Unauthorized to update this entry' });
+            }
+    
+            Object.assign(education, updates);
+            await education.save();
+    
+            res.status(200).json({ message: 'Education updated successfully', education });
+        } catch (error) {
+            res.status(500).json({ message: 'Internal server error', error: error.message });
+        }
+    };
+    
+    // Delete an education entry
+    export const deleteEducation = async (req, res) => {
+        try {
+            const { id } = req.params;
+    
+            const education = await Education.findById(id);
+            if (!education) {
+                return res.status(404).json({ message: 'Education entry not found' });
+            }
+    
+            if (education.applicantId.toString() !== req.user._id.toString()) {
+                return res.status(403).json({ message: 'Unauthorized to delete this entry' });
+            }
+    
+            await education.remove();
+            res.status(200).json({ message: 'Education entry deleted successfully' });
+        } catch (error) {
+            res.status(500).json({ message: 'Internal server error', error: error.message });
+        }
+    };
     
     
