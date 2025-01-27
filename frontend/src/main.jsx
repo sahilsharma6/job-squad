@@ -16,6 +16,8 @@ import Company from "./pages/Company/Company";
 // import Loader from "./pages/Register/Loader";
 import ViewJobDetailsLayout from "./pages/Jobs/ViewJobDetailsLayout";
 import ScrollToTop from "./components/ScrollToTop";
+import CompanySignupPage from "./pages/Register/CompanyRegister";
+import CompanyLogin from "./pages/Login/CompanyLogin";
 
 
 createRoot(document.getElementById("root")).render(
@@ -37,7 +39,8 @@ createRoot(document.getElementById("root")).render(
           <Route path="/signin" element={<LoginPage />} />
           <Route path="/reset" element={<ResetPasswordPage/>} />
           <Route path="/company" element={<Company/>} />
-          {/* <Route path="/loader" element={<Loader/>} /> */}
+          <Route path="/companyregister" element={<CompanySignupPage/>} />
+          <Route path="/companysignin" element={<CompanyLogin/>} />
         </Route>
       </Routes>
     </BrowserRouter>
