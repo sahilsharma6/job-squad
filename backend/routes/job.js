@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getAllJobs,createJob,getJobById,updateJob,deleteJob, getJobByFilter, getJobSectors, getJobSectorById, createJobSector } from "../controllers/Job.js";
+import { getAllJobs,createJob,getJobById,updateJob,deleteJob, getJobByFilter, getJobSectors, getJobSectorById, createJobSector, getJobRoles, deleteJobRole, createJobRole, updateJobRole, deleteJobSector, updateJobSector } from "../controllers/Job.js";
 import isAuthenticated from "../middleware/isAuthenticated.js";
 import { AccessRole } from "../middleware/AccessRole.js";
 
@@ -16,5 +16,14 @@ JobRoutes.delete("/delete/:jobId",isAuthenticated,AccessRole(['company','admin']
 JobRoutes.get('/jobsectors',getJobSectors);
 JobRoutes.get('/jobsector/:sectorId',getJobSectorById);
 JobRoutes.post('/create-job-sector',isAuthenticated,AccessRole(['admin']),createJobSector);
+JobRoutes.delete('/jobsector/:sectorId',isAuthenticated,AccessRole(['admin']),deleteJobSector);
+JobRoutes.put('/update-job-sector/:sectorId',isAuthenticated,AccessRole(['admin']),updateJobSector); 
+
+// jobRole Routes
+
+JobRoutes.get('/jobroles',getJobRoles);
+JobRoutes.delete('/jobrole/:roleId',isAuthenticated,AccessRole(['admin']),deleteJobRole);
+JobRoutes.post('/create-job-role',isAuthenticated,AccessRole(['admin']),createJobRole);
+JobRoutes.put('/update-job-role/:roleId',isAuthenticated,AccessRole(['admin']),updateJobRole);
 
 export default JobRoutes;

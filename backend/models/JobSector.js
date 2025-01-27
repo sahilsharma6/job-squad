@@ -8,6 +8,13 @@ const JobSectorSchema = new Schema({
         unique: true,
         trim: true
     },
+    jobs:[{
+        jobId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Job',
+            required: true
+        },
+    }],
     createdAt: {
         type: Date,
         default: Date.now
