@@ -10,6 +10,7 @@ import MarketplaceBanner from "./components/MarketplaceBanner";
 import Hero from "@/pages/Home/components/Hero";
 import FAQSection from "./components/Faq";
 import StatsSection from "./components/StatsSection";
+import RecruiterChoiceCard from "./components/AreyouRecuiter";
 
 const HomePage = () => {
   return (
@@ -61,12 +62,14 @@ const HomePage = () => {
         <div>
           <JobMatchHero />
         </div>
+        <RecruiterChoiceCard/>
         <div>
           <FAQSection/>
         </div>
                 <div className="py-16">
           <NewsletterSection />
         </div>
+        
       </div>
     </div>
   );
