@@ -12,6 +12,7 @@ import img2 from "../Login/google.png";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from 'js-cookie';
+import { useLoginMutation } from "@/services/authApi";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -22,6 +23,8 @@ const LoginPage = () => {
   const [errors, setErrors] = useState({});
   const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
+
+  const [login] = useLoginMutation();
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -51,47 +54,20 @@ const LoginPage = () => {
     
     if (validateForm()) {
       try {
-        const base_url = import.meta.env.VITE_BASE_URL;
-        const response = await axios.post(`${base_url}/api/v1/user/signin`, {
-          email: formData.email,
-          password: formData.password,
-          rememberMe: rememberMe
-        });
-
-        // Handle successful login
-        console.log('Login successful', response.data);
-        
-        // Store token in a cookie
-        const token = response.data.token;
-        const options = {
-          expires: rememberMe ? 7 : undefined,
-          path: '/'
-        };
-        Cookies.set('token', token, options);
-        
-        // Redirect to dashboard or home
-        navigate('/');
+        const response = await login(formData);
+        if (response.data) {
+          const { token } = response.data;
+          Cookies.set('token', token, { expires: 7 });
+          navigate('/dashboard');
+        }
       } catch (error) {
-        console.error('Login failed', error.response?.data);
-        setErrors(prevErrors => ({
-          ...prevErrors,
-          submit: error.response?.data?.message || 'Login failed'
-        }));
+        console.error('Login failed:', error);
+        alert('Login failed. Please try again.');
       }
     }
   };
 
   const auth = async () => {
-    try {
-      const base_url = import.meta.env.VITE_BASE_URL;
-      const response = await fetch(`${base_url}/api/v1/user/request`, { method: 'post' });
-      if (!response.ok) throw new Error('Network response was not ok');
-      const data = await response.json();
-      window.location.href = data.url;
-    } catch (error) {
-      console.error('Authentication failed:', error);
-      alert('Failed to authenticate. Please try again.');
-    }
   };
 
   return (
