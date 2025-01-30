@@ -7,7 +7,7 @@ import jwt from 'jsonwebtoken'
 import { OAuth2Client } from 'google-auth-library';
 
 
-export const SignUp = async (req, res) => {
+export const signUp = async (req, res) => {
 
     try{
        const {firstName, lastName,phoneNo, email, password} = req.body;
@@ -31,7 +31,7 @@ export const SignUp = async (req, res) => {
     }
 }
 
-export const SignIn = async (req, res) => {
+export const signIn = async (req, res) => {
         try{
         const {email, password} = req.body;
         if(!email || !password){
