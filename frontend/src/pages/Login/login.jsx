@@ -68,6 +68,16 @@ const LoginPage = () => {
   };
 
   const auth = async () => {
+    try {
+      const base_url = import.meta.env.VITE_BASE_URL;
+      const response = await fetch(`${base_url}/api/v1/user/request`, { method: 'post' });
+      if (!response.ok) throw new Error('Network response was not ok');
+      const data = await response.json();
+      window.location.href = data.url;
+    } catch (error) {
+      console.error('Authentication failed:', error);
+      alert('Failed to authenticate. Please try again.');
+    }
   };
 
   return (
