@@ -2,6 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
+import { Provider } from 'react-redux';
 import { BrowserRouter, Routes, Route } from "react-router";
 import AssetsForDesign from "./pages/Assets";
 import HomePage from "./pages/Home/Home";
@@ -53,76 +54,80 @@ import { AdminViewArticles } from "./pages/Dashboard/admin/articles/AdminViewArt
 import { AdminPostArticle } from "./pages/Dashboard/admin/articles/AdminPostArticle";
 import { AdminPostRequirement } from "./pages/Dashboard/admin/AdminPostRequirement";
 import { AdminSettings } from "./pages/Dashboard/admin/AdminSettings";
+import { store } from "./Rtk/store";
 
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <BrowserRouter>
-      <ScrollToTop />
-      <Routes>
-        <Route path="/" element={<App />}>
-          {/* Public Routes */}
-          <Route index element={<HomePage />} />
-          <Route path="/about" element={<AboutUs />} />
-          <Route path="/contact" element={<ContactSection />} />
-          <Route path="/our/assets" element={<AssetsForDesign />} />
-          <Route path="/blogs" element={<BlogPage />} />
-          <Route path="/jobs" element={<JobLayout />} />
-          <Route path="/jobs/:jobId" element={<ViewJobDetailsLayout />} />
-          <Route path="/register" element={<SignupForm />} />
-          <Route path="/signin" element={<LoginPage />} />
-          <Route path="/reset" element={<ResetPasswordPage />} />
-          <Route path="/company" element={<Company />} />
+    <Provider store={store}> {/* Wrap the entire app */}
+      <BrowserRouter>
+        <ScrollToTop />
+        <Routes>
+          <Route path="/" element={<App />}>
+            {/* Public Routes */}
+            <Route index element={<HomePage />} />
+            <Route path="/about" element={<AboutUs />} />
+            <Route path="/contact" element={<ContactSection />} />
+            <Route path="/our/assets" element={<AssetsForDesign />} />
+            <Route path="/blogs" element={<BlogPage />} />
+            <Route path="/jobs" element={<JobLayout />} />
+            <Route path="/jobs/:jobId" element={<ViewJobDetailsLayout />} />
+            <Route path="/register" element={<SignupForm />} />
+            <Route path="/signin" element={<LoginPage />} />
+            <Route path="/reset" element={<ResetPasswordPage />} />
+            <Route path="/company" element={<Company />} />
 
-          {/* Dashboard Routes - Single DashboardLayout */}
-          <Route path="/dashboard" element={<DashboardLayout />}>
-            {/* Candidate Routes */}
-            <Route path="candidate">
-              <Route index element={<CandidateDashboard />} />
-              <Route path="profile" element={<CandidateProfile />} />
-              <Route path="resume" element={<CandidateResume />} />
-              <Route path="applied-jobs" element={<CandidateAppliedJobs />} />
-              <Route path="shortlisted-jobs" element={<CandidateShortlistedJobs />} />
-              <Route path="saved-jobs" element={<CandidateSavedJobs />} />
-              <Route path="following-companies" element={<CandidateFollowingCompanies />} />
-              <Route path="meetings" element={<CandidateMeetings />} />
-              <Route path="messages" element={<CandidateMessages />} />
-              <Route path="job-alerts" element={<CandidateJobAlerts />} />
-              <Route path="settings" element={<CandidateSettings />} />
+            {/* Dashboard Routes - Single DashboardLayout */}
+            <Route path="/dashboard" element={<DashboardLayout />}>
+              {/* Candidate Routes */}
+              <Route path="candidate">
+                <Route index element={<CandidateDashboard />} />
+                <Route path="profile" element={<CandidateProfile />} />
+                <Route path="resume" element={<CandidateResume />} />
+                <Route path="applied-jobs" element={<CandidateAppliedJobs />} />
+                <Route path="shortlisted-jobs" element={<CandidateShortlistedJobs />} />
+                <Route path="saved-jobs" element={<CandidateSavedJobs />} />
+                <Route path="following-companies" element={<CandidateFollowingCompanies />} />
+                <Route path="meetings" element={<CandidateMeetings />} />
+                <Route path="messages" element={<CandidateMessages />} />
+                <Route path="job-alerts" element={<CandidateJobAlerts />} />
+                <Route path="settings" element={<CandidateSettings />} />
+              </Route>
+
+              {/* Company Routes */}
+              <Route path="company">
+                <Route index element={<CompanyDashboard />} />
+                <Route path="profile" element={<CompanyProfile />} />
+                <Route path="post-job" element={<CompanyPostJob />} />
+                <Route path="manage-jobs" element={<CompanyManageJobs />} />
+                <Route path="candidates" element={<CompanyAllCandidates />} />
+                <Route path="shortlisted-resume" element={<CompanyShortlistedResumes />} />
+                <Route path="messages" element={<CompanyMessages />} />
+                <Route path="meetings" element={<CompanyMeetings />} />
+                <Route path="resume-alerts" element={<CompanyResumeAlerts />} />
+                <Route path="settings" element={<CompanySettings />} />
+              </Route>
+
+              {/* Admin Routes */}
+              <Route path="admin">
+                <Route index element={<AdminDashboard />} />
+                <Route path="users-candidates" element={<AdminManageCandidates />} />
+                <Route path="users-companies" element={<AdminManageCompanies />} />
+                <Route path="users-unauthorized" element={<AdminManageUnauthorized />} />
+                <Route path="articles" element={<AdminViewArticles />} />
+                <Route path="post-article" element={<AdminPostArticle />} />
+                <Route path="post-requirement" element={<AdminPostRequirement />} />
+                <Route path="settings" element={<AdminSettings />} />
+              </Route>
             </Route>
 
-            {/* Company Routes */}
-            <Route path="company">
-              <Route index element={<CompanyDashboard />} />
-              <Route path="profile" element={<CompanyProfile />} />
-              <Route path="post-job" element={<CompanyPostJob />} />
-              <Route path="manage-jobs" element={<CompanyManageJobs />} />
-              <Route path="candidates" element={<CompanyAllCandidates />} />
-              <Route path="shortlisted-resume" element={<CompanyShortlistedResumes />} />
-              <Route path="messages" element={<CompanyMessages />} />
-              <Route path="meetings" element={<CompanyMeetings />} />
-              <Route path="resume-alerts" element={<CompanyResumeAlerts />} />
-              <Route path="settings" element={<CompanySettings />} />
-            </Route>
-
-            {/* Admin Routes */}
-            <Route path="admin">
-              <Route index element={<AdminDashboard />} />
-              <Route path="users-candidates" element={<AdminManageCandidates />} />
-              <Route path="users-companies" element={<AdminManageCompanies />} />
-              <Route path="users-unauthorized" element={<AdminManageUnauthorized />} />
-              <Route path="articles" element={<AdminViewArticles />} />
-              <Route path="post-article" element={<AdminPostArticle />} />
-              <Route path="post-requirement" element={<AdminPostRequirement />} />
-              <Route path="settings" element={<AdminSettings />} />
-            </Route>
+            <Route path="/reset" element={<ResetPasswordPage />} />
+            <Route path="/company" element={<Company />} />
+            <Route path="/companyregister" element={<CompanySignupPage />} />
+            <Route path="/companysignin" element={<CompanyLogin />} />
           </Route>
-          <Route path="/reset" element={<ResetPasswordPage/>} />
-          <Route path="/company" element={<Company/>} />
-          <Route path="/companyregister" element={<CompanySignupPage/>} />
-          <Route path="/companysignin" element={<CompanyLogin/>} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   </StrictMode>
 );

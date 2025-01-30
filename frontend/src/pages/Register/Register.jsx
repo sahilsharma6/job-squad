@@ -8,7 +8,7 @@ import img from "./img.png";
 import img1 from "./image.png";
 import { useNavigate } from "react-router";
 import axios from "axios";
-
+import { useSignupMutation } from "@/Rtk/services/Auth";
 const SignupPage = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -19,14 +19,12 @@ const SignupPage = () => {
     password: '',
     confirmPassword: ''
   });
+    const [signup, { isLoading, error }] = useSignupMutation();
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const { id, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [id]: value
-    }));
+    setFormData(prevState => ({ ...prevState, [id]: value }));
   };
 
   const validateForm = () => {
@@ -65,28 +63,29 @@ const SignupPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+  
     if (validateForm()) {
       try {
-        const response = await axios.post('http://localhost:3300/api/v1/user/signup', {
+        const response = await signup({
           firstName: formData.firstName,
           lastName: formData.lastName,
           email: formData.email,
           phoneNo: formData.phoneNumber,
           password: formData.password
-        });
-
-        console.log('Signup successful', response.data);
-        navigate('/signin');
-      } catch (error) {
-        console.error('Signup failed', error.response?.data);
-        setErrors(prevErrors => ({
+        }).unwrap();
+  
+        console.log("Signup successful:", response);
+        navigate("/signin");
+      } catch (err) {
+        console.error("Signup failed", err);
+        setErrors((prevErrors) => ({
           ...prevErrors,
-          submit: error.response?.data?.message || 'Signup failed'
+          submit: err?.data?.message || "Signup failed",
         }));
       }
     }
   };
+  
 
   return (
     <div className="relative min-h-screen overflow-hidden pb-5">
