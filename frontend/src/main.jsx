@@ -54,11 +54,13 @@ import { AdminViewArticles } from "./pages/Dashboard/admin/articles/AdminViewArt
 import { AdminPostArticle } from "./pages/Dashboard/admin/articles/AdminPostArticle";
 import { AdminPostRequirement } from "./pages/Dashboard/admin/AdminPostRequirement";
 import { AdminSettings } from "./pages/Dashboard/admin/AdminSettings";
-// import { store } from "./Rtk/store";
+import { Provider } from "react-redux";
+import { store } from "./store";
 
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
+    <Provider store={store}>
       <BrowserRouter>
         <ScrollToTop />
         <Routes>
@@ -119,7 +121,6 @@ createRoot(document.getElementById("root")).render(
                 <Route path="settings" element={<AdminSettings />} />
               </Route>
             </Route>
-
             <Route path="/reset" element={<ResetPasswordPage />} />
             <Route path="/company" element={<Company />} />
             <Route path="/companyregister" element={<CompanySignupPage />} />
@@ -127,5 +128,6 @@ createRoot(document.getElementById("root")).render(
           </Route>
         </Routes>
       </BrowserRouter>
+    </Provider>
   </StrictMode>
 );

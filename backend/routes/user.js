@@ -1,10 +1,10 @@
 import express from 'express';
-import { addEducation, addExperience, deleteAddress, deleteEducation, deleteExperience, getAddress, getEducation, getExperience, googleSignIn, request, setAddress, SignIn, signOut, SignUp, updateAddress, updateEducation, updateExperience } from '../controllers/userController.js';
+import { addEducation, addExperience, deleteAddress, deleteEducation, deleteExperience, getAddress, getEducation, getExperience, googleSignIn, request, setAddress, signIn, signOut, signUp, updateAddress, updateEducation, updateExperience } from '../controllers/userController.js';
 import isAuthenticated from '../middleware/isAuthenticated.js';
 const UserRoutes=express.Router();
 
-UserRoutes.post('/signup',SignUp)
-UserRoutes.post('/signin',SignIn)
+UserRoutes.post('/signup',signUp)
+UserRoutes.post('/signin',signIn)
 UserRoutes.get('/logout',signOut)
 UserRoutes.get('/googlelogin',googleSignIn);
 UserRoutes.post('/request',request);
