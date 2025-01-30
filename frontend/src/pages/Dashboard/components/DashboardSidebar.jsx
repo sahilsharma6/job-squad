@@ -46,7 +46,7 @@ const DashboardSidebar = ({ open, setOpen, role }) => {
                       to={item.href}
                       className={`flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors duration-150 ${
                         isActive(item.href)
-                          ? 'bg-primary text-primary-foreground'
+                          ? 'bg-primary-ultra/30 text-primary-foreground'
                           : 'text-gray-700 hover:bg-gray-100'
                       }`}
                     >
