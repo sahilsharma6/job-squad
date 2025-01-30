@@ -54,12 +54,11 @@ import { AdminViewArticles } from "./pages/Dashboard/admin/articles/AdminViewArt
 import { AdminPostArticle } from "./pages/Dashboard/admin/articles/AdminPostArticle";
 import { AdminPostRequirement } from "./pages/Dashboard/admin/AdminPostRequirement";
 import { AdminSettings } from "./pages/Dashboard/admin/AdminSettings";
-import { store } from "./Rtk/store";
+// import { store } from "./Rtk/store";
 
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <Provider store={store}> {/* Wrap the entire app */}
       <BrowserRouter>
         <ScrollToTop />
         <Routes>
@@ -128,6 +127,5 @@ createRoot(document.getElementById("root")).render(
           </Route>
         </Routes>
       </BrowserRouter>
-    </Provider>
   </StrictMode>
 );

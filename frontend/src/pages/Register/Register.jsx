@@ -8,7 +8,6 @@ import img from "./img.png";
 import img1 from "./image.png";
 import { useNavigate } from "react-router";
 import axios from "axios";
-import { useSignupMutation } from "@/Rtk/services/Auth";
 const SignupPage = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -19,7 +18,7 @@ const SignupPage = () => {
     password: '',
     confirmPassword: ''
   });
-    const [signup, { isLoading, error }] = useSignupMutation();
+    // const [signup, { isLoading, error }] = useSignupMutation();
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
