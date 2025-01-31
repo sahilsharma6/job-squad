@@ -2,6 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
+import { Provider } from 'react-redux';
 import { BrowserRouter, Routes, Route } from "react-router";
 import AssetsForDesign from "./pages/Assets";
 import HomePage from "./pages/Home/Home";
@@ -53,7 +54,6 @@ import { AdminViewArticles } from "./pages/Dashboard/admin/articles/AdminViewArt
 import { AdminPostArticle } from "./pages/Dashboard/admin/articles/AdminPostArticle";
 import { AdminPostRequirement } from "./pages/Dashboard/admin/AdminPostRequirement";
 import { AdminSettings } from "./pages/Dashboard/admin/AdminSettings";
-import { Provider } from "react-redux";
 import { store } from "./store";
 
 
