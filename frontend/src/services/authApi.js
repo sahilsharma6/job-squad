@@ -10,7 +10,7 @@ export const authApi = createApi({
   endpoints: (builder) => ({
     login: builder.mutation({
       query: (credentials) => ({
-        url: 'signin',
+        url: 'user/signin',
         method: 'POST',
         body: credentials
       }),
@@ -25,7 +25,7 @@ export const authApi = createApi({
     }),
     signup: builder.mutation({
       query: (userInfo) => ({
-        url: 'signup',
+        url: 'user/signup',
         method: 'POST',
         body: userInfo
       }),

@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router-dom"; // Use 'useNavigate' for navigation
 import { Menu, X, ChevronDown } from "lucide-react";
+import Cookies from 'js-cookie'; // Assuming token is stored in cookies
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [mobileDropdownOpen, setMobileDropdownOpen] = useState({});
-  const [isMobile, setIsMobile] = useState(false); // Track screen size
+  const [isMobile, setIsMobile] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track if user is logged in
+  const navigate = useNavigate();
 
   const menuItems = [
     { label: "Home", link: "/" },
@@ -87,9 +90,13 @@ const Navbar = () => {
     }));
   };
 
+  // Handle login state based on token
+  useEffect(() => {
+    const token = Cookies.get('user'); // Check if token exists in cookies
+    setIsLoggedIn(!!token); // Update state based on token presence
+  }, []);
 
-
-  // close mobile menu when screen size is greater than 768px
+  // Handle mobile menu resize
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768); 
@@ -103,6 +110,15 @@ const Navbar = () => {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  // Logout handler
+  const handleLogout = () => {
+    Cookies.remove('token');
+    Cookies.remove('user');
+     // Remove token from cookies on logout
+    setIsLoggedIn(false); // Update login state
+    navigate('/signin'); // Redirect to signin page
+  };
 
   return (
     <nav
@@ -165,16 +181,24 @@ const Navbar = () => {
 
         {/* Desktop Buttons */}
         <div className="hidden lg:flex items-center space-x-4">
-          <Link to="/register">
-            <Button variant="a" className="underline hover:border-primary-dark hover:no-underline border">
-              Register
+          {isLoggedIn ? (
+            <Button onClick={handleLogout} className="bg-primary-light text-white hover:bg-primary-dark">
+              Logout
             </Button>
-          </Link>
-          <Link to="/signin">
-            <Button className="bg-primary-light text-white hover:bg-primary-dark">
-              Sign in
-            </Button>
-          </Link>
+          ) : (
+            <>
+              <Link to="/register">
+                <Button variant="a" className="underline hover:border-primary-dark hover:no-underline border">
+                  Register
+                </Button>
+              </Link>
+              <Link to="/signin">
+                <Button className="bg-primary-light text-white hover:bg-primary-dark">
+                  Sign in
+                </Button>
+              </Link>
+            </>
+          )}
         </div>
 
         {/* Mobile Menu Toggle */}
@@ -252,19 +276,27 @@ const Navbar = () => {
             ))}
             {/* Mobile Buttons */}
             <div className="flex flex-col space-y-4 mt-4">
-              <Link to="/register">
-                <Button
-                  variant="a"
-                  className="underline hover:border-primary-dark hover:no-underline border"
-                >
-                  Register
-                </Button>
-              </Link>
-              <Link to="/signin">
-                <Button className="bg-primary-light text-white hover:bg-primary-dark">
-                  Sign in
-                </Button>
-              </Link>
+              {isLoggedIn ? (
+                <button onClick={handleLogout} className="bg-primary-light text-white hover:bg-primary-dark">
+                  Logout
+                </button>
+              ) : (
+                <>
+                  <Link to="/register">
+                    <Button
+                      variant="a"
+                      className="underline hover:border-primary-dark hover:no-underline border"
+                    >
+                      Register
+                    </Button>
+                  </Link>
+                  <Link to="/signin">
+                    <Button className="bg-primary-light text-white hover:bg-primary-dark">
+                      Sign in
+                    </Button>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </motion.div>
