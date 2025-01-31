@@ -4,14 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom"; // Use 'useNavigate' for navigation
 import { Menu, X, ChevronDown } from "lucide-react";
 import Cookies from 'js-cookie'; // Assuming token is stored in cookies
-
+import { useLogoutMutation } from "@/services/authApi";
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [mobileDropdownOpen, setMobileDropdownOpen] = useState({});
-  const [isMobile, setIsMobile] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track if user is logged in
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
-
+  const [logout] = useLogoutMutation();
   const menuItems = [
     { label: "Home", link: "/" },
     {
@@ -92,34 +91,22 @@ const Navbar = () => {
 
   // Handle login state based on token
   useEffect(() => {
-    const token = Cookies.get('user'); // Check if token exists in cookies
-    setIsLoggedIn(!!token); // Update state based on token presence
-  }, []);
-
-  // Handle mobile menu resize
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768); 
-      if (window.innerWidth >= 768) {
-        setIsMobileMenuOpen(false); 
-      }
+    const checkLogin = () => {
+      const token = Cookies.get("user");
+      setIsLoggedIn(!!token);
     };
-
-    window.addEventListener("resize", handleResize);
-    handleResize(); 
-
-    return () => window.removeEventListener("resize", handleResize);
+    
+    checkLogin();
+    window.addEventListener("storage", checkLogin);
+    return () => window.removeEventListener("storage", checkLogin);
   }, []);
 
-  // Logout handler
-  const handleLogout = () => {
-    Cookies.remove('token');
-    Cookies.remove('user');
-     // Remove token from cookies on logout
-    setIsLoggedIn(false); // Update login state
-    navigate('/signin'); // Redirect to signin page
+  const handleLogout = async () => {
+    await logout();
+    Cookies.remove("user");
+    setIsLoggedIn(false);
+    navigate("/signin");
   };
-
   return (
     <nav
       className={`relative ${window.location.pathname !== "/" ? "bg-transparent" : "bg-primary-ultra/30"} w-full z-10`}
@@ -182,6 +169,7 @@ const Navbar = () => {
         {/* Desktop Buttons */}
         <div className="hidden lg:flex items-center space-x-4">
           {isLoggedIn ? (
+            
             <Button onClick={handleLogout} className="bg-primary-light text-white hover:bg-primary-dark">
               Logout
             </Button>
