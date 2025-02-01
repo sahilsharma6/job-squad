@@ -5,12 +5,16 @@ import { Link, useNavigate } from "react-router-dom"; // Use 'useNavigate' for n
 import { Menu, X, ChevronDown } from "lucide-react";
 import Cookies from 'js-cookie'; // Assuming token is stored in cookies
 import { useLogoutMutation } from "@/services/authApi";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "@/features/auth/authSlice";
+
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [mobileDropdownOpen, setMobileDropdownOpen] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
-  const [logout] = useLogoutMutation();
+  const [logoutt] = useLogoutMutation();
+  const dispatch=useDispatch();
   const menuItems = [
     { label: "Home", link: "/" },
     {
@@ -90,22 +94,20 @@ const Navbar = () => {
   };
 
   // Handle login state based on token
-  useEffect(() => {
-    const checkLogin = () => {
-      const token = Cookies.get("user");
-      setIsLoggedIn(!!token);
-    };
-    
-    checkLogin();
-    window.addEventListener("storage", checkLogin);
-    return () => window.removeEventListener("storage", checkLogin);
-  }, []);
-
+  const { isAuthenticated} = useSelector((state) => state.auth);
+  console.log(isAuthenticated)
   const handleLogout = async () => {
-    await logout();
-    Cookies.remove("user");
-    setIsLoggedIn(false);
-    navigate("/signin");
+    try {
+      await logoutt() // Ensure mutation completes successfully
+      dispatch(logout());
+      Cookies.remove('user')
+      Cookies.remove('token')
+       // Update Redux state
+      navigate("/signin"); // Redirect to signin page
+
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
   };
   return (
     <nav
@@ -168,8 +170,7 @@ const Navbar = () => {
 
         {/* Desktop Buttons */}
         <div className="hidden lg:flex items-center space-x-4">
-          {isLoggedIn ? (
-            
+          {isAuthenticated ? (
             <Button onClick={handleLogout} className="bg-primary-light text-white hover:bg-primary-dark">
               Logout
             </Button>
@@ -192,10 +193,7 @@ const Navbar = () => {
         {/* Mobile Menu Toggle */}
         {!isMobileMenuOpen && (
           <div className="lg:hidden">
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-2xl text-primary-light"
-            >
+            <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-2xl text-primary-light">
               {isMobileMenuOpen ? <X /> : <Menu />}
             </button>
           </div>
@@ -264,10 +262,13 @@ const Navbar = () => {
             ))}
             {/* Mobile Buttons */}
             <div className="flex flex-col space-y-4 mt-4">
-              {isLoggedIn ? (
+              {isAuthenticated ? (
+                <>
+                <h1>Welcome {user.firstName}</h1>
                 <button onClick={handleLogout} className="bg-primary-light text-white hover:bg-primary-dark">
                   Logout
                 </button>
+                </>
               ) : (
                 <>
                   <Link to="/register">

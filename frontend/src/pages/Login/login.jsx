@@ -57,8 +57,6 @@ const LoginPage = () => {
         const response = await login(formData);
         if (response.data) {
           const { token } = response.data;
-          localStorage.setItem("isLoggedIn", "true"); // Trigger storage event
-window.dispatchEvent(new Event("storage"));
           navigate('/dashboard');
         }
       } catch (error) {
