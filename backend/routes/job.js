@@ -7,7 +7,7 @@ const JobRoutes = Router();
 
 JobRoutes.get("/all",getAllJobs);
 JobRoutes.get("/jobbyfilters",getJobByFilter);
-JobRoutes.get("/:jobId",isAuthenticated,AccessRole(['candidate','company','admin']) ,getJobById);
+JobRoutes.get("/:jobId",isAuthenticated,AccessRole(['applicant','company','admin']) ,getJobById);
 JobRoutes.post("/create",isAuthenticated,AccessRole(['company','admin']) ,createJob);
 JobRoutes.put("/update/:jobId",isAuthenticated,AccessRole(['company','admin']) ,updateJob);
 JobRoutes.delete("/delete/:jobId",isAuthenticated,AccessRole(['company','admin']) ,deleteJob);

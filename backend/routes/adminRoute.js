@@ -3,6 +3,8 @@ import isAuthenticated from '../middleware/isAuthenticated.js';
 import { AccessRole } from '../middleware/AccessRole.js';
 import uploadMiddleware from '../middleware/uploadMiddleware.js';
 import { createArticle, createCategory, deleteArticle, deleteCategory, getArticleById, getArticles, getCategories, updateArticle, updateCategory } from '../controllers/ArticleController.js';
+import ApplicationRouter from './application.js';
+import CompanyRoutes from './company.js';
 
 const AdminRouter = express.Router();
 
@@ -18,7 +20,8 @@ AdminRouter.post('/article-category',isAuthenticated,AccessRole(['admin']),creat
 AdminRouter.delete('/article-category/:id',isAuthenticated,AccessRole(['admin']),deleteCategory);
 AdminRouter.put('/update-article-category/:id',isAuthenticated,AccessRole(['admin']),updateCategory);
 
-
+AdminRouter.use('/job-application',ApplicationRouter);
+AdminRouter.use('/company',CompanyRoutes);
 
 
 
