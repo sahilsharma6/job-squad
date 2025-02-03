@@ -66,6 +66,7 @@
     "react-slick": "^0.30.3",
     "react-tsparticles": "^2.12.2",
     "recharts": "^2.15.0",
+    "redux-persist": "^6.0.0",
     "slick-carousel": "^1.8.1",
     "sonner": "^1.7.2",
     "tailwind-merge": "^2.6.0",

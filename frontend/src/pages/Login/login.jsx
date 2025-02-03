@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import  { useState,useEffect } from "react";
 import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,8 +12,8 @@ import img2 from "../Login/google.png";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from 'js-cookie';
-import { useLoginMutation } from "@/services/authApi";
-
+import { useGoogleCallbackMutation, useLoginMutation } from "@/services/authApi";
+import { useGoogleLoginMutation } from "@/services/authApi";
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -23,9 +23,9 @@ const LoginPage = () => {
   const [errors, setErrors] = useState({});
   const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
-
+  const [googleLogin] = useGoogleLoginMutation();
   const [login] = useLoginMutation();
-
+  const [googleCallback] = useGoogleCallbackMutation()
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData(prevState => ({
@@ -76,6 +76,31 @@ const LoginPage = () => {
     } catch (error) {
       console.error('Authentication failed:', error);
       alert('Failed to authenticate. Please try again.');
+    }
+  };
+  useEffect(() => {
+    // Check for Google callback
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
+    
+    if (code) {
+      googleCallback(code)
+        .then(() => navigate('/dashboard'))
+        .catch(error => {
+          console.error('Callback error', error);
+          alert('Authentication failed');
+        });
+    }
+  }, []);
+
+  const handleGoogleAuth = async () => {
+    try {
+      const val=await googleLogin();
+      console.log(val)
+      // Actual redirection happens in the mutation's onQueryStarted
+    } catch (error) {
+      console.error('Google Authentication failed:', error);
+      alert('Failed to authenticate with Google. Please try again.');
     }
   };
 
@@ -160,7 +185,7 @@ const LoginPage = () => {
                     variant="outline"
                     className="w-full flex items-center justify-center hover:bg-white"
                     type="button"
-                    onClick={auth}
+                    onClick={handleGoogleAuth}
                   >
                     <img
                       src={img2}

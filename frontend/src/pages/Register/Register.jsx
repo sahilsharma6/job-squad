@@ -9,6 +9,7 @@ import img1 from "./image.png";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import { useSignupMutation } from "@/services/authApi";
+import img2 from "../Login/google.png";
 const SignupPage = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -85,7 +86,18 @@ const SignupPage = () => {
       }
     }
   };
-  
+  const auth = async () => {
+    try {
+      const base_url = import.meta.env.VITE_BASE_URL;
+      const response = await fetch(`${base_url}/api/v1/user/request`, { method: 'post' });
+      if (!response.ok) throw new Error('Network response was not ok');
+      const data = await response.json();
+      window.location.href = data.url;
+    } catch (error) {
+      console.error('Authentication failed:', error);
+      alert('Failed to authenticate. Please try again.');
+    }
+  };
 
   return (
     <div className="relative min-h-screen overflow-hidden pb-5">
@@ -167,6 +179,24 @@ const SignupPage = () => {
               <CardContent className="space-y-6">
                 <form onSubmit={handleSubmit} className="space-y-4">
                   {/* First Name */}
+                  <motion.div
+                                    whileHover={{ scale: 1.02 }}
+                                    transition={{ type: "spring", stiffness: 400 }}
+                                  >
+                                    <Button
+                                      variant="outline"
+                                      className="w-full flex items-center justify-center hover:bg-white"
+                                      type="button"
+                                      onClick={auth}
+                                    >
+                                      <img
+                                        src={img2}
+                                        alt="Google logo"
+                                        className="mr-2 h-4 w-4"
+                                      />
+                                      <span className="text-primary-ultra">Sign in with Google</span>
+                                    </Button>
+                                  </motion.div>
                   <motion.div
                     className="space-y-2"
                     whileHover={{ scale: 1.01 }}

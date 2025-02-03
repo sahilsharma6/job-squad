@@ -116,11 +116,11 @@ export const CandidateAppliedJobs = () => {
   };
 
   return (
-    <Card className="p-6">
-      <div className="flex justify-between items-center mb-6">
+    <Card className="p-6 w-full max-w-7xl mx-auto">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
         <h2 className="text-2xl font-semibold">Applied Jobs</h2>
         <Select defaultValue="1month">
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="w-full md:w-[180px]">
             <SelectValue placeholder="Select time period" />
           </SelectTrigger>
           <SelectContent>
@@ -131,62 +131,64 @@ export const CandidateAppliedJobs = () => {
         </Select>
       </div>
 
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Job Info</TableHead>
-            <TableHead>Applied Date</TableHead>
-            <TableHead>Download CV</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Action</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {currentJobs.map((job) => (
-            <TableRow key={job.id}>
-              <TableCell>
-                <div className="flex items-center gap-3">
-                  <div className={`w-12 h-12 rounded-lg ${job.iconBg} flex items-center justify-center text-white text-xl`}>
-                    {job.icon}
-                  </div>
-                  <div>
-                    <div className="font-medium">{job.title}</div>
-                    <div className="text-sm text-gray-500">
-                      {job.company} • {job.location}
+      <div className="overflow-x-auto">
+        <Table className="min-w-full">
+          <TableHeader>
+            <TableRow>
+              <TableHead>Job Info</TableHead>
+              <TableHead>Applied Date</TableHead>
+              <TableHead>Download CV</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>Action</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {currentJobs.map((job) => (
+              <TableRow key={job.id}>
+                <TableCell>
+                  <div className="flex items-center gap-3">
+                    <div className={`w-10 h-10 md:w-12 md:h-12 rounded-lg ${job.iconBg} flex items-center justify-center text-white text-lg md:text-xl`}>
+                      {job.icon}
+                    </div>
+                    <div>
+                      <div className="font-medium text-sm md:text-base">{job.title}</div>
+                      <div className="text-xs md:text-sm text-gray-500">
+                        {job.company} • {job.location}
+                      </div>
                     </div>
                   </div>
-                </div>
-              </TableCell>
-              <TableCell>{job.date}</TableCell>
-              <TableCell>
-                <Button variant="outline" size="sm" className="flex items-center gap-2">
-                  <Download className="w-4 h-4" />
-                  Download CV
-                </Button>
-              </TableCell>
-              <TableCell>
-                <Badge variant={job.status === "Active" ? "success" : "destructive"}>
-                  {job.status}
-                </Badge>
-              </TableCell>
-              <TableCell>
-                <div className="flex gap-2">
-                  <Button variant="outline" size="icon">
-                    <Eye className="w-4 h-4" />
+                </TableCell>
+                <TableCell className="text-xs md:text-sm">{job.date}</TableCell>
+                <TableCell>
+                  <Button variant="outline" size="sm" className="flex items-center gap-2 text-xs md:text-sm">
+                    <Download className="w-3 h-3 md:w-4 md:h-4" />
+                    Download CV
                   </Button>
-                  <Button variant="outline" size="icon">
-                    <Trash2 className="w-4 h-4 text-red-500" />
-                  </Button>
-                </div>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+                </TableCell>
+                <TableCell>
+                  <Badge variant={job.status === "Active" ? "success" : "destructive"}>
+                    {job.status}
+                  </Badge>
+                </TableCell>
+                <TableCell>
+                  <div className="flex gap-2">
+                    <Button variant="outline" size="icon">
+                      <Eye className="w-4 h-4" />
+                    </Button>
+                    <Button variant="outline" size="icon">
+                      <Trash2 className="w-4 h-4 text-red-500" />
+                    </Button>
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
 
-      <div className="mt-6">
+      <div className="mt-6 flex justify-center">
         <Pagination>
-          <PaginationContent>
+          <PaginationContent className="flex flex-wrap gap-2">
             <PaginationItem>
               <PaginationPrevious 
                 onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
@@ -204,7 +206,7 @@ export const CandidateAppliedJobs = () => {
                 </PaginationLink>
               </PaginationItem>
             ))}
-
+            
             <PaginationItem>
               <PaginationNext 
                 onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
