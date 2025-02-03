@@ -12,6 +12,7 @@ import img2 from "../Login/google.png";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from 'js-cookie';
+import { useCompanyloginMutation } from "@/services/authApi";
 
 const CompanyLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -30,6 +31,7 @@ const CompanyLogin = () => {
       [id]: value
     }));
   };
+  const [login]=useCompanyloginMutation()
 
   const validateForm = () => {
     const newErrors = {};
@@ -51,48 +53,30 @@ const CompanyLogin = () => {
     
     if (validateForm()) {
       try {
-        const base_url = import.meta.env.VITE_BASE_URL;
-        const response = await axios.post(`${base_url}/api/v1/user/signin`, {
-          email: formData.email,
-          password: formData.password,
-          rememberMe: rememberMe
-        });
-
-        // Handle successful login
-        console.log('Login successful', response.data);
-        
-        // Store token in a cookie
-        const token = response.data.token;
-        const options = {
-          expires: rememberMe ? 7 : undefined,
-          path: '/'
-        };
-        Cookies.set('token', token, options);
-        
-        // Redirect to dashboard or home
-        navigate('/');
+        const response = await login(formData);
+        if (response.data) {
+          const { token } = response.data;
+          navigate('/dashboard');
+        }
       } catch (error) {
-        console.error('Login failed', error.response?.data);
-        setErrors(prevErrors => ({
-          ...prevErrors,
-          submit: error.response?.data?.message || 'Login failed'
-        }));
+        console.error('Login failed:', error);
+        alert('Login failed. Please try again.');
       }
     }
   };
 
-  const auth = async () => {
-    try {
-      const base_url = import.meta.env.VITE_BASE_URL;
-      const response = await fetch(`${base_url}/api/v1/user/request`, { method: 'post' });
-      if (!response.ok) throw new Error('Network response was not ok');
-      const data = await response.json();
-      window.location.href = data.url;
-    } catch (error) {
-      console.error('Authentication failed:', error);
-      alert('Failed to authenticate. Please try again.');
-    }
-  };
+  // const auth = async () => {
+  //   try {
+  //     const base_url = import.meta.env.VITE_BASE_URL;
+  //     const response = await fetch(`${base_url}/api/v1/user/request`, { method: 'post' });
+  //     if (!response.ok) throw new Error('Network response was not ok');
+  //     const data = await response.json();
+  //     window.location.href = data.url;
+  //   } catch (error) {
+  //     console.error('Authentication failed:', error);
+  //     alert('Failed to authenticate. Please try again.');
+  //   }
+  // };
 
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-primary-light via-primary-ultra to-primary-light overflow-hidden">
@@ -167,7 +151,7 @@ const CompanyLogin = () => {
               </CardHeader>
 
               <CardContent className="space-y-6">
-                <motion.div
+                {/* <motion.div
                   whileHover={{ scale: 1.02 }}
                   transition={{ type: "spring", stiffness: 400 }}
                 >
@@ -184,9 +168,9 @@ const CompanyLogin = () => {
                     />
                     <span className="text-primary-ultra">Sign in with Google</span>
                   </Button>
-                </motion.div>
+                </motion.div> */}
 
-                <div className="relative">
+                {/* <div className="relative">
                   <div className="absolute inset-0 flex items-center">
                     <span className="w-full border-t" />
                   </div>
@@ -195,7 +179,7 @@ const CompanyLogin = () => {
                       Or continue with
                     </span>
                   </div>
-                </div>
+                </div> */}
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <motion.div

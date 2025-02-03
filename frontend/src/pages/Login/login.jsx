@@ -57,7 +57,6 @@ const LoginPage = () => {
         const response = await login(formData);
         if (response.data) {
           const { token } = response.data;
-          Cookies.set('token', token, { expires: 7 });
           navigate('/dashboard');
         }
       } catch (error) {

@@ -23,9 +23,39 @@ export const authApi = createApi({
         }
       }
     }),
+    companylogin: builder.mutation({
+      query: (credentials) => ({
+        url: 'user/signin',
+        method: 'POST',
+        body: credentials
+      }),
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(setCredentials(data.user));
+        } catch (error) {
+          // Handle error if needed
+        }
+      }
+    }),
     signup: builder.mutation({
       query: (userInfo) => ({
-        url: 'user/signup',
+        url: 'company/signup',
+        method: 'POST',
+        body: userInfo
+      }),
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(setCredentials(data.user));
+        } catch (error) {
+          // Handle error if needed
+        }
+      }
+    }),
+    companysignup: builder.mutation({
+      query: (userInfo) => ({
+        url: 'company/signup',
         method: 'POST',
         body: userInfo
       }),
@@ -58,5 +88,7 @@ export const authApi = createApi({
 export const {
   useLoginMutation,
   useSignupMutation,
-  useLogoutMutation
+  useLogoutMutation,
+  useCompanyloginMutation,
+  useCompanysignupMutation
 } = authApi;
