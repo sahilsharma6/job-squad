@@ -4,6 +4,7 @@ import JobRoutes from './job.js';
 import isAuthenticated from '../middleware/isAuthenticated.js';
 import { AccessRole } from '../middleware/AccessRole.js';
 import uploadMiddleware from '../middleware/uploadMiddleware.js';
+import { getJobByCompanyId } from '../controllers/Job.js';
 const CompanyRoutes=express.Router();
 
 CompanyRoutes.post('/signup',uploadMiddleware,signUp);
@@ -20,5 +21,6 @@ CompanyRoutes.put('/validate/:id',isAuthenticated,AccessRole(['admin']),approveC
 CompanyRoutes.delete('/delete/:id',isAuthenticated,AccessRole(['admin']),deleteCompany); // delete company by id   (id is company id)
 
 CompanyRoutes.use('/jobs',JobRoutes);
+CompanyRoutes.get('/posted-jobs',isAuthenticated,AccessRole(['company','admin']),getJobByCompanyId);
 
 export default CompanyRoutes;
