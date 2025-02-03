@@ -111,6 +111,21 @@ export async function getJobById(req, res) {
     }
 }
 
+// get job by company ID
+export async function getJobByCompanyId(req, res) {
+    try {
+        const { companyId } = req.params;
+        const jobs = await JobSchema.find({ companyId });
+        res.status(200).json({ jobs, success: true });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: err.message, success: false });
+    }
+}
+
+
+
+
 // Create a new job
 export async function createJob(req, res) {
     try {
@@ -177,7 +192,8 @@ export async function createJob(req, res) {
         console.log(err);
         res.status(500).json({ message: err.message, success: false });
     }
-}
+}  
+    
 
 // Update a job
 export async function updateJob(req, res) {
