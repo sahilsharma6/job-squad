@@ -1,10 +1,24 @@
 import express from 'express';
-import { signIn, signOut, signUp } from '../controllers/companyController.js';
+import { approveCompany, deleteCompany, getAllCompanies, getCompanyById, getValidCompanies, signIn, signOut, signUp, updateCompany } from '../controllers/companyController.js';
+import JobRoutes from './job.js';
+import isAuthenticated from '../middleware/isAuthenticated.js';
+import { AccessRole } from '../middleware/AccessRole.js';
+import uploadMiddleware from '../middleware/uploadMiddleware.js';
 const CompanyRoutes=express.Router();
 
-CompanyRoutes.post('/signup',signUp);
+CompanyRoutes.post('/signup',uploadMiddleware,signUp);
 CompanyRoutes.post('/signin',signIn);
 CompanyRoutes.get('/logout',signOut);
 
 
-export default CompanyRoutes
+
+CompanyRoutes.get('/all-companies',isAuthenticated,AccessRole(['admin']),getAllCompanies);
+CompanyRoutes.get('/all',getValidCompanies);
+CompanyRoutes.get('/:id',isAuthenticated,AccessRole(['company','admin']),getCompanyById); // get company by id   (id is company id)
+CompanyRoutes.put('/update/:id',isAuthenticated,AccessRole(['company','admin']),updateCompany); // update company by id   (id is company id)
+CompanyRoutes.put('/validate/:id',isAuthenticated,AccessRole(['admin']),approveCompany); // validate company by id   (id is company id)
+CompanyRoutes.delete('/delete/:id',isAuthenticated,AccessRole(['admin']),deleteCompany); // delete company by id   (id is company id)
+
+CompanyRoutes.use('/jobs',JobRoutes);
+
+export default CompanyRoutes;

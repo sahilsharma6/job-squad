@@ -6,10 +6,12 @@ import jwt from 'jsonwebtoken'
 export const signUp = async (req, res) => {
 
     try{
-        const {companyName, companyLogo ,companyDescription ,companyWebsite ,contactPersonName,contactPersonProfile,  contactPersonEmail,password,contactPersonPhone} = req.body;
+        const {companyName,companyDescription ,companyWebsite ,contactPersonName,contactPersonProfile,  contactPersonEmail,password,contactPersonPhone} = req.body;
            if(!companyName || !companyDescription || !contactPersonName || !  contactPersonEmail || !password){
                return res.status(400).json({message: 'All fields are required'})
            }
+
+           const images = req.files.map(file => file.path);
            
          const companyExist = await Company.findOne({contactPersonEmail});
             if(companyExist){
@@ -19,9 +21,10 @@ export const signUp = async (req, res) => {
 
             const hashedPassword = await bcrypt.hash(password, 12);
 
+
            const company =  new Company({
                companyName,
-               companyLogo,
+               companyLogo: images,
                companyDescription,
                companyWebsite,
                contactPersonName,
@@ -111,4 +114,132 @@ export const signOut = async (req, res) => {
         res.status(500).json({message: 'Internal server error'})
     }
 };
+
+
+
+export const getCompany = async (req, res) => {
+    try{
+        const company = await Company.findById(req.user.userId);
+        if(!company){
+            return res.status(400).json({message: 'Company not found'})
+        }
+        res.status(200).json({company})
+    }
+    catch(err){
+        console.log(err)
+        res.status(500).json({message: 'Internal server error'})
+    }
+};
+
+export const updateCompany = async (req, res) => {
+     try{
+        const id = req.params.id;
+        const {companyName,companyDescription ,companyWebsite ,contactPersonName,contactPersonProfile,  contactPersonEmail,contactPersonPhone} = req.body;
+        
+        const images = req.files.map(file => file.path);
+        const company = await Company.findById(id);
+        if(!company){
+            return res.status(400).json({message: 'Company not found'})
+        }
+
+        company.companyName = companyName;
+        company.companyDescription = companyDescription;
+        company.companyWebsite = companyWebsite;
+        company.contactPersonName = contactPersonName;
+        company.contactPersonProfile = contactPersonProfile;
+        company.contactPersonEmail = contactPersonEmail;
+        company.contactPersonPhone = contactPersonPhone;
+        if(images.length !== 0){
+            company.companyLogo = images;
+        }
+        await company.save();
+        res.status(200).json({company})
+
+     }
+        catch(err){
+            console.log(err)
+            res.status(500).json({message: 'Internal server error'})
+        }
+};
+
+
+export const deleteCompany = async (req, res) => {
+    try{
+        const id = req.params.id;
+        const company = await Company.findById(id);
+        if(!company){
+            return res.status(400).json({message: 'Company not found'})
+        }
+        await company.delete();
+        res.status(200).json({message: 'Company deleted successfully'})
+    }
+    catch(err){
+        console.log(err)
+        res.status(500).json({message: 'Internal server error'})
+    }
+};
+
+
+export const getCompanyById = async (req, res) => {
+    try{
+        const id = req.params.id;
+        const company = await Company.findById(id);
+        if(!company){
+            return res.status(400).json({message: 'Company not found'})
+        }
+        res.status(200).json({company})
+    }
+    catch(err){
+        console.log(err)
+        res.status(500).json({message: 'Internal server error'})
+    }
+};
+
+
+export const getValidCompanies = async (req, res) => {
+    try{
+        const companies = await Company.find({isValide: true});
+        res.status(200).json({companies})
+    }
+    catch(err){
+        console.log(err)
+        res.status(500).json({message: 'Internal server error'})
+    }
+};
+
+
+
+
+// for admin
+export const getAllCompanies = async (req, res) => {
+    try{
+        const companies = await Company.find();
+        res.status(200).json({companies})
+    }
+    catch(err){
+        console.log(err)
+        res.status(500).json({message: 'Internal server error'})
+    }
+};
+
+
+export const approveCompany = async (req, res) => {
+    try{
+        const id = req.params.id;
+        const company = await Company.findById(id);
+        if(!company){
+            return res.status(400).json({message: 'Company not found'})
+        }
+        company.isValide = true;
+        await company.save();
+        res.status(200).json({message: 'Company approved successfully'})
+    }
+    catch(err){
+        console.log(err)
+        res.status(500).json({message: 'Internal server error'})
+    }
+}
+
+
+
 

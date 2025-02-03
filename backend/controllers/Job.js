@@ -177,7 +177,8 @@ export async function createJob(req, res) {
         console.log(err);
         res.status(500).json({ message: err.message, success: false });
     }
-}
+}  
+    
 
 // Update a job
 export async function updateJob(req, res) {

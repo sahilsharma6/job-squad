@@ -25,7 +25,7 @@ export const getApplications = async (req, res) => {
 export const getApplicationById = async (req, res) => {
     const { appid } = req.params;
     try {
-        if (req.user.role === 'candidate') {
+        if (req.user.role === 'applicant') {
             const application = await ApplicationSchema.findOne({ _id: appid, applicantId: req.user.userId });
             return res.status(200).json({ application, success: true });
         } else if (req.user.role === 'company') {
