@@ -1,4 +1,4 @@
-import  { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,6 +14,7 @@ import axios from "axios";
 import Cookies from 'js-cookie';
 import { useGoogleCallbackMutation, useLoginMutation } from "@/services/authApi";
 import { useGoogleLoginMutation } from "@/services/authApi";
+
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -26,6 +27,7 @@ const LoginPage = () => {
   const [googleLogin] = useGoogleLoginMutation();
   const [login] = useLoginMutation();
   const [googleCallback] = useGoogleCallbackMutation()
+
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData(prevState => ({
@@ -78,8 +80,8 @@ const LoginPage = () => {
       alert('Failed to authenticate. Please try again.');
     }
   };
+
   useEffect(() => {
-    // Check for Google callback
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code');
     
@@ -95,52 +97,76 @@ const LoginPage = () => {
 
   const handleGoogleAuth = async () => {
     try {
-      const val=await googleLogin();
+      const val = await googleLogin();
       console.log(val)
-      // Actual redirection happens in the mutation's onQueryStarted
     } catch (error) {
       console.error('Google Authentication failed:', error);
       alert('Failed to authenticate with Google. Please try again.');
     }
   };
 
-  return (
-    <div className="relative min-h-screen bg-gradient-to-br from-primary-light via-primary-ultra to-primary-light overflow-hidden">
-      {/* Animated gradient background */}
-      <motion.div
-        className="absolute inset-0"
-        animate={{ backgroundPosition: ["0% 0%", "100% 100%"] }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: "linear",
-        }}
-        style={{
-          backgroundSize: "200% 200%",
-        }}
-      ></motion.div>
+  // Bubble generation function
+  const generateBubbles = () => {
+    return [...Array(20)].map((_, index) => {
+      const size = Math.random() * 80 + 30; // 30-110px
+      const delay = Math.random() * 3;
+      const duration = Math.random() * 15 + 10; // 10-25 seconds
+      const opacity = Math.random() * 0.4 + 0.2; // 0.2-0.6 opacity
 
-      {/* Floating decorative circles */}
-      {[...Array(10)].map((_, index) => (
+      return (
         <motion.div
           key={index}
-          className="absolute rounded-full bg-blue-300 opacity-50"
+          className="absolute rounded-full bg-primary-ultra backdrop-blur-sm"
           style={{
-            width: `${Math.random() * 80 + 20}px`,
-            height: `${Math.random() * 80 + 20}px`,
-            top: `${Math.random() * 100}vh`,
+            width: `${size}px`,
+            height: `${size}px`,
+            top: `${Math.random() * 120}vh`,
             left: `${Math.random() * 100}vw`,
+            background: 'radial-gradient(circle at 30% 30%, rgb(54, 116, 181)))', // Proper blue gradient
+            boxShadow: '0 4px 20px rgb(87, 143, 202), inset 0 0 15px rgb(87, 143, 202)', // Blue shadow with blur
+            border: '1px solid rgba(0,0,255,0.2)' // Blue border
           }}
-          animate={{ y: ["0%", "-200%"], opacity: [0.5, 1, 0] }}
+          
+          
+          
+          animate={{ 
+            y: [
+              0, 
+              `-${Math.random() * 200 + 100}%`, 
+              `-${Math.random() * 250 + 150}%`
+            ],
+            x: [
+              `${Math.random() * 50 - 25}%`, 
+              `${Math.random() * 100 - 50}%`,
+              `${Math.random() * 50 - 25}%`
+            ],
+            scale: [
+              1, 
+              1.1, 
+              0.9, 
+              1
+            ],
+            opacity: [opacity, 0.1, 0]
+          }}
           transition={{
-            duration: Math.random() * 5 + 3,
+            duration: duration,
+            delay: delay,
             repeat: Infinity,
+            repeatType: "loop",
             ease: "easeInOut",
           }}
-        ></motion.div>
-      ))}
+        />
+      );
+    });
+  };
 
-      {/* Main Login Section */}
+  return (
+    <div className="relative min-h-screen bg-gradient-to-br  overflow-hidden">
+      {/* Bubble Background */}
+      {generateBubbles()}
+
+      {/* Rest of the login page remains the same */}
+      {/* ... (previous code remains unchanged) ... */}
       <div className="flex items-center justify-center min-h-screen relative px-4 sm:px-8">
         <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg space-y-8 relative">
           {/* Right Balloon Animation */}

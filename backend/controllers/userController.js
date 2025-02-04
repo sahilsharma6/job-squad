@@ -134,7 +134,8 @@ export const googleSignIn = async (req, res) => {
                 sameSite: 'Lax', 
               });
             userExist.password = undefined;
-            return res.status(200).json({  success: true ,message: "Login successful.",  token, user: userExist});
+            res.status(200).redirect(`${process.env.CLIENT_URL}`);
+            // return res.status(200).json({  success: true ,message: "Login successful.",  token, user: userExist});
         }
 
         const user = await Applicant({ email, firstName: given_name, lastName: family_name, role: 'applicant' });

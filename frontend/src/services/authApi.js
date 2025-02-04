@@ -40,7 +40,7 @@ export const authApi = createApi({
     }),
     signup: builder.mutation({
       query: (userInfo) => ({
-        url: 'company/signup',
+        url: 'user/signup',
         method: 'POST',
         body: userInfo
       }),
