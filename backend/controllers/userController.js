@@ -1,11 +1,13 @@
 import express from 'express'
 import Applicant from '../models/Applicant.js'
 import Address from '../models/Address.js'
+import Education from '../models/Education.js'
 import Experience from '../models/Experience.js'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { OAuth2Client } from 'google-auth-library';
-
+import path from 'path';
+import fs from 'fs';
 
 export const signUp = async (req, res) => {
 
@@ -186,7 +188,7 @@ export const googleSignIn = async (req, res) => {
                 return res.status(400).json({message: 'All fields are required'});
             }
             const user = req.user;
-            const address = new Address({applicantId: user._id, type, location, city, state, country, zipCode});
+            const address = new Address({applicantId: user.userId, type, location, city, state, country, zipCode});
             await address.save();
             res.status(200).json({message: 'Address added successfully'});
         }
@@ -199,7 +201,7 @@ export const googleSignIn = async (req, res) => {
     export const getAddress = async (req, res) => {
         try{
             const user = req.user;
-            const address = await Address.find({applicantId: user._id});
+            const address = await Address.find({applicantId: user.userId});
             res.status(200).json({address});
         }
         catch(err){
@@ -216,7 +218,7 @@ export const googleSignIn = async (req, res) => {
                 return res.status(400).json({message: 'All fields are required'});
             }
             const user = req.user;
-            const address = await Address.findOneAndUpdate({applicantId: user._id}, {type, location, city, state, country, zipCode});
+            const address = await Address.findOneAndUpdate({applicantId: user.userId}, {type, location, city, state, country, zipCode});
             res.status(200).json({message: 'Address updated successfully'});
         }
         catch(err){
@@ -228,7 +230,7 @@ export const googleSignIn = async (req, res) => {
     export const deleteAddress = async (req, res) => {
         try{
             const user = req.user;
-            const address = await Address.findOneAndDelete({applicantId: user._id});
+            const address = await Address.findOneAndDelete({applicantId: user.userId});
             res.status(200).json({message: 'Address deleted successfully'});
         }
         catch(err){
@@ -255,7 +257,7 @@ export const googleSignIn = async (req, res) => {
             }
     
            
-            const applicantId = req.user._id; 
+            const applicantId = req.user.userId; 
             if (!applicantId) {
                 return res.status(401).json({ message: 'Unauthorized' });
             }
@@ -323,7 +325,7 @@ export const googleSignIn = async (req, res) => {
 
     export const getExperience = async (req, res) => {
         try {
-            const applicantId = req.user._id;
+            const applicantId = req.user.userId;
             if (!applicantId) {
                 return res.status(401).json({ message: 'Unauthorized' });
             }
@@ -381,7 +383,7 @@ export const googleSignIn = async (req, res) => {
 
     export const getEducation = async (req, res) => {
         try {
-            const applicantId = req.user._id;
+            const applicantId = req.user.userId;
             if (!applicantId) {
                 return res.status(401).json({ message: 'Unauthorized' });
             }
@@ -408,7 +410,7 @@ export const googleSignIn = async (req, res) => {
                 return res.status(404).json({ message: 'Education entry not found' });
             }
     
-            if (education.applicantId.toString() !== req.user._id.toString()) {
+            if (education.applicantId.toString() !== req.user.userId.toString()) {
                 return res.status(403).json({ message: 'Unauthorized to update this entry' });
             }
     
@@ -431,7 +433,7 @@ export const googleSignIn = async (req, res) => {
                 return res.status(404).json({ message: 'Education entry not found' });
             }
     
-            if (education.applicantId.toString() !== req.user._id.toString()) {
+            if (education.applicantId.toString() !== req.user.userId.toString()) {
                 return res.status(403).json({ message: 'Unauthorized to delete this entry' });
             }
     
@@ -441,5 +443,70 @@ export const googleSignIn = async (req, res) => {
             res.status(500).json({ message: 'Internal server error', error: error.message });
         }
     };
+
+
+   export const uploadResume = async (req, res) => {
+    try {
+        const resume = req.file;
+        if (!resume) {
+            return res.status(400).json({ message: 'Please upload a resume' });
+        }
+        console.log(req.user);
+        const applicantId = req.user.userId;
+        if (!applicantId) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
+
+        const user = await Applicant.findById(applicantId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        const resumeUrl = resume.path;
+        user.resume = resumeUrl;
+        await user.save();
+        res.status(200).json({ message: 'Resume uploaded successfully' });
+
+    }
+    catch(err){
+        console.log(err);
+        res.status(500).json({message: 'Internal server error'});
+    }
+} 
     
-    
+
+
+export const getResume = async (req, res) => {
+  try {
+    const applicantId = req.params.id;
+
+    if (!applicantId) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+
+    const user = await Applicant.findById(applicantId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const resumePath = user.resume;
+    if (!resumePath) {
+      return res.status(404).json({ message: 'Resume not found' });
+    }
+
+    if (!fs.existsSync(resumePath)) {
+      return res.status(404).json({ message: 'Resume file not found on the server' });
+    }
+
+    res.download(resumePath, path.basename(resumePath), (err) => {
+      if (err) {
+        console.error('Error sending file:', err);
+        res.status(500).json({ message: 'Error downloading the file' });
+      }
+    });
+
+  } catch (err) {
+    console.error('Error fetching resume:', err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+

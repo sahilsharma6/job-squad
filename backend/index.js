@@ -26,6 +26,7 @@ app.use(express.json());
 app.use(cookieParser()); 
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/resume', express.static(path.join(__dirname, 'resume')));
 app.use('/api/v1', main);
 
 
