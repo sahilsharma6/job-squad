@@ -11,11 +11,16 @@ import Hero from "@/pages/Home/components/Hero";
 import FAQSection from "./components/Faq";
 import StatsSection from "./components/StatsSection";
 import RecruiterChoiceCard from "./components/AreyouRecuiter";
+import JobPostingBanner from "./components/JobPostingBanner";
 
 const HomePage = () => {
   return (
     <div>
       <Hero />
+
+      <div>
+        <JobPostingBanner />
+      </div>
 
       <div>
         <div className="py-16">
@@ -38,7 +43,7 @@ const HomePage = () => {
             isVerticalCard={false}
           />
         </div>
-       
+
         <div>
           <StatsSection />
         </div>
@@ -62,14 +67,14 @@ const HomePage = () => {
         <div>
           <JobMatchHero />
         </div>
-        <RecruiterChoiceCard/>
+        <RecruiterChoiceCard />
         <div>
-          <FAQSection/>
+          <FAQSection />
         </div>
-                <div className="py-16">
+        <div className="py-16">
           <NewsletterSection />
         </div>
-        
+
       </div>
     </div>
   );
