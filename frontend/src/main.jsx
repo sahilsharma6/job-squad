@@ -22,39 +22,40 @@ import CompanyLogin from "./pages/Login/CompanyLogin";
 
 import DashboardLayout from "./pages/Dashboard/DashboardLayout";
 
-// Candidate Routes
-import { CandidateDashboard } from "./pages/Dashboard/candidate/CandidateDashboard";
-import { CandidateProfile } from "./pages/Dashboard/candidate/CandidateProfile";
-import { CandidateResume } from "./pages/Dashboard/candidate/CandidateResume";
-import { CandidateAppliedJobs } from "./pages/Dashboard/candidate/CandidateAppliedJobs";
-import { CandidateSavedJobs } from "./pages/Dashboard/candidate/CandidateSavedJobs";
-import { CandidateFollowingCompanies } from "./pages/Dashboard/candidate/CandidateFollowingCompanies";
-import { CandidateMeetings } from "./pages/Dashboard/candidate/CandidateMeetings";
-import { CandidateJobAlerts } from "./pages/Dashboard/candidate/CandidateJobAlerts";
-import { CandidateSettings } from "./pages/Dashboard/candidate/CandidateSettings";
-import { CandidateShortlistedJobs } from "./pages/Dashboard/candidate/CandidateShortlistedJobs";
-import { CandidateMessages } from "./pages/Dashboard/candidate/CandidateMessages";
+// // Candidate Routes
+// import { CandidateDashboard } from "./pages/Dashboard/candidate/CandidateDashboard";
+// import { CandidateProfile } from "./pages/Dashboard/candidate/CandidateProfile";
+// import { CandidateResume } from "./pages/Dashboard/candidate/CandidateResume";
+// import { CandidateAppliedJobs } from "./pages/Dashboard/candidate/CandidateAppliedJobs";
+// import { CandidateSavedJobs } from "./pages/Dashboard/candidate/CandidateSavedJobs";
+// import { CandidateFollowingCompanies } from "./pages/Dashboard/candidate/CandidateFollowingCompanies";
+// import { CandidateMeetings } from "./pages/Dashboard/candidate/CandidateMeetings";
+// import { CandidateJobAlerts } from "./pages/Dashboard/candidate/CandidateJobAlerts";
+// import { CandidateSettings } from "./pages/Dashboard/candidate/CandidateSettings";
+// import { CandidateShortlistedJobs } from "./pages/Dashboard/candidate/CandidateShortlistedJobs";
+// import { CandidateMessages } from "./pages/Dashboard/candidate/CandidateMessages";
 
-// Company Routes
-import { CompanyDashboard } from "./pages/Dashboard/company/CompanyDashboard";
-import { CompanyProfile } from "./pages/Dashboard/company/CompanyProfile";
-import { CompanyPostJob } from "./pages/Dashboard/company/CompanyPostJob";
-import { CompanyManageJobs } from "./pages/Dashboard/company/CompanyManageJobs";
-import { CompanyAllCandidates } from "./pages/Dashboard/company/CompanyAllCandidates";
-import { CompanyShortlistedResumes } from "./pages/Dashboard/company/CompanyShortlistedResumes";
-import { CompanyMessages } from "./pages/Dashboard/company/CompanyMessages";
-import { CompanyMeetings } from "./pages/Dashboard/company/CompanyMeetings";
-import { CompanyResumeAlerts } from "./pages/Dashboard/company/CompanyResumeAlerts";
-import { CompanySettings } from "./pages/Dashboard/company/CompanySettings";
-import { AdminDashboard } from "./pages/Dashboard/admin/AdminDashboard";
-import { AdminManageCandidates } from "./pages/Dashboard/admin/users/AdminManageCandidates";
-import { AdminManageCompanies } from "./pages/Dashboard/admin/users/AdminManageCompanies";
-import { AdminManageUnauthorized } from "./pages/Dashboard/admin/users/AdminManageUnauthorized";
-import { AdminViewArticles } from "./pages/Dashboard/admin/articles/AdminViewArticles";
-import { AdminPostArticle } from "./pages/Dashboard/admin/articles/AdminPostArticle";
-import { AdminPostRequirement } from "./pages/Dashboard/admin/AdminPostRequirement";
-import { AdminSettings } from "./pages/Dashboard/admin/AdminSettings";
+// // Company Routes
+// import { CompanyDashboard } from "./pages/Dashboard/company/CompanyDashboard";
+// import { CompanyProfile } from "./pages/Dashboard/company/CompanyProfile";
+// import { CompanyPostJob } from "./pages/Dashboard/company/CompanyPostJob";
+// import { CompanyManageJobs } from "./pages/Dashboard/company/CompanyManageJobs";
+// import { CompanyAllCandidates } from "./pages/Dashboard/company/CompanyAllCandidates";
+// import { CompanyShortlistedResumes } from "./pages/Dashboard/company/CompanyShortlistedResumes";
+// import { CompanyMessages } from "./pages/Dashboard/company/CompanyMessages";
+// import { CompanyMeetings } from "./pages/Dashboard/company/CompanyMeetings";
+// import { CompanyResumeAlerts } from "./pages/Dashboard/company/CompanyResumeAlerts";
+// import { CompanySettings } from "./pages/Dashboard/company/CompanySettings";
+// import { AdminDashboard } from "./pages/Dashboard/admin/AdminDashboard";
+// import { AdminManageCandidates } from "./pages/Dashboard/admin/users/AdminManageCandidates";
+// import { AdminManageCompanies } from "./pages/Dashboard/admin/users/AdminManageCompanies";
+// import { AdminManageUnauthorized } from "./pages/Dashboard/admin/users/AdminManageUnauthorized";
+// import { AdminViewArticles } from "./pages/Dashboard/admin/articles/AdminViewArticles";
+// import { AdminPostArticle } from "./pages/Dashboard/admin/articles/AdminPostArticle";
+// import { AdminPostRequirement } from "./pages/Dashboard/admin/AdminPostRequirement";
+// import { AdminSettings } from "./pages/Dashboard/admin/AdminSettings";
 import { store } from "./store";
+import { DashboardRoutes } from "./dashboardRoutes";
 
 
 createRoot(document.getElementById("root")).render(
@@ -78,8 +79,8 @@ createRoot(document.getElementById("root")).render(
             <Route path="/company" element={<Company />} />
 
             {/* Dashboard Routes - Single DashboardLayout */}
-            <Route path="/dashboard" element={<DashboardLayout />}>
-              {/* Candidate Routes */}
+            {/* <Route path="/dashboard" element={<DashboardLayout />}>
+              Candidate Routes
               <Route path="candidate">
                 <Route index element={<CandidateDashboard />} />
                 <Route path="profile" element={<CandidateProfile />} />
@@ -94,7 +95,7 @@ createRoot(document.getElementById("root")).render(
                 <Route path="settings" element={<CandidateSettings />} />
               </Route>
 
-              {/* Company Routes */}
+              Company Routes
               <Route path="company">
                 <Route index element={<CompanyDashboard />} />
                 <Route path="profile" element={<CompanyProfile />} />
@@ -108,7 +109,7 @@ createRoot(document.getElementById("root")).render(
                 <Route path="settings" element={<CompanySettings />} />
               </Route>
 
-              {/* Admin Routes */}
+              Admin Routes
               <Route path="admin">
                 <Route index element={<AdminDashboard />} />
                 <Route path="users-candidates" element={<AdminManageCandidates />} />
@@ -119,7 +120,15 @@ createRoot(document.getElementById("root")).render(
                 <Route path="post-requirement" element={<AdminPostRequirement />} />
                 <Route path="settings" element={<AdminSettings />} />
               </Route>
+            </Route> */}
+
+            <Route path="/dashboard" element={<DashboardLayout />}>
+              {/* Import the dashboard routes */}
+              {DashboardRoutes}
             </Route>
+
+
+
             <Route path="/reset" element={<ResetPasswordPage />} />
             <Route path="/company" element={<Company />} />
             <Route path="/companyregister" element={<CompanySignupPage />} />

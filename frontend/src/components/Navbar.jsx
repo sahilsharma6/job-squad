@@ -7,40 +7,51 @@ import Cookies from 'js-cookie'; // Assuming token is stored in cookies
 import { useLogoutMutation } from "@/services/authApi";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/features/auth/authSlice";
+import { jobData } from "@/pages/Jobs/jobs-data";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [mobileDropdownOpen, setMobileDropdownOpen] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const navigate = useNavigate();
   const [logoutt] = useLogoutMutation();
   const dispatch=useDispatch();
+
+
+  const extractUniqueIndustries = () => {
+    return Array.from(new Set(jobData.map((job) => job.industry))).slice(0, 6);
+  };
+
+  const extractUniqueLocations = () => {
+    return Array.from(new Set(jobData.map((job) => job.location))).slice(0, 6);
+  };
+
+  const handleSearchRedirect = (type, value) => {
+    const params = new URLSearchParams();
+    params.set(type, value);
+    navigate(`/jobs?${params.toString()}`);
+  };
+
+
   const menuItems = [
     { label: "Home", link: "/" },
     {
       label: "Find a Job",
       dropdown: [
         {
-          title: "Popular categories",
-          items: [
-            { label: "IT jobs", link: "/jobs/it" },
-            { label: "Sales jobs", link: "/jobs/sales" },
-            { label: "Marketing jobs", link: "/jobs/marketing" },
-            { label: "Data Science jobs", link: "/jobs/data-science" },
-            { label: "HR jobs", link: "/jobs/hr" },
-            { label: "Engineering jobs", link: "/jobs/engineering" },
-          ],
+          title: "Popular Categories",
+          items: extractUniqueIndustries().map((industry) => ({
+            label: industry,
+            action: () => handleSearchRedirect("industries", industry),
+          })),
         },
         {
-          title: "Jobs in demand",
-          items: [
-            { label: "Fresher jobs", link: "/jobs/fresher" },
-            { label: "MNC jobs", link: "/jobs/mnc" },
-            { label: "Remote jobs", link: "/jobs/remote" },
-            { label: "Work from home jobs", link: "/jobs/work-from-home" },
-            { label: "Walk-in jobs", link: "/jobs/walk-in" },
-            { label: "Part-time jobs", link: "/jobs/part-time" },
-          ],
+          title: "By Location",
+          items: extractUniqueLocations().map((location) => ({
+            label: location,
+            action: () => handleSearchRedirect("location", location),
+          })),
         },
       ],
     },
@@ -149,13 +160,15 @@ const Navbar = () => {
                         <ul>
                           {section.items.map((dropdownItem, idx) => (
                             <li key={idx}>
-                              <Link
-                                onClick={() => setIsMobileMenuOpen(false)}
-                                to={dropdownItem.link}
-                                className="text-sm hover:text-white hover:bg-grey-muted rounded-md px-2 py-1 block"
-                              >
-                                {dropdownItem.label}
-                              </Link>
+                              {dropdownItem.link ? (
+                                <Link to={dropdownItem.link} className="text-sm hover:text-white hover:bg-grey-muted rounded-md px-2 py-1 block">
+                                  {dropdownItem.label}
+                                </Link>
+                              ) : (
+                                <span onClick={dropdownItem.action} className="text-sm hover:text-white hover:bg-grey-muted rounded-md px-2 py-1 block cursor-pointer">
+                                  {dropdownItem.label}
+                                </span>
+                              )}
                             </li>
                           ))}
                         </ul>
