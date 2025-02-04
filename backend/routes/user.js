@@ -1,7 +1,8 @@
 import express from 'express';
-import { addEducation, addExperience, deleteAddress, deleteEducation, deleteExperience, getAddress, getEducation, getExperience, googleSignIn, request, setAddress, signIn, signOut, signUp, updateAddress, updateEducation, updateExperience } from '../controllers/userController.js';
+import { addEducation, addExperience, deleteAddress, deleteEducation, deleteExperience, getAddress, getEducation, getExperience, getResume, googleSignIn, request, setAddress, signIn, signOut, signUp, updateAddress, updateEducation, updateExperience, uploadResume } from '../controllers/userController.js';
 import isAuthenticated from '../middleware/isAuthenticated.js';
 import ApplicationRouter from './application.js';
+import uploadResumeMiddleware from '../middleware/uploadResumeMiddleware.js';
 const UserRoutes=express.Router();
 
 UserRoutes.post('/signup',signUp)
@@ -29,7 +30,8 @@ UserRoutes.post('/seteducation',isAuthenticated,addEducation);
 UserRoutes.get('/geteducation',isAuthenticated,getEducation);
 UserRoutes.put('/updateeducation/:id',isAuthenticated,updateEducation); // id is education id
 UserRoutes.delete('/deleteeducation/:id',isAuthenticated,deleteEducation); // id is education id
-
+UserRoutes.post('/resume',isAuthenticated,uploadResumeMiddleware,uploadResume);
+UserRoutes.get('/resume/:id',isAuthenticated,getResume); // id is user id
 //all  jobs
 UserRoutes.use('/job-application',ApplicationRouter);
 
