@@ -84,41 +84,39 @@ export const authApi = createApi({
     }),
     googleLogin: builder.mutation({
       query: () => ({
-        url: '/user/request',
-        method: 'POST',
-        credentials: 'include'
+        url: "/user/request",
+        method: "POST",
+        credentials: "include",
       }),
-      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+      async onQueryStarted(arg, { queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          
-          // Redirect to Google OAuth URL
           if (data.url) {
             window.location.href = data.url;
+          } else {
+            console.error("Google OAuth URL not found in response.");
           }
         } catch (error) {
-          console.error('Google login failed', error);
+          console.error("Google login failed", error);
         }
-      }
+      },
     }),
     googleCallback: builder.mutation({
       query: (code) => ({
-        url: 'user/callback',
-        method: 'POST',
+        url: "/user/callback",
+        method: "POST",
         body: { code },
-        credentials: 'include'
+        credentials: "include",
       }),
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          
-          // Set user credentials in Redux
           dispatch(setCredentials(data.user));
         } catch (error) {
-          console.error('Google callback failed', error);
+          console.error("Google callback failed", error);
         }
-      }
-    })
+      },
+    }),
   })
 });
 

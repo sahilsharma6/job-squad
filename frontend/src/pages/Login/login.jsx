@@ -14,6 +14,8 @@ import axios from "axios";
 import Cookies from 'js-cookie';
 import { useGoogleCallbackMutation, useLoginMutation } from "@/services/authApi";
 import { useGoogleLoginMutation } from "@/services/authApi";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "@/features/auth/authSlice";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -21,6 +23,7 @@ const LoginPage = () => {
     email: '',
     password: ''
   });
+  const dispatch=useDispatch()
   const [errors, setErrors] = useState({});
   const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
@@ -82,28 +85,51 @@ const LoginPage = () => {
   };
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get('code');
-    
-    if (code) {
-      googleCallback(code)
-        .then(() => navigate('/dashboard'))
-        .catch(error => {
-          console.error('Callback error', error);
-          alert('Authentication failed');
-        });
-    }
-  }, []);
+    console.log("Current URL:", window.location.href);
 
-  const handleGoogleAuth = async () => {
-    try {
-      const val = await googleLogin();
-      console.log(val)
-    } catch (error) {
-      console.error('Google Authentication failed:', error);
-      alert('Failed to authenticate with Google. Please try again.');
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get("code");
+
+    console.log("Extracted Code:", code);
+    console.log("URL Params:", urlParams.toString());
+
+    if (code) {
+        googleCallback({ code }) // Send code to backend
+            .unwrap()
+            .then((data) => {
+                console.log("Google callback successful:", data);
+                dispatch(setCredentials(data.user));
+                navigate("/dashboard");
+            })
+            .catch((error) => {
+                console.error("Google callback error:", error);
+                alert("Authentication failed");
+            });
+
+        // Remove the code from the URL after sending it
+        window.history.replaceState(null, "", window.location.pathname);
     }
-  };
+}, [googleCallback, dispatch, navigate]);
+const handleGoogleAuth = async () => {
+  try {
+      console.log("Triggering Google Login...");
+      const response = await googleLogin().unwrap();
+      
+      if (response.url) {
+          console.log("Redirecting to Google OAuth:", response.url);
+          window.location.href = response.url; // Redirect to Google OAuth page
+      } else {
+          console.error("Google OAuth URL not found in response.");
+      }
+  } catch (error) {
+      console.error("Google Authentication failed:", error);
+      alert("Failed to authenticate with Google. Please try again.");
+  }
+};
+
+
+
+  
 
   // Bubble generation function
   const generateBubbles = () => {

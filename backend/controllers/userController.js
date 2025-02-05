@@ -108,66 +108,87 @@ export const signIn = async (req, res) => {
       
       }
 
-export const googleSignIn = async (req, res) => {
-    try{
-        const code = req.query.code;
-        const redirectURL = `${process.env.BASE_URL}/api/v1/user/googlelogin`;
-        const oAuth2Client = new OAuth2Client(
+      export const googleSignIn = async (req, res) => {
+        try {
+          const { code } = req.query;
+          const redirectURL = `${process.env.BASE_URL}/api/v1/user/googlelogin`;
+      
+          // Initialize OAuth2Client
+          const oAuth2Client = new OAuth2Client(
             process.env.CLIENT_ID,
             process.env.CLIENT_SECRET,
             redirectURL
           );
-        const r =  await oAuth2Client.getToken(code);
-        await oAuth2Client.setCredentials(r.tokens);
-        const response = await fetch(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=${oAuth2Client.credentials.access_token}`);
-        console.log(response);
-        const data = await response.json();
-
-        console.log(data);
-
-        const { email, given_name, family_name } = data;
-        const userExist = await Applicant.findOne({ email });
-        if(userExist){
-            const token = jwt.sign({id: userExist._id ,role: userExist.role}, process.env.JWT, { expiresIn: '1h' });
+      
+          // Exchange code for tokens
+          const { tokens } = await oAuth2Client.getToken(code);
+          oAuth2Client.setCredentials(tokens);
+      
+          // Fetch user information
+          const response = await fetch(
+            `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${tokens.access_token}`
+          );
+          const userData = await response.json();
+      
+          const { email, given_name, family_name } = userData;
+          let user = await Applicant.findOne({ email });
+      
+          // Common token and cookie setting logic
+          const createUserResponse = async (currentUser) => {
+            const token = jwt.sign(
+              { id: currentUser._id, role: currentUser.role },
+              process.env.JWT,
+              { expiresIn: '1h' }
+            );
+      
+            // Set authentication token
             res.cookie('token', token, {
-                httpOnly: process.env.NODE_ENV === 'production',
-                secure: process.env.NODE_ENV === 'production',
-                maxAge: 36000000, 
-                sameSite: 'Lax', 
-              });
-            userExist.password = undefined;
-            res.status(200).redirect(`${process.env.CLIENT_URL}`);
-            // return res.status(200).json({  success: true ,message: "Login successful.",  token, user: userExist});
-        }
-
-        const user = await Applicant({ email, firstName: given_name, lastName: family_name, role: 'applicant' });
-        await user.save();
-        const token = jwt.sign({userId: user._id ,role: user.role}, process.env.JWT, { expiresIn: '1h' });
-
-
-        res.cookie('token', token, {
-            httpOnly: process.env.NODE_ENV === 'production',
-            secure: process.env.NODE_ENV === 'production',
-            maxAge: 36000000, 
-            sameSite: 'Lax', 
+              httpOnly: process.env.NODE_ENV === 'production',
+              secure: process.env.NODE_ENV === 'production',
+              maxAge: 36000000,
+              sameSite: 'Lax',
+            });
+      
+            // Set user info cookie
+            const encodedUserData = Buffer.from(
+              JSON.stringify({ id: currentUser._id, role: currentUser.role })
+            ).toString('base64');
+      
+            res.cookie('user', encodedUserData, {
+              httpOnly: false,
+              secure: process.env.NODE_ENV === 'production',
+              maxAge: 36000000,
+              sameSite: 'Lax',
+            });
+      
+            return res.status(200).redirect(process.env.CLIENT_URL);
+          };
+      
+          // Existing user flow
+          if (user) {
+            return createUserResponse(user);
+          }
+      
+          // New user creation
+          user = new Applicant({
+            email,
+            firstName: given_name,
+            lastName: family_name,
+            role: 'applicant',
           });
-
-        const encodeddata = Buffer.from(JSON.stringify({id: user._id, role: user.role})).toString('base64');  
-        res.cookie('user', encodeddata, {
-            httpOnly: false,
-            secure: process.env.NODE_ENV === 'production',
-            maxAge: 36000000,
-            sameSite: 'Lax',
-        }); 
-            res.status(200).redirect(`${process.env.CLIENT_URL}`);
-
-    }
-    catch(err){
-        console.log(err)
-        res.status(500).json({message: 'Internal server error'})
-    }
-}
-
+      
+          await user.save();
+          return createUserResponse(user);
+      
+        } catch (error) {
+          console.error('Google Sign-In Error:', error);
+          res.status(500).json({ 
+            message: 'Internal server error during Google authentication',
+            error: error.message 
+          });
+        }
+      };
+      
  export const signOut = async (req, res) => {
         try{
             res.clearCookie('token');

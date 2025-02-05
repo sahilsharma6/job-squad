@@ -102,6 +102,8 @@ const Navbar = () => {
       dispatch(logout());
       Cookies.remove('user')
       Cookies.remove('token')
+      localStorage.removeItem('user')
+      localStorage.removeItem('token')
        // Update Redux state
       navigate("/signin"); // Redirect to signin page
 
