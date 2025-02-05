@@ -81,9 +81,7 @@ const jobSchema = new mongoose.Schema({
         default: 'active',
         // enum: ['active', 'inactive']
     },
-    jobQuestions: {
-        type: [Object],//{question:String,required:Boolean}
-    }
+    jobQuestions:[]
 });
 
 const Job = mongoose.model('Job', jobSchema);
