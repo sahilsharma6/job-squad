@@ -156,6 +156,7 @@ const Navbar = () => {
         },
       ],
     },
+    { label: "Blog", link: "/blogs" },
     { label: "Contact", link: "/contact" },
   ];
 
