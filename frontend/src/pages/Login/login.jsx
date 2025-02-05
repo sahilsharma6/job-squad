@@ -71,45 +71,35 @@ const LoginPage = () => {
     }
   };
 
-  const auth = async () => {
-    try {
-      const base_url = import.meta.env.VITE_BASE_URL;
-      const response = await fetch(`${base_url}/api/v1/user/request`, { method: 'post' });
-      if (!response.ok) throw new Error('Network response was not ok');
-      const data = await response.json();
-      window.location.href = data.url;
-    } catch (error) {
-      console.error('Authentication failed:', error);
-      alert('Failed to authenticate. Please try again.');
-    }
-  };
 
-  useEffect(() => {
-    console.log("Current URL:", window.location.href);
+//   useEffect(() => {
+//     console.log("Current URL:", window.location.href);
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get("code");
+//     const urlParams = new URLSearchParams(window.location.search);
+//     const code = urlParams.get("code");
 
-    console.log("Extracted Code:", code);
-    console.log("URL Params:", urlParams.toString());
+//     console.log("Extracted Code:", code);
+//     console.log("URL Params:", urlParams.toString());
 
-    if (code) {
-        googleCallback({ code }) // Send code to backend
-            .unwrap()
-            .then((data) => {
-                console.log("Google callback successful:", data);
-                dispatch(setCredentials(data.user));
-                navigate("/dashboard");
-            })
-            .catch((error) => {
-                console.error("Google callback error:", error);
-                alert("Authentication failed");
-            });
+//     if (code) {
+//         googleCallback({ code }) // Send code to backend
+//             .unwrap()
+//             .then((data) => {
+//                 console.log("Google callback successful:", data);
+//                 dispatch(setCredentials(data.user));
+//                 navigate("/dashboard");
+//             })
+//             .catch((error) => {
+//                 console.error("Google callback error:", error);
+//                 alert("Authentication failed");
+//             });
 
-        // Remove the code from the URL after sending it
-        window.history.replaceState(null, "", window.location.pathname);
-    }
-}, [googleCallback, dispatch, navigate]);
+//         // Remove the code from the URL after sending it
+//         window.history.replaceState(null, "", window.location.pathname);
+//     }
+// }, [googleCallback, dispatch, navigate]);
+
+
 const handleGoogleAuth = async () => {
   try {
       console.log("Triggering Google Login...");

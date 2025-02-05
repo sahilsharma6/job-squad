@@ -82,25 +82,35 @@ export const authApi = createApi({
         }
       }
     }),
+    // googleLogin: builder.mutation({
+    //   query: () => ({
+    //     url: "/user/request",
+    //     method: "POST",
+    //     credentials: "include",
+    //   }),
+    //   async onQueryStarted(arg, { queryFulfilled }) {
+    //     try {
+    //       const { data } = await queryFulfilled;
+    //       if (data.url) {
+    //         window.location.href = data.url;
+    //       } else {
+    //         console.error("Google OAuth URL not found in response.");
+    //       }
+    //     } catch (error) {
+    //       console.error("Google login failed", error);
+    //     }
+    //   },
+    // }),
     googleLogin: builder.mutation({
       query: () => ({
         url: "/user/request",
         method: "POST",
-        credentials: "include",
       }),
-      async onQueryStarted(arg, { queryFulfilled }) {
-        try {
-          const { data } = await queryFulfilled;
-          if (data.url) {
-            window.location.href = data.url;
-          } else {
-            console.error("Google OAuth URL not found in response.");
-          }
-        } catch (error) {
-          console.error("Google login failed", error);
-        }
-      },
     }),
+    fetchUser: builder.query({
+      query: () => "/user/me", // Fetch user details
+    }),
+
     googleCallback: builder.mutation({
       query: (code) => ({
         url: "/user/callback",
@@ -127,5 +137,6 @@ export const {
   useCompanyloginMutation,
   useCompanysignupMutation,
   useGoogleLoginMutation,
-  useGoogleCallbackMutation
+  useGoogleCallbackMutation,
+  useFetchUserQuery
 } = authApi;

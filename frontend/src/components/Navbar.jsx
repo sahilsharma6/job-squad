@@ -4,9 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom"; // Use 'useNavigate' for navigation
 import { Menu, X, ChevronDown } from "lucide-react";
 import Cookies from 'js-cookie'; // Assuming token is stored in cookies
-import { useLogoutMutation } from "@/services/authApi";
+import { useFetchUserQuery, useLogoutMutation } from "@/services/authApi";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "@/features/auth/authSlice";
+import { logout, setCredentials } from "@/features/auth/authSlice";
 import { jobData } from "@/pages/Jobs/jobs-data";
 
 const Navbar = () => {
@@ -17,7 +17,7 @@ const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [logoutt] = useLogoutMutation();
   const dispatch=useDispatch();
-
+  const { data: user, error } = useFetchUserQuery();
 
   const extractUniqueIndustries = () => {
     return Array.from(new Set(jobData.map((job) => job.industry))).slice(0, 6);
@@ -103,6 +103,25 @@ const Navbar = () => {
       [index]: !prev[index],
     }));
   };
+  // useEffect(() => {
+  //   const fetchUserData = async () => {
+  //     try {
+  //       const response = await fetch("/api/v1/user/me", { credentials: "include" });
+  //       const userData = await response.json();
+  //       console.log(response);
+  //       if (userData) {
+  //         console.log("User Data Fetched:", userData);
+  //         dispatch(setCredentials(userData)); // Store user in Redux
+  //         navigate("/dashboard"); // Redirect after login
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching user data:", error);
+  //       alert("Authentication failed");
+  //     }
+  //   };
+  
+  //   fetchUserData();
+  // }, [dispatch, navigate]);
 
   // Handle login state based on token
   const { isAuthenticated} = useSelector((state) => state.auth);
@@ -122,6 +141,7 @@ const Navbar = () => {
       console.error("Logout failed:", error);
     }
   };
+  
   return (
     <nav
       className={`relative ${window.location.pathname !== "/" ? "bg-transparent" : "bg-primary-ultra/30"} w-full z-10`}

@@ -188,6 +188,20 @@ export const signIn = async (req, res) => {
           });
         }
       };
+      export const getdata =async (req, res) => {
+        try {
+          const token = req.cookies.token;
+          if (!token) return res.status(401).json({ message: "Unauthorized" });
+      
+          const decoded = jwt.verify(token, process.env.JWT);
+          const user = await Applicant.findById(decoded.id).select("-password"); // Exclude password
+      
+          if (!user) return res.status(404).json({ message: "User not found" });
+          res.json(user);
+        } catch (error) {
+          res.status(500).json({ message: "Server error", error: error.message });
+        }
+      };
       
  export const signOut = async (req, res) => {
         try{
