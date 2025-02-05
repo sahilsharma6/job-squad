@@ -1,8 +1,31 @@
 import mongoose from 'mongoose';
-
-
+const jobQuestionSchema = new mongoose.Schema({
+    type: {
+        type: String,
+        required: true
+    },
+    label: {
+        type: String,
+        required: true
+    },
+    fieldName: {
+        type: String,
+        required: true
+    },
+    options: [
+        {
+            label: {
+                type: String,
+                required: true
+            },
+            value: {
+                type: String,
+                required: true
+            }
+        }
+    ]
+});
 const jobSchema = new mongoose.Schema({
-
     companyId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Company',
@@ -11,17 +34,13 @@ const jobSchema = new mongoose.Schema({
     jobTitle: {
         type: String,
         required: true
-        // enum: ['Full Time', 'Part Time', 'Internship']
     },
     jobSector: {
         type: String,
-        required: true,
-        ref: 'JobSector'
     },
     jobRole: {
         type: String,
         required: true
-        // enum:["web-developer","software-developer","data-analyst","data-scientist","product-manager","project-manager","business-analyst","business-development","marketing","sales","finance","human-resource","designer","others"]
     },
     jobDescription: {
         type: String,
@@ -30,35 +49,43 @@ const jobSchema = new mongoose.Schema({
     jobType: {
         type: String,
         required: true
-        // enum: ['Remote', 'Hybrid', 'On-site']
     },
     jobLocation: {
         type: String,
-        // required: true
+        required: true
+    },
+    phone: {
+        type: String
+    },
+    email: {
+        type: String,
+    },
+    experience: {
+        type: String,
+    },
+    jobLevel: {
+        type: String
+    },
+    tools: {
+        type: [String]
     },
     jobCity: { 
         type: String,
-        // required: true
     },
     jobState: {
         type: String,
-        // required: true
     },
     jobCountry: {
         type: String,
-        // required: true
     },
     jobZipCode: {
         type: String,
-        // required: true
     },
     minSalary: {
         type: Number,
-        // required: true
     },
     maxSalary: {
         type: Number,
-        // required: true
     },
     jobVacancy: {
         type: Number,
@@ -79,13 +106,8 @@ const jobSchema = new mongoose.Schema({
     jobStatus: {
         type: String,
         default: 'active',
-        // enum: ['active', 'inactive']
     },
-    jobQuestions:[]
+    jobQuestions: [jobQuestionSchema] // Use the defined jobQuestionSchema
 });
-
 const Job = mongoose.model('Job', jobSchema);
-
 export default Job;
-
-

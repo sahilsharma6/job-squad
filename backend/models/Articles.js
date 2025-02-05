@@ -2,11 +2,6 @@ import mongoose from 'mongoose';
 
 const articleSchema = new mongoose.Schema({
 
-    applicantId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Applicant',
-        required: true
-    },
     category: {
         type: String,
         required: true
@@ -19,9 +14,9 @@ const articleSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    image: {
-        type: String,
-        required: true
+    images: {
+        type: [String],
+        // required: true
     },
     date: {
         type: Date,

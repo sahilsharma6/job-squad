@@ -1,7 +1,7 @@
 import ApplicationSchema from "../models/Application.js";
 import JobSchema from "../models/Job.js";
 import ApplicantSchema from "../models/Applicant.js";
-import QuestionValidation from "../config/QustionValidation.js";
+import AnswerValidation from "../config/QustionValidation.js";
 
 // Controller functions
 
@@ -25,7 +25,7 @@ export const getApplications = async (req, res) => {
 export const getApplicationById = async (req, res) => {
     const { appid } = req.params;
     try {
-        if (req.user.role === 'candidate') {
+        if (req.user.role === 'applicant') {
             const application = await ApplicationSchema.findOne({ _id: appid, applicantId: req.user.userId });
             return res.status(200).json({ application, success: true });
         } else if (req.user.role === 'company') {
@@ -42,7 +42,8 @@ export const getApplicationById = async (req, res) => {
 };
 
 // POST
-export const createApplication = async (req, res) => {
+export const createApplication = async (req, res) => { 
+     try {
     const { jobId } = req.params;
     const getJob = await JobSchema.findById(jobId);
     if (!getJob._id) {
@@ -57,7 +58,7 @@ export const createApplication = async (req, res) => {
         if (req.body.jobAnswers.length !== getJob.jobQuestions.length) {
             return res.status(404).json({ message: "Please provide all the answers", success: false });
         }
-        const getErrors = QuestionValidation(getJob.jobQuestions, req.body.jobAnswers);
+        const getErrors = AnswerValidation(getJob.jobQuestions, req.body.jobAnswers);
         if (getErrors.length !== 0) {
             return res.status(404).json({ message: getErrors, success: false });
         }
@@ -74,11 +75,11 @@ export const createApplication = async (req, res) => {
             jobAnswers: jobAnswers
         }
     );
-    try {
+  
         await newApplication.save();
         res.status(201).json({newApplication,success:true});
     } catch (error) {
-        res.status(409).json({ message: error.message,success:false });
+        res.status(500).json({ message: error.message,success:false });
     }
 };
 

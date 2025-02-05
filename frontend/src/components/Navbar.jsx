@@ -1,13 +1,38 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router-dom"; // Use 'useNavigate' for navigation
 import { Menu, X, ChevronDown } from "lucide-react";
+import Cookies from 'js-cookie'; // Assuming token is stored in cookies
+import { useLogoutMutation } from "@/services/authApi";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "@/features/auth/authSlice";
+import { jobData } from "@/pages/Jobs/jobs-data";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [mobileDropdownOpen, setMobileDropdownOpen] = useState({});
-  const [isMobile, setIsMobile] = useState(false); // Track screen size
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [logoutt] = useLogoutMutation();
+  const dispatch=useDispatch();
+
+
+  const extractUniqueIndustries = () => {
+    return Array.from(new Set(jobData.map((job) => job.industry))).slice(0, 6);
+  };
+
+  const extractUniqueLocations = () => {
+    return Array.from(new Set(jobData.map((job) => job.location))).slice(0, 6);
+  };
+
+  const handleSearchRedirect = (type, value) => {
+    const params = new URLSearchParams();
+    params.set(type, value);
+    navigate(`/jobs?${params.toString()}`);
+  };
+
 
   const menuItems = [
     { label: "Home", link: "/" },
@@ -15,26 +40,18 @@ const Navbar = () => {
       label: "Find a Job",
       dropdown: [
         {
-          title: "Popular categories",
-          items: [
-            { label: "IT jobs", link: "/jobs/it" },
-            { label: "Sales jobs", link: "/jobs/sales" },
-            { label: "Marketing jobs", link: "/jobs/marketing" },
-            { label: "Data Science jobs", link: "/jobs/data-science" },
-            { label: "HR jobs", link: "/jobs/hr" },
-            { label: "Engineering jobs", link: "/jobs/engineering" },
-          ],
+          title: "Popular Categories",
+          items: extractUniqueIndustries().map((industry) => ({
+            label: industry,
+            action: () => handleSearchRedirect("industries", industry),
+          })),
         },
         {
-          title: "Jobs in demand",
-          items: [
-            { label: "Fresher jobs", link: "/jobs/fresher" },
-            { label: "MNC jobs", link: "/jobs/mnc" },
-            { label: "Remote jobs", link: "/jobs/remote" },
-            { label: "Work from home jobs", link: "/jobs/work-from-home" },
-            { label: "Walk-in jobs", link: "/jobs/walk-in" },
-            { label: "Part-time jobs", link: "/jobs/part-time" },
-          ],
+          title: "By Location",
+          items: extractUniqueLocations().map((location) => ({
+            label: location,
+            action: () => handleSearchRedirect("location", location),
+          })),
         },
       ],
     },
@@ -87,23 +104,22 @@ const Navbar = () => {
     }));
   };
 
+  // Handle login state based on token
+  const { isAuthenticated} = useSelector((state) => state.auth);
+  console.log(isAuthenticated)
+  const handleLogout = async () => {
+    try {
+      await logoutt() // Ensure mutation completes successfully
+      dispatch(logout());
+      Cookies.remove('user')
+      Cookies.remove('token')
+       // Update Redux state
+      navigate("/signin"); // Redirect to signin page
 
-
-  // close mobile menu when screen size is greater than 768px
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768); 
-      if (window.innerWidth >= 768) {
-        setIsMobileMenuOpen(false); 
-      }
-    };
-
-    window.addEventListener("resize", handleResize);
-    handleResize(); 
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
   return (
     <nav
       className={`relative ${window.location.pathname !== "/" ? "bg-transparent" : "bg-primary-ultra/30"} w-full z-10`}
@@ -144,13 +160,15 @@ const Navbar = () => {
                         <ul>
                           {section.items.map((dropdownItem, idx) => (
                             <li key={idx}>
-                              <Link
-                                onClick={() => setIsMobileMenuOpen(false)}
-                                to={dropdownItem.link}
-                                className="text-sm hover:text-white hover:bg-grey-muted rounded-md px-2 py-1 block"
-                              >
-                                {dropdownItem.label}
-                              </Link>
+                              {dropdownItem.link ? (
+                                <Link to={dropdownItem.link} className="text-sm hover:text-white hover:bg-grey-muted rounded-md px-2 py-1 block">
+                                  {dropdownItem.label}
+                                </Link>
+                              ) : (
+                                <span onClick={dropdownItem.action} className="text-sm hover:text-white hover:bg-grey-muted rounded-md px-2 py-1 block cursor-pointer">
+                                  {dropdownItem.label}
+                                </span>
+                              )}
                             </li>
                           ))}
                         </ul>
@@ -165,25 +183,30 @@ const Navbar = () => {
 
         {/* Desktop Buttons */}
         <div className="hidden lg:flex items-center space-x-4">
-          <Link to="/register">
-            <Button variant="a" className="underline hover:border-primary-dark hover:no-underline border">
-              Register
+          {isAuthenticated ? (
+            <Button onClick={handleLogout} className="bg-primary-light text-white hover:bg-primary-dark">
+              Logout
             </Button>
-          </Link>
-          <Link to="/signin">
-            <Button className="bg-primary-light text-white hover:bg-primary-dark">
-              Sign in
-            </Button>
-          </Link>
+          ) : (
+            <>
+              <Link to="/register">
+                <Button variant="a" className="underline hover:border-primary-dark hover:no-underline border">
+                  Register
+                </Button>
+              </Link>
+              <Link to="/signin">
+                <Button className="bg-primary-light text-white hover:bg-primary-dark">
+                  Sign in
+                </Button>
+              </Link>
+            </>
+          )}
         </div>
 
         {/* Mobile Menu Toggle */}
         {!isMobileMenuOpen && (
           <div className="lg:hidden">
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-2xl text-primary-light"
-            >
+            <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-2xl text-primary-light">
               {isMobileMenuOpen ? <X /> : <Menu />}
             </button>
           </div>
@@ -252,19 +275,30 @@ const Navbar = () => {
             ))}
             {/* Mobile Buttons */}
             <div className="flex flex-col space-y-4 mt-4">
-              <Link to="/register">
-                <Button
-                  variant="a"
-                  className="underline hover:border-primary-dark hover:no-underline border"
-                >
-                  Register
-                </Button>
-              </Link>
-              <Link to="/signin">
-                <Button className="bg-primary-light text-white hover:bg-primary-dark">
-                  Sign in
-                </Button>
-              </Link>
+              {isAuthenticated ? (
+                <>
+                <h1>Welcome {user.firstName}</h1>
+                <button onClick={handleLogout} className="bg-primary-light text-white hover:bg-primary-dark">
+                  Logout
+                </button>
+                </>
+              ) : (
+                <>
+                  <Link to="/register">
+                    <Button
+                      variant="a"
+                      className="underline hover:border-primary-dark hover:no-underline border"
+                    >
+                      Register
+                    </Button>
+                  </Link>
+                  <Link to="/signin">
+                    <Button className="bg-primary-light text-white hover:bg-primary-dark">
+                      Sign in
+                    </Button>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </motion.div>

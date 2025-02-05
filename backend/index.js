@@ -26,11 +26,12 @@ app.use(express.json());
 app.use(cookieParser()); 
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/resume', express.static(path.join(__dirname, 'resume')));
 app.use('/api/v1', main);
 
 
 connectDB();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3300;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
