@@ -13,6 +13,7 @@ import { MapPin, Clock, LayoutGrid, LayoutList, Search, ChevronDown, ChevronUp, 
 import { jobData, industryFilters, salaryRanges } from '../jobs-data';
 import JobCard from './JobCard';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { useSearchParams } from 'react-router';
 
 // Utility function for parsing relative time
 function parseRelativeTime(timeAgo) {
@@ -66,16 +67,97 @@ const FilterOption = ({ name, count, checked, onChange, disabled }) => {
 
 
 const JobSection = () => {
+
+    const [searchParams, setSearchParams] = useSearchParams();
     const [viewMode, setViewMode] = useState('list');
-    const [selectedIndustries, setSelectedIndustries] = useState(new Set(['All']));
-    const [selectedSalaryRanges, setSelectedSalaryRanges] = useState(new Set(['All']));
-    const [itemsPerPage, setItemsPerPage] = useState('7');
-    const [sortBy, setSortBy] = useState('newest');
-    const [currentPage, setCurrentPage] = useState(1);
-    const [searchQuery, setSearchQuery] = useState('');
-    const [location, setLocation] = useState('');
+    const [selectedIndustries, setSelectedIndustries] = useState(() => {
+        // Retrieve industries from URL parameters
+        const industriesParam = searchParams.get('industries');
+        
+        if (industriesParam) {
+            // If industries exist in URL, parse and create a Set
+            const parsedIndustries = industriesParam.split(',');
+            
+            // Validate against actual job data industries
+            const validIndustries = new Set(
+                parsedIndustries.filter(industry => 
+                    industry === 'All' || 
+                    jobData.some(job => job.industry === industry)
+                )
+            );
+
+            // If no valid industries found, default to 'All'
+            return validIndustries.size > 0 
+                ? validIndustries 
+                : new Set(['All']);
+        }
+
+        // Default to 'All' if no industries in URL
+        return new Set(['All']);
+    });
+    const [selectedSalaryRanges, setSelectedSalaryRanges] = useState(() => {
+        const salaryParam = searchParams.get('salary');
+        return salaryParam 
+            ? new Set(salaryParam.split(',')) 
+            : new Set(['All']);
+    });
+    const [itemsPerPage, setItemsPerPage] = useState(
+        searchParams.get('itemsPerPage') || '7'
+    );
+    const [sortBy, setSortBy] = useState(
+        searchParams.get('sortBy') || 'newest'
+    );
+    const [currentPage, setCurrentPage] = useState(
+        parseInt(searchParams.get('page') || '1', 10)
+    );
+    const [searchQuery, setSearchQuery] = useState(
+        searchParams.get('query') || ''
+    );
+    const [location, setLocation] = useState(
+        searchParams.get('location') || ''
+    );
     const [showMoreIndustries, setShowMoreIndustries] = useState(false);
     const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
+
+
+    useEffect(() => {
+        const params = new URLSearchParams();
+
+        // Add non-default parameters
+        if (selectedIndustries.size > 0 && !selectedIndustries.has('All')) {
+            params.set('industries', Array.from(selectedIndustries).join(','));
+        }
+        if (selectedSalaryRanges.size > 0 && !selectedSalaryRanges.has('All')) {
+            params.set('salary', Array.from(selectedSalaryRanges).join(','));
+        }
+        if (itemsPerPage !== '7') {
+            params.set('itemsPerPage', itemsPerPage);
+        }
+        if (sortBy !== 'newest') {
+            params.set('sortBy', sortBy);
+        }
+        if (currentPage !== 1) {
+            params.set('page', currentPage.toString());
+        }
+        if (searchQuery) {
+            params.set('query', searchQuery);
+        }
+        if (location) {
+            params.set('location', location);
+        }
+
+        // Update URL without page reload
+        setSearchParams(params, { replace: true });
+    }, [
+        selectedIndustries, 
+        selectedSalaryRanges, 
+        itemsPerPage, 
+        sortBy, 
+        currentPage, 
+        searchQuery, 
+        location
+    ]);
+    
 
     // Dynamically extract unique industries from job data
     const extractUniqueIndustries = () => {
@@ -102,68 +184,112 @@ const JobSection = () => {
     const industryJobCounts = calculateIndustryJobCounts(dynamicIndustries);
 
 
+    // useEffect(() => {
+    //     console.log('Current Search Params:', Object.fromEntries(searchParams));
+    //     console.log('Industries from Params:', searchParams.get('industries'));
+    // }, [searchParams]);
+
+    useEffect(() => {
+        const industriesParam = searchParams.get('industries');
+        
+        if (industriesParam) {
+            const parsedIndustries = industriesParam.split(',');
+            const validIndustries = new Set(
+                parsedIndustries.filter(industry => 
+                    industry === 'All' || 
+                    jobData.some(job => job.industry === industry)
+                )
+            );
+    
+            setSelectedIndustries(validIndustries.size > 0 ? validIndustries : new Set(['All']));
+        } else {
+            setSelectedIndustries(new Set(['All']));
+        }
+    }, [searchParams]);
+
+
     // Updated filtering and sorting logic
     const filteredJobs = useMemo(() => {
+        console.log('Filtering Jobs - Start');
+        // Start with a copy of all job data
         let filtered = [...jobData];
-
-        // Search filter
+    
+        // Apply search filter with multiple fields
         if (searchQuery) {
-            filtered = filtered.filter(job =>
-                job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                job.company.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                job.description.toLowerCase().includes(searchQuery.toLowerCase())
+            const searchLower = searchQuery.toLowerCase();
+            filtered = filtered.filter(job => 
+                job.title.toLowerCase().includes(searchLower) ||
+                job.company.toLowerCase().includes(searchLower) ||
+                job.description.toLowerCase().includes(searchLower)
             );
         }
-
-        // Location filter
+    
+        // Apply location filter with flexible matching
         if (location) {
-            filtered = filtered.filter(job =>
-                job.location.toLowerCase().includes(location.toLowerCase())
+            const locationLower = location.toLowerCase();
+            filtered = filtered.filter(job => 
+                job.location.toLowerCase().includes(locationLower)
             );
         }
-
-        // Industry filter
+    
+        // Apply industry filter with dynamic selection
         if (!selectedIndustries.has('All')) {
-            filtered = filtered.filter(job =>
-                Array.from(selectedIndustries).includes(job.industry)
-            );
+            filtered = filtered.filter(job => {
+                const isMatch = Array.from(selectedIndustries).includes(job.industry);
+                console.log(`Job ${job.title} - Industry ${job.industry} - Match: ${isMatch}`);
+                return isMatch;
+            });
         }
 
-        // Salary range filter
+        console.log('Filtered Jobs Count:', filtered.length);
+    
+        // Enhanced salary range filtering with more precise calculation
         if (!selectedSalaryRanges.has('All')) {
             filtered = filtered.filter(job => {
-                const [minStr, maxStr] = job.salary.replace(/[^0-9-]/g, '').split('-').map(Number);
+                // Robust salary parsing
+                const salaryClean = job.salary.replace(/[^0-9-]/g, '');
+                const [minStr, maxStr] = salaryClean.split('-').map(Number);
+                
                 const min = minStr || 0;
                 const max = maxStr || Infinity;
-
+    
+                // More explicit salary range matching
                 return Array.from(selectedSalaryRanges).some(range => {
                     switch (range) {
-                        case '$0k - $20k': return max <= 20;
-                        case '$20k - $40k': return min >= 20 && max <= 40;
-                        case '$40k - $60k': return min >= 40 && max <= 60;
-                        default: return false;
+                        case '$0k - $20k': 
+                            return max <= 20000;
+                        case '$20k - $40k': 
+                            return min >= 20000 && max <= 40000;
+                        case '$40k - $60k': 
+                            return min >= 40000 && max <= 60000;
+                        default: 
+                            return false;
                     }
                 });
             });
         }
-
-        // Sorting
+    
+        // Advanced sorting with error handling
         return filtered.sort((a, b) => {
             try {
                 const dateA = parseRelativeTime(a.timeAgo);
                 const dateB = parseRelativeTime(b.timeAgo);
-
-                if (sortBy === 'newest') {
-                    return dateB.getTime() - dateA.getTime();
-                } else {
-                    return dateA.getTime() - dateB.getTime();
-                }
+    
+                return sortBy === 'newest' 
+                    ? dateB.getTime() - dateA.getTime()
+                    : dateA.getTime() - dateB.getTime();
             } catch (error) {
                 console.warn('Sorting error:', error);
                 return 0;
             }
         });
-    }, [searchQuery, location, selectedIndustries, selectedSalaryRanges, sortBy]);
+    }, [
+        searchQuery, 
+        location, 
+        selectedIndustries, 
+        selectedSalaryRanges, 
+        sortBy
+    ]);
 
     // Pagination
     const totalPages = Math.ceil(filteredJobs.length / Number(itemsPerPage));
@@ -175,23 +301,45 @@ const JobSection = () => {
     const handleIndustryChange = (industry) => {
         setSelectedIndustries(prev => {
             const newSelection = new Set(prev);
+            
             if (industry === 'All') {
+                // Clear all selections and set to 'All'
+                const params = new URLSearchParams(searchParams);
+                params.delete('industries');
+                setSearchParams(params);
                 return new Set(['All']);
             }
+
             newSelection.delete('All');
+            
             if (newSelection.has(industry)) {
+                // Remove industry if already selected
                 newSelection.delete(industry);
+                
                 if (newSelection.size === 0) {
+                    // If no industries left, reset to 'All'
+                    const params = new URLSearchParams(searchParams);
+                    params.delete('industries');
+                    setSearchParams(params);
                     return new Set(['All']);
                 }
             } else {
+                // Add new industry
                 newSelection.add(industry);
             }
+
+            // Update URL parameters with selected industries
+            const params = new URLSearchParams(searchParams);
+            params.set('industries', Array.from(newSelection).join(','));
+            setSearchParams(params);
+
             return newSelection;
         });
+
+        // Reset to first page when changing filters
         setCurrentPage(1);
     };
-
+    
     const handleSalaryRangeChange = (range) => {
         setSelectedSalaryRanges(prev => {
             const newSelection = new Set(prev);
@@ -278,6 +426,7 @@ const JobSection = () => {
         setCurrentPage(1);
         setSortBy('newest');
         setMobileFilterOpen(false);
+        setSearchParams({});
     };
 
     // Render industries with optional "Show More" functionality
