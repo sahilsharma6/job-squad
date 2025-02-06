@@ -3,104 +3,15 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Search, ChevronLeft, ChevronRight } from "lucide-react";
+import { blog_posts, blog_posts_trending } from "./blog-data";
 
 const LatestPosts = () => {
-  const posts = [
-    {
-      id: 1,
-      title: "21 Job Interview Tips: How To Make a Great Impression",
-      category: "News",
-      author: "Azumi Rose",
-      authorImage:
-        "https://postaresume.co.in/blog/wp-content/uploads/2024/02/Five-Tips-Interview-Post-by-POST-A-RESUME-vipul-M-mali-vipul-the-wonderful.png",
-      date: "25 April 2022",
-      timeToRead: "8 mins to read",
-      image:
-        "https://postaresume.co.in/blog/wp-content/uploads/2024/02/Five-Tips-Interview-Post-by-POST-A-RESUME-vipul-M-mali-vipul-the-wonderful.png",
-    },
-    {
-      id: 2,
-      title: "Email Examples: How To Respond to Employer Interview Requests",
-      category: "Events",
-      author: "Azumi Rose",
-      authorImage:
-        "https://postaresume.co.in/blog/wp-content/uploads/2024/02/Five-Tips-Interview-Post-by-POST-A-RESUME-vipul-M-mali-vipul-the-wonderful.png",
-      date: "25 April 2022",
-      timeToRead: "8 mins to read",
-      image:
-        "https://postaresume.co.in/blog/wp-content/uploads/2024/02/Five-Tips-Interview-Post-by-POST-A-RESUME-vipul-M-mali-vipul-the-wonderful.png",
-    },
-    {
-      id: 3,
-      title: "10 Ways to Avoid a Referee Disaster Zone",
-      category: "Tips",
-      author: "Steven",
-      authorImage:
-        "https://postaresume.co.in/blog/wp-content/uploads/2024/02/Five-Tips-Interview-Post-by-POST-A-RESUME-vipul-M-mali-vipul-the-wonderful.png",
-      date: "23 Sep",
-      timeToRead: "5 mins to read",
-      image:
-        "https://postaresume.co.in/blog/wp-content/uploads/2024/02/Five-Tips-Interview-Post-by-POST-A-RESUME-vipul-M-mali-vipul-the-wonderful.png",
-    },
-    {
-      id: 4,
-      title: "How To Set Work-Life Boundaries From Any Location",
-      category: "Guides",
-      author: "Merias",
-      authorImage:
-        "https://postaresume.co.in/blog/wp-content/uploads/2024/02/Five-Tips-Interview-Post-by-POST-A-RESUME-vipul-M-mali-vipul-the-wonderful.png",
-      date: "14 Sep",
-      timeToRead: "6 mins to read",
-      image:
-        "https://postaresume.co.in/blog/wp-content/uploads/2024/02/Five-Tips-Interview-Post-by-POST-A-RESUME-vipul-M-mali-vipul-the-wonderful.png",
-    },  {
-      id: 5,
-      title: "How To Set Work-Life Boundaries From Any Location",
-      category: "Guides",
-      author: "Merias",
-      authorImage:
-        "https://postaresume.co.in/blog/wp-content/uploads/2024/02/Five-Tips-Interview-Post-by-POST-A-RESUME-vipul-M-mali-vipul-the-wonderful.png",
-      date: "14 Sep",
-      timeToRead: "6 mins to read",
-      image:
-        "https://postaresume.co.in/blog/wp-content/uploads/2024/02/Five-Tips-Interview-Post-by-POST-A-RESUME-vipul-M-mali-vipul-the-wonderful.png",
-    },
-  ];
-
-  const trending = [
-    {
-      id: 1,
-      title: "How to get better agents in New York, USA",
-      author: "Sugar Rosie",
-      authorImage:
-        "https://postaresume.co.in/blog/wp-content/uploads/2024/02/Five-Tips-Interview-Post-by-POST-A-RESUME-vipul-M-mali-vipul-the-wonderful.png",
-      date: "15 Sep",
-      postImage:
-        "https://postaresume.co.in/blog/wp-content/uploads/2024/02/Five-Tips-Interview-Post-by-POST-A-RESUME-vipul-M-mali-vipul-the-wonderful.png",
-    },
-    {
-      id: 2,
-      title: "How to get better agents in New York, USA",
-      author: "Sugar Rosie",
-      authorImage:  "https://postaresume.co.in/blog/wp-content/uploads/2024/02/Five-Tips-Interview-Post-by-POST-A-RESUME-vipul-M-mali-vipul-the-wonderful.png", 
-      date: "15 Sep",
-      postImage:  "https://postaresume.co.in/blog/wp-content/uploads/2024/02/Five-Tips-Interview-Post-by-POST-A-RESUME-vipul-M-mali-vipul-the-wonderful.png",
-    }, {
-      id: 3,
-      title: "How to get better agents in New York, USA",
-      author: "Sugar Rosie",
-      authorImage:  "https://postaresume.co.in/blog/wp-content/uploads/2024/02/Five-Tips-Interview-Post-by-POST-A-RESUME-vipul-M-mali-vipul-the-wonderful.png", 
-      date: "15 Sep",
-      postImage:  "https://postaresume.co.in/blog/wp-content/uploads/2024/02/Five-Tips-Interview-Post-by-POST-A-RESUME-vipul-M-mali-vipul-the-wonderful.png",
-    },
-   
-  ];
 
   const postsPerPage = 4;
   const [currentPage, setCurrentPage] = useState(1);
 
-  const totalPages = Math.ceil(posts.length / postsPerPage);
-  const currentPosts = posts.slice(
+  const totalPages = Math.ceil(blog_posts.length / postsPerPage);
+  const currentPosts = blog_posts.slice(
     (currentPage - 1) * postsPerPage,
     currentPage * postsPerPage
   );
@@ -180,7 +91,7 @@ const LatestPosts = () => {
           <div  className="border p-4 shadow-md rounded-lg">
           <h3 className="text-xl font-semibold mb-4">Trending Now</h3>
           <ul>
-            {trending.map((item) => (
+            {blog_posts_trending.map((item) => (
               <Link key={item.id} to={`/blog/${item.id}`}>
               <li key={item.id} className="mb-4 flex items-center">
                 <img
