@@ -28,6 +28,7 @@ import { store } from "./store";
 
 import ComingSoon from "./components/ComingSoon";
 import NotFound from "./components/NotFound";
+import BlogDetailsLayout from "./pages/Blogs/BlogDetails/BlogDetailsLayout";
 // List of paths that should show the coming soon page
 const comingSoonPaths = [
   '/marketplace',
@@ -50,7 +51,10 @@ createRoot(document.getElementById("root")).render(
             <Route path="/about" element={<AboutUs />} />
             <Route path="/contact" element={<ContactSection />} />
             <Route path="/our/assets" element={<AssetsForDesign />} />
+
             <Route path="/blogs" element={<BlogPage />} />
+            <Route path="/blog/:id" element={<BlogDetailsLayout />} />
+
             <Route path="/jobs" element={<JobLayout />} />
             <Route path="/jobs/:jobId" element={<ViewJobDetailsLayout />} />
             <Route path="/register" element={<SignupForm />} />
