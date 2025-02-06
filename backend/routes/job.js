@@ -11,7 +11,6 @@ JobRoutes.get("/:jobId",isAuthenticated,AccessRole(['applicant','company','admin
 JobRoutes.post("/create",isAuthenticated,AccessRole(['company','admin']) ,createJob);
 JobRoutes.put("/update/:jobId",isAuthenticated,AccessRole(['company','admin']) ,updateJob);
 JobRoutes.delete("/delete/:jobId",isAuthenticated,AccessRole(['company','admin']) ,deleteJob);
-
 //get Job Sectors
 JobRoutes.get('/jobsectors',getJobSectors);
 JobRoutes.get('/jobsector/:sectorId',getJobSectorById);
