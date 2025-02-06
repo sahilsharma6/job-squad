@@ -585,3 +585,22 @@ export const saveJob = async (req, res) => {
     }
   };
   
+
+  export const getSavedJobs = async (req, res) => {
+    try {
+      const applicantId = req.user.userId;
+      if (!applicantId) {
+        return res.status(401).json({ message: 'Unauthorized' });
+      }
+  
+      const user = await Applicant.findById(applicantId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.status(200).json({ savedJobs: user.savedJobs.jobs });
+    }
+    catch(err){
+        console.log(err);
+        res.status(500).json({message: 'Internal server error'});
+    }
+}

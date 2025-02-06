@@ -1,5 +1,5 @@
 import express from 'express';
-import { addEducation, addExperience, deleteAddress, deleteEducation, deleteExperience, getAddress, getdata, getEducation, getExperience, getResume, googleSignIn, request, saveJob, setAddress, signIn, signOut, signUp, updateAddress, updateEducation, updateExperience, uploadResume,} from '../controllers/userController.js';
+import { addEducation, addExperience, deleteAddress, deleteEducation, deleteExperience, getAddress, getdata, getEducation, getExperience, getResume, getSavedJobs, googleSignIn, request, saveJob, setAddress, signIn, signOut, signUp, updateAddress, updateEducation, updateExperience, uploadResume,} from '../controllers/userController.js';
 import isAuthenticated from '../middleware/isAuthenticated.js';
 import ApplicationRouter from './application.js';
 import uploadResumeMiddleware from '../middleware/uploadResumeMiddleware.js';
@@ -36,7 +36,8 @@ UserRoutes.post('/resume',isAuthenticated,uploadResumeMiddleware,uploadResume);
 UserRoutes.get('/resume/:id',isAuthenticated,getResume); // id is user id
 //all  jobs
 UserRoutes.use('/job-application',ApplicationRouter);
-UserRoutes.post("/saved-job/:id",isAuthenticated,AccessRole(['applicant','admin']),saveJob);
+UserRoutes.post("/save-job/:id",isAuthenticated,AccessRole(['applicant','admin']),saveJob);
+UserRoutes.get("/saved-jobs",isAuthenticated,AccessRole(['applicant','admin']),getSavedJobs);
 UserRoutes.get('/me',getdata);
 
 
