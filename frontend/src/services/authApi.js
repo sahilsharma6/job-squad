@@ -40,7 +40,7 @@ export const authApi = createApi({
     }),
     signup: builder.mutation({
       query: (userInfo) => ({
-        url: 'company/signup',
+        url: 'user/signup',
         method: 'POST',
         body: userInfo
       }),
@@ -81,7 +81,52 @@ export const authApi = createApi({
           // Handle error if needed
         }
       }
-    })
+    }),
+    // googleLogin: builder.mutation({
+    //   query: () => ({
+    //     url: "/user/request",
+    //     method: "POST",
+    //     credentials: "include",
+    //   }),
+    //   async onQueryStarted(arg, { queryFulfilled }) {
+    //     try {
+    //       const { data } = await queryFulfilled;
+    //       if (data.url) {
+    //         window.location.href = data.url;
+    //       } else {
+    //         console.error("Google OAuth URL not found in response.");
+    //       }
+    //     } catch (error) {
+    //       console.error("Google login failed", error);
+    //     }
+    //   },
+    // }),
+    googleLogin: builder.mutation({
+      query: () => ({
+        url: "/user/request",
+        method: "POST",
+      }),
+    }),
+    fetchUser: builder.query({
+      query: () => "/user/me", // Fetch user details
+    }),
+
+    googleCallback: builder.mutation({
+      query: (code) => ({
+        url: "/user/callback",
+        method: "POST",
+        body: { code },
+        credentials: "include",
+      }),
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(setCredentials(data.user));
+        } catch (error) {
+          console.error("Google callback failed", error);
+        }
+      },
+    }),
   })
 });
 
@@ -90,5 +135,8 @@ export const {
   useSignupMutation,
   useLogoutMutation,
   useCompanyloginMutation,
-  useCompanysignupMutation
+  useCompanysignupMutation,
+  useGoogleLoginMutation,
+  useGoogleCallbackMutation,
+  useFetchUserQuery
 } = authApi;

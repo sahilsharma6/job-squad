@@ -1,7 +1,197 @@
-import React from 'react'
+
+import React from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { BarChart3, Eye, Layers, Briefcase, Mail, MessageCircle } from "lucide-react";
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 
 export const CandidateDashboard = () => {
+  // Sample data for the profile views chart
+  const profileViewsData = [
+    { name: "Jan", views: 130 },
+    { name: "Feb", views: 160 },
+    { name: "Mar", views: 150 },
+    { name: "Apr", views: 180 },
+    { name: "May", views: 220 },
+    { name: "Jun", views: 200 },
+    { name: "Jul", views: 250 },
+    { name: "Aug", views: 300 },
+    { name: "Sep", views: 210 },
+  ];
+
+  // Sample notifications
+  const notifications = [
+    { icon: <Briefcase className="text-blue-500" />, message: "You Have New Application For Web Designer!", time: "just now" },
+    { icon: <Mail className="text-blue-500" />, message: "Tesla Jonsin Has Sent You Private Message!", time: "15 min ago" },
+    { icon: <Briefcase className="text-blue-500" />, message: "Henry Wilson Applied For A Job Senior Product Designer", time: "2 months ago" },
+    { icon: <MessageCircle className="text-blue-500" />, message: "You Have New Review For #53454 This List", time: "15 days ago" },
+  ];
+
   return (
-    <div>CandidateDashboard</div>
-  )
-}
+    <div className="p-6 bg-gray-100 min-h-screen">
+      {/* Top Summary Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <Card className="bg-blue-100 p-5 rounded-lg flex items-center">
+          <BarChart3 className="text-blue-600 w-10 h-10" />
+          <div className="ml-4">
+            <h2 className="text-3xl font-bold text-blue-600">620</h2>
+            <p className="text-gray-600">Applied Jobs</p>
+          </div>
+        </Card>
+
+        <Card className="bg-green-100 p-5 rounded-lg flex items-center">
+          <Eye className="text-green-600 w-10 h-10" />
+          <div className="ml-4">
+            <h2 className="text-3xl font-bold text-green-600">25k</h2>
+            <p className="text-gray-600">Profile Views</p>
+          </div>
+        </Card>
+
+        <Card className="bg-red-100 p-5 rounded-lg flex items-center">
+          <Layers className="text-red-600 w-10 h-10" />
+          <div className="ml-4">
+            <h2 className="text-3xl font-bold text-red-600">150</h2>
+            <p className="text-gray-600">Shortlisted Jobs</p>
+          </div>
+        </Card>
+      </div>
+
+      {/* Profile Views Chart */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+        <Card className="p-6">
+          <h3 className="text-lg font-semibold text-gray-700">Your Profile Views</h3>
+          <ResponsiveContainer width="100%" height={250}>
+            <LineChart data={profileViewsData}>
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Line type="monotone" dataKey="views" stroke="#4F46E5" strokeWidth={3} dot={{ r: 6 }} />
+            </LineChart>
+          </ResponsiveContainer>
+        </Card>
+
+        {/* Notifications Section */}
+        <Card className="p-6">
+          <h3 className="text-lg font-semibold text-gray-700">Notifications</h3>
+          <div className="mt-4 space-y-4">
+            {notifications.map((notif, index) => (
+              <div key={index} className="flex items-center space-x-3">
+                {notif.icon}
+                <div>
+                  <p className="text-gray-700 font-medium">{notif.message}</p>
+                  <p className="text-gray-500 text-sm">{notif.time}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Card>
+      </div>
+      <JobListings/>
+    </div>
+  );
+};
+
+
+
+import { Bookmark, Clock, MapPin } from "lucide-react";
+
+const jobs = [
+  {
+    title: "Application Developer",
+    company: "Circle Pixel",
+    category: "Development",
+    type: "Full Time",
+    postedTime: "2 Hour Ago",
+    location: "25/B Milford Road, New York",
+    skills: ["Figma", "Photoshop", "Adobe XD"],
+    salary: "$150 - $180",
+    iconColor: "bg-blue-600",
+  },
+  {
+    title: "Marketing Manager",
+    company: "Azutine Growths",
+    category: "Marketing",
+    type: "Freelance",
+    postedTime: "2 Hour Ago",
+    location: "25/B Milford Road, New York",
+    skills: ["Figma", "Photoshop", "Adobe XD"],
+    salary: "$150 - $180",
+    iconColor: "bg-purple-600",
+  },
+  {
+    title: "Product Designer",
+    company: "Larana Inc",
+    category: "Design",
+    type: "Internship",
+    postedTime: "2 Hour Ago",
+    location: "25/B Milford Road, New York",
+    skills: ["Figma", "Photoshop", "Adobe XD"],
+    salary: "$150 - $180",
+    iconColor: "bg-black",
+  },
+  {
+    title: "Creative Director",
+    company: "Rubic Corner",
+    category: "Design",
+    type: "Full Time",
+    postedTime: "2 Hour Ago",
+    location: "25/B Milford Road, New York",
+    skills: ["Figma", "Photoshop", "Adobe XD"],
+    salary: "$150 - $180",
+    iconColor: "bg-green-600",
+  },
+];
+
+const JobCard = ({ job }) => (
+  <Card className="p-5 shadow-md rounded-lg border bg-white">
+    <div className="flex justify-between items-center">
+      <div className="flex items-center space-x-4">
+        <div className={`w-12 h-12 rounded-full flex items-center justify-center ${job.iconColor}`}>
+          <Briefcase className="text-white" size={24} />
+        </div>
+        <div>
+          <h3 className="text-lg font-semibold">{job.title}</h3>
+          <p className="text-blue-600">{job.company}</p>
+        </div>
+      </div>
+      <Bookmark className="text-gray-400 cursor-pointer" size={20} />
+    </div>
+
+    <div className="flex items-center text-gray-500 text-sm mt-3 space-x-3">
+      <Briefcase size={16} /> <span>{job.category}</span>
+      <span>•</span>
+      <span>{job.type}</span>
+      <span>•</span>
+      <Clock size={16} /> <span>{job.postedTime}</span>
+    </div>
+
+    <div className="flex items-center text-gray-500 text-sm mt-2">
+      <MapPin size={16} /> <span>{job.location}</span>
+    </div>
+
+    <div className="mt-3 flex flex-wrap gap-2">
+      {job.skills.map((skill, index) => (
+        <span key={index} className="bg-blue-100 text-blue-600 text-xs px-3 py-1 rounded-full">
+          {skill}
+        </span>
+      ))}
+    </div>
+
+    <div className="flex justify-between items-center mt-4">
+      <p className="text-blue-600 font-semibold text-lg">{job.salary} <span className="text-gray-500 text-sm">/Hour</span></p>
+      <button className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium">View Details</button>
+    </div>
+  </Card>
+);
+
+const JobListings = () => (
+  <div className="p-6 bg-gray-100 min-h-screen">
+    <h2 className="text-xl font-bold text-gray-700 mb-4">Jobs Applied Recently</h2>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {jobs.map((job, index) => (
+        <JobCard key={index} job={job} />
+      ))}
+    </div>
+  </div>
+);
+
+export default JobListings;

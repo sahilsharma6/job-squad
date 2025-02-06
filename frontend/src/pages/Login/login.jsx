@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,7 +12,10 @@ import img2 from "../Login/google.png";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from 'js-cookie';
-import { useLoginMutation } from "@/services/authApi";
+import { useGoogleCallbackMutation, useLoginMutation } from "@/services/authApi";
+import { useGoogleLoginMutation } from "@/services/authApi";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "@/features/auth/authSlice";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -20,11 +23,13 @@ const LoginPage = () => {
     email: '',
     password: ''
   });
+  const dispatch=useDispatch()
   const [errors, setErrors] = useState({});
   const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
-
+  const [googleLogin] = useGoogleLoginMutation();
   const [login] = useLoginMutation();
+  const [googleCallback] = useGoogleCallbackMutation()
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -66,56 +71,118 @@ const LoginPage = () => {
     }
   };
 
-  const auth = async () => {
-    try {
-      const base_url = import.meta.env.VITE_BASE_URL;
-      const response = await fetch(`${base_url}/api/v1/user/request`, { method: 'post' });
-      if (!response.ok) throw new Error('Network response was not ok');
-      const data = await response.json();
-      window.location.href = data.url;
-    } catch (error) {
-      console.error('Authentication failed:', error);
-      alert('Failed to authenticate. Please try again.');
-    }
+
+//   useEffect(() => {
+//     console.log("Current URL:", window.location.href);
+
+//     const urlParams = new URLSearchParams(window.location.search);
+//     const code = urlParams.get("code");
+
+//     console.log("Extracted Code:", code);
+//     console.log("URL Params:", urlParams.toString());
+
+//     if (code) {
+//         googleCallback({ code }) // Send code to backend
+//             .unwrap()
+//             .then((data) => {
+//                 console.log("Google callback successful:", data);
+//                 dispatch(setCredentials(data.user));
+//                 navigate("/dashboard");
+//             })
+//             .catch((error) => {
+//                 console.error("Google callback error:", error);
+//                 alert("Authentication failed");
+//             });
+
+//         // Remove the code from the URL after sending it
+//         window.history.replaceState(null, "", window.location.pathname);
+//     }
+// }, [googleCallback, dispatch, navigate]);
+
+
+const handleGoogleAuth = async () => {
+  try {
+      console.log("Triggering Google Login...");
+      const response = await googleLogin().unwrap();
+      
+      if (response.url) {
+          console.log("Redirecting to Google OAuth:", response.url);
+          window.location.href = response.url; // Redirect to Google OAuth page
+      } else {
+          console.error("Google OAuth URL not found in response.");
+      }
+  } catch (error) {
+      console.error("Google Authentication failed:", error);
+      alert("Failed to authenticate with Google. Please try again.");
+  }
+};
+
+
+
+  
+
+  // Bubble generation function
+  const generateBubbles = () => {
+    return [...Array(20)].map((_, index) => {
+      const size = Math.random() * 80 + 30; // 30-110px
+      const delay = Math.random() * 3;
+      const duration = Math.random() * 15 + 10; // 10-25 seconds
+      const opacity = Math.random() * 0.4 + 0.2; // 0.2-0.6 opacity
+
+      return (
+        <motion.div
+          key={index}
+          className="absolute rounded-full bg-primary-ultra backdrop-blur-sm"
+          style={{
+            width: `${size}px`,
+            height: `${size}px`,
+            top: `${Math.random() * 120}vh`,
+            left: `${Math.random() * 100}vw`,
+            background: 'radial-gradient(circle at 30% 30%, rgb(54, 116, 181)))', // Proper blue gradient
+            boxShadow: '0 4px 20px rgb(87, 143, 202), inset 0 0 15px rgb(87, 143, 202)', // Blue shadow with blur
+            border: '1px solid rgba(0,0,255,0.2)' // Blue border
+          }}
+          
+          
+          
+          animate={{ 
+            y: [
+              0, 
+              `-${Math.random() * 200 + 100}%`, 
+              `-${Math.random() * 250 + 150}%`
+            ],
+            x: [
+              `${Math.random() * 50 - 25}%`, 
+              `${Math.random() * 100 - 50}%`,
+              `${Math.random() * 50 - 25}%`
+            ],
+            scale: [
+              1, 
+              1.1, 
+              0.9, 
+              1
+            ],
+            opacity: [opacity, 0.1, 0]
+          }}
+          transition={{
+            duration: duration,
+            delay: delay,
+            repeat: Infinity,
+            repeatType: "loop",
+            ease: "easeInOut",
+          }}
+        />
+      );
+    });
   };
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-primary-light via-primary-ultra to-primary-light overflow-hidden">
-      {/* Animated gradient background */}
-      <motion.div
-        className="absolute inset-0"
-        animate={{ backgroundPosition: ["0% 0%", "100% 100%"] }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: "linear",
-        }}
-        style={{
-          backgroundSize: "200% 200%",
-        }}
-      ></motion.div>
+    <div className="relative min-h-screen bg-gradient-to-br  overflow-hidden">
+      {/* Bubble Background */}
+      {generateBubbles()}
 
-      {/* Floating decorative circles */}
-      {[...Array(10)].map((_, index) => (
-        <motion.div
-          key={index}
-          className="absolute rounded-full bg-blue-300 opacity-50"
-          style={{
-            width: `${Math.random() * 80 + 20}px`,
-            height: `${Math.random() * 80 + 20}px`,
-            top: `${Math.random() * 100}vh`,
-            left: `${Math.random() * 100}vw`,
-          }}
-          animate={{ y: ["0%", "-200%"], opacity: [0.5, 1, 0] }}
-          transition={{
-            duration: Math.random() * 5 + 3,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        ></motion.div>
-      ))}
-
-      {/* Main Login Section */}
+      {/* Rest of the login page remains the same */}
+      {/* ... (previous code remains unchanged) ... */}
       <div className="flex items-center justify-center min-h-screen relative px-4 sm:px-8">
         <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg space-y-8 relative">
           {/* Right Balloon Animation */}
@@ -160,7 +227,7 @@ const LoginPage = () => {
                     variant="outline"
                     className="w-full flex items-center justify-center hover:bg-white"
                     type="button"
-                    onClick={auth}
+                    onClick={handleGoogleAuth}
                   >
                     <img
                       src={img2}

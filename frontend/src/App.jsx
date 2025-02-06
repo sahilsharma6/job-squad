@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { useEffect, useState } from "react";
 import Loading from "./components/Loading";
+import AuthHandler from "./components/AuthHandler";
 
 const App = () => {
 
@@ -20,9 +21,11 @@ const App = () => {
     <>
       {loading && <Loading />}
       <div className="bg-base-white">
+        
         <header>
           <Navbar />
         </header>
+        <AuthHandler/>
         <Outlet />
         <footer>
           <Footer />
