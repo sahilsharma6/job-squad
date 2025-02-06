@@ -44,6 +44,12 @@ const applicantSchema = new mongoose.Schema({
 
     emailNotification:{
         type: Boolean,
+    },
+    savedJobs:{
+        jobs:[{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Job'
+        },],
     }
 });
 

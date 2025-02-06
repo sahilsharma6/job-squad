@@ -25,6 +25,7 @@ const jobQuestionSchema = new mongoose.Schema({
         }
     ]
 });
+
 const jobSchema = new mongoose.Schema({
     companyId: {
         type: mongoose.Schema.Types.ObjectId,
