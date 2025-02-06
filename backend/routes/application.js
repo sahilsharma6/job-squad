@@ -7,7 +7,7 @@ import { AccessRole } from '../middleware/AccessRole.js';
 ApplicationRouter.get('/applications',isAuthenticated,AccessRole(['applicant','company','admin']),getApplications);
 ApplicationRouter.get('/applications/:appId',isAuthenticated,AccessRole(['applicant','company','admin']), getApplicationById);
 ApplicationRouter.post('/apply/:jobId',isAuthenticated,AccessRole(['applicant','admin']), createApplication);
-ApplicationRouter.put('/applications/:appId',isAuthenticated,AccessRole(['applicant']),updateApplication);
-ApplicationRouter.delete('/applications/:appId',isAuthenticated,AccessRole(['applicant']),deleteApplication);
+ApplicationRouter.put('/applications/:appId',isAuthenticated,AccessRole(['applicant','admin']),updateApplication);
+ApplicationRouter.delete('/applications/:appId',isAuthenticated,AccessRole(['applicant','admin']),deleteApplication);
 
 export default ApplicationRouter;

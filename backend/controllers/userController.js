@@ -1,4 +1,5 @@
 import express from 'express'
+import Job from '../models/Job.js'
 import Applicant from '../models/Applicant.js'
 import Address from '../models/Address.js'
 import Education from '../models/Education.js'
@@ -544,4 +545,62 @@ export const getResume = async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+export const saveJob = async (req, res) => {
+    try {
+      const jobId = req.params.id;
+      const applicantId = req.user.userId;
+  
+      if (!jobId || !applicantId) {
+        return res.status(400).json({ message: 'All fields are required' });
+      }
+  
+      const user = await Applicant.findById(applicantId);
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      const job = await Job.findById(jobId);
+      if (!job) {
+        return res.status(404).json({ message: 'Job not found' });
+      }
+  
+      const savedJobsList = user.savedJobs.jobs;
+  
+      // Check if the job already exists in savedJobs
+      if (savedJobsList.some((job) => job.toString() === jobId)) {
+        user.savedJobs.jobs = savedJobsList.filter(
+          (job) => job.toString() !== jobId
+        );
+        await user.save();
+        return res.status(200).json({ message: 'Job removed from saved jobs' });
+      }
+  
+      user.savedJobs.jobs.push(jobId);
+      await user.save();
+      return res.status(200).json({ message: 'Job saved successfully' });
+  
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'Internal server error' });
+    }
+  };
+  
 
+  export const getSavedJobs = async (req, res) => {
+    try {
+      const applicantId = req.user.userId;
+      if (!applicantId) {
+        return res.status(401).json({ message: 'Unauthorized' });
+      }
+  
+      const user = await Applicant.findById(applicantId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.status(200).json({ savedJobs: user.savedJobs.jobs });
+    }
+    catch(err){
+        console.log(err);
+        res.status(500).json({message: 'Internal server error'});
+    }
+}
