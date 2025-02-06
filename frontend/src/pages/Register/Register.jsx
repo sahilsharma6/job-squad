@@ -9,6 +9,7 @@ import img1 from "./image.png";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import { useSignupMutation } from "@/services/authApi";
+import img2 from "../Login/google.png";
 const SignupPage = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -74,7 +75,7 @@ const SignupPage = () => {
           phoneNo: formData.phoneNumber,
           password: formData.password,
         };
-
+        console.log(userInfo)
         await signup(userInfo).unwrap();  // Use .unwrap() to handle success or failure
 
         // Navigate to sign-in page after successful signup
@@ -85,49 +86,75 @@ const SignupPage = () => {
       }
     }
   };
-  
+  const auth = async () => {
+    try {
+      const base_url = import.meta.env.VITE_BASE_URL;
+      const response = await fetch(`${base_url}/api/v1/user/request`, { method: 'post' });
+      if (!response.ok) throw new Error('Network response was not ok');
+      const data = await response.json();
+      window.location.href = data.url;
+    } catch (error) {
+      console.error('Authentication failed:', error);
+      alert('Failed to authenticate. Please try again.');
+    }
+  };
+  const generateBubbles = () => {
+    return [...Array(20)].map((_, index) => {
+      const size = Math.random() * 80 + 30; // 30-110px
+      const delay = Math.random() * 3;
+      const duration = Math.random() * 15 + 10; // 10-25 seconds
+      const opacity = Math.random() * 0.4 + 0.2; // 0.2-0.6 opacity
 
+      return (
+        <motion.div
+          key={index}
+          className="absolute rounded-full bg-primary-ultra backdrop-blur-sm"
+          style={{
+            width: `${size}px`,
+            height: `${size}px`,
+            top: `${Math.random() * 120}vh`,
+            left: `${Math.random() * 100}vw`,
+            background: 'radial-gradient(circle at 30% 30%, rgb(54, 116, 181)))', // Proper blue gradient
+            boxShadow: '0 4px 20px rgb(87, 143, 202), inset 0 0 15px rgb(87, 143, 202)', // Blue shadow with blur
+            border: '1px solid rgba(0,0,255,0.2)' // Blue border
+          }}
+          
+          
+          
+          animate={{ 
+            y: [
+              0, 
+              `-${Math.random() * 200 + 100}%`, 
+              `-${Math.random() * 250 + 150}%`
+            ],
+            x: [
+              `${Math.random() * 50 - 25}%`, 
+              `${Math.random() * 100 - 50}%`,
+              `${Math.random() * 50 - 25}%`
+            ],
+            scale: [
+              1, 
+              1.1, 
+              0.9, 
+              1
+            ],
+            opacity: [opacity, 0.1, 0]
+          }}
+          transition={{
+            duration: duration,
+            delay: delay,
+            repeat: Infinity,
+            repeatType: "loop",
+            ease: "easeInOut",
+          }}
+        />
+      );
+    });
+  };
   return (
     <div className="relative min-h-screen overflow-hidden pb-5">
       {/* Animated gradient background */}
-      <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-primary-ultra to-primary-ultra"
-        animate={{
-          backgroundPosition: ["0% 0%", "100% 100%"],
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: "linear",
-        }}
-        style={{
-          backgroundSize: "200% 200%",
-        }}
-      ></motion.div>
-
-      {/* Floating decorative circles */}
-      {[...Array(10)].map((_, index) => (
-        <motion.div
-          key={index}
-          className="absolute rounded-full bg-white opacity-50"
-          style={{
-            width: `${Math.random() * 80 + 20}px`,
-            height: `${Math.random() * 80 + 20}px`,
-            top: `${Math.random() * 100}vh`,
-            left: `${Math.random() * 100}vw`,
-          }}
-          animate={{
-            y: ["0%", "-200%"],
-            opacity: [0.5, 1, 0],
-          }}
-          transition={{
-            duration: Math.random() * 5 + 3,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        ></motion.div>
-      ))}
-
+      {generateBubbles()}
       {/* Main Signup Card Section */}
       <div className="flex items-center justify-center min-h-screen relative z-5">
         <div className="w-full max-w-md space-y-8 relative">
@@ -167,6 +194,24 @@ const SignupPage = () => {
               <CardContent className="space-y-6">
                 <form onSubmit={handleSubmit} className="space-y-4">
                   {/* First Name */}
+                  <motion.div
+                                    whileHover={{ scale: 1.02 }}
+                                    transition={{ type: "spring", stiffness: 400 }}
+                                  >
+                                    <Button
+                                      variant="outline"
+                                      className="w-full flex items-center justify-center hover:bg-white"
+                                      type="button"
+                                      onClick={auth}
+                                    >
+                                      <img
+                                        src={img2}
+                                        alt="Google logo"
+                                        className="mr-2 h-4 w-4"
+                                      />
+                                      <span className="text-primary-ultra">Sign in with Google</span>
+                                    </Button>
+                                  </motion.div>
                   <motion.div
                     className="space-y-2"
                     whileHover={{ scale: 1.01 }}

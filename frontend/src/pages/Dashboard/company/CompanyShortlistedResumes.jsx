@@ -11,7 +11,7 @@ const CandidateCard = ({ name, title, rating, reviews, location, skills, price }
   <Card className="p-6">
     <div className="flex items-start gap-4">
       <div className="w-16 h-16 rounded-full bg-gray-200 overflow-hidden">
-        <img src="/api/placeholder/64/64" alt={name} className="w-full h-full object-cover" />
+        <img src="/api/placeholder/64/64" alt={name} className="w-full h-full object-cover md:flex" />
       </div>
       
       <div className="flex-1">
@@ -233,11 +233,11 @@ export const CompanyShortlistedResumes = () => {
   return (
     <div className="max-w-7xl mx-auto p-6">
       <div className="mb-8">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold">ShortListed Candidates</h2>
+        <div className="md:flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold md:flex pb-5">ShortListed Candidates</h2>
           <div className="flex gap-4">
             <Input 
-              className="w-64" 
+              className="w-40" 
               type="search" 
               placeholder="Search..." 
               value={searchQuery}
