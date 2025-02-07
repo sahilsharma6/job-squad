@@ -9,19 +9,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout, setCredentials } from "@/features/auth/authSlice";
 import { jobData } from "@/pages/Jobs/jobs-data";
 import { useAuth } from "@/hooks/useAuth";
-
+import { useLogout } from "@/hooks/handlelogout";
+// import { useAuthHandler } from "./AuthHandler";
 const Navbar = () => {
+  // useAuthHandler(); // Trigger auth handling on component mount
+  // const user = useSelector((state) => state.auth.user);
+  
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const { isAuthenticated } = useAuth();
-
+  const handleLogout = useLogout();
+  const { isAuthenticated,role ,user} = useAuth();
+  
+  console.log(isAuthenticated)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [mobileDropdownOpen, setMobileDropdownOpen] = useState({});
   const [logout] = useLogoutMutation();
 
-  const { data: user, error } = useFetchUserQuery();
-
+  const { data: userr, error } = useFetchUserQuery();
+  console.log(user)
   const extractUniqueIndustries = () => {
     return Array.from(new Set(jobData.map((job) => job.industry))).slice(0, 6);
   };
@@ -37,19 +42,22 @@ const Navbar = () => {
   };
 
   const getDisplayName = () => {
-    if (!user) return 'Account';
-    
+    if (!user) return "Account"; // Fallback if user is not logged in
+  
+    console.log("User Role:", user.role); // Debugging purpose
+  
     switch (user.role) {
-      case 'applicant':
-        return user.firstName || 'Candidate';
-      case 'company':
-        return user.companyName || 'Company';
-      case 'admin':
-        return 'Admin';
+      case "applicant":
+        return user.firstName || "Candidate";
+      case "company":
+        return user.companyName || "Company";
+      case "admin":
+        return user.adminName || "Admin"; // If admin has a name field
       default:
-        return 'Account';
+        return "Account"; // Fallback for undefined roles
     }
   };
+  
 
   const getRoleBasedMenuItems = () => {
     if (!user) return [];
@@ -166,26 +174,6 @@ const Navbar = () => {
       [index]: !prev[index],
     }));
   };
-  // useEffect(() => {
-  //   const fetchUserData = async () => {
-  //     try {
-  //       const response = await fetch("/api/v1/user/me", { credentials: "include" });
-  //       const userData = await response.json();
-  //       console.log(response);
-  //       if (userData) {
-  //         console.log("User Data Fetched:", userData);
-  //         dispatch(setCredentials(userData)); // Store user in Redux
-  //         navigate("/dashboard"); // Redirect after login
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching user data:", error);
-  //       alert("Authentication failed");
-  //     }
-  //   };
-  
-  //   fetchUserData();
-  // }, [dispatch, navigate]);
-
   // Handle login state based on token
   // const { isAuthenticated} = useSelector((state) => state.auth);
   // console.log(isAuthenticated)
@@ -202,21 +190,8 @@ const Navbar = () => {
   //     console.error("Logout failed:", error);
   //   }
   // };
-
-  const handleLogout = async () => {
-    try {
-      await logoutt();
-      dispatch(logout());
-      Cookies.remove('user');
-      Cookies.remove('token');
-      navigate("/signin");
-    } catch (error) {
-      console.error("Logout failed:", error);
-    }
-  };
-
-
   
+
   return (
     <nav className={`relative ${window.location.pathname !== "/" ? "bg-transparent" : "bg-primary-ultra/30"} w-full z-10`}>
       <div className="container flex justify-between items-center py-4 w-full max-w-6xl mx-auto px-4">
