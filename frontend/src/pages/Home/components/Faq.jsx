@@ -44,7 +44,7 @@ const FAQSection = () => {
                 </span>
               </AccordionTrigger>
               <AccordionContent className="px-6 pb-4 text-gray-600 font-lato">
-                Yes, you can apply for multiple job listings. We encourage candidates to apply
+                Yes, you can apply for multiple job listings. We encourage applicants to apply
                 for any positions that match their skills and experience.
               </AccordionContent>
             </AccordionItem>

@@ -6,8 +6,8 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select';
 import { Eye, Check, History, Trash2, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
 
-// ... CandidateCard component remains the same ...
-const CandidateCard = ({ name, title, rating, reviews, location, skills, price }) => (
+// ... ApplicantCard component remains the same ...
+const ApplicantCard = ({ name, title, rating, reviews, location, skills, price }) => (
   <Card className="p-6">
     <div className="flex items-start gap-4">
       <div className="w-16 h-16 rounded-full bg-gray-200 overflow-hidden">
@@ -177,8 +177,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
 
 export const CompanyShortlistedResumes = () => {
   // Generate more sample data for better pagination demonstration
-  const allCandidates = Array.from({ length: 10}, (_, index) => ({
-    name: `Candidate ${index + 1}`,
+  const allApplicants = Array.from({ length: 10}, (_, index) => ({
+    name: `Applicant ${index + 1}`,
     title: 'Product Designer',
     rating: 5,
     reviews: 560,
@@ -192,17 +192,17 @@ export const CompanyShortlistedResumes = () => {
   const [timeframe, setTimeframe] = useState('1month');
   const itemsPerPage = 4;
 
-  // Filter candidates based on search query
-  const filteredCandidates = allCandidates.filter(candidate =>
-    candidate.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    candidate.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    candidate.skills.some(skill => skill.toLowerCase().includes(searchQuery.toLowerCase()))
+  // Filter applicants based on search query
+  const filteredApplicants = allApplicants.filter(applicant =>
+    applicant.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    applicant.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    applicant.skills.some(skill => skill.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
   // Calculate pagination
-  const totalPages = Math.ceil(filteredCandidates.length / itemsPerPage);
+  const totalPages = Math.ceil(filteredApplicants.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedCandidates = filteredCandidates.slice(startIndex, startIndex + itemsPerPage);
+  const paginatedApplicants = filteredApplicants.slice(startIndex, startIndex + itemsPerPage);
 
   // Reset to first page when search query changes
   useEffect(() => {
@@ -234,7 +234,7 @@ export const CompanyShortlistedResumes = () => {
     <div className="max-w-7xl mx-auto p-6">
       <div className="mb-8">
         <div className="md:flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold md:flex pb-5">ShortListed Candidates</h2>
+          <h2 className="text-2xl font-bold md:flex pb-5">ShortListed Applicants</h2>
           <div className="flex gap-4">
             <Input 
               className="w-40" 
@@ -258,8 +258,8 @@ export const CompanyShortlistedResumes = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {paginatedCandidates.map((candidate) => (
-          <CandidateCard key={candidate.name} {...candidate} />
+        {paginatedApplicants.map((applicant) => (
+          <ApplicantCard key={applicant.name} {...applicant} />
         ))}
       </div>
 
@@ -271,9 +271,9 @@ export const CompanyShortlistedResumes = () => {
         />
       )}
 
-      {filteredCandidates.length === 0 && (
+      {filteredApplicants.length === 0 && (
         <div className="text-center py-8 text-gray-500">
-          No candidates found matching your search criteria.
+          No applicants found matching your search criteria.
         </div>
       )}
     </div>

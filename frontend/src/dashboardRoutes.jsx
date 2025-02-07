@@ -1,31 +1,34 @@
 import { Route } from "react-router";
 
-// Candidate Routes
-import { CandidateDashboard } from "./pages/Dashboard/candidate/CandidateDashboard";
-import { CandidateProfile } from "./pages/Dashboard/candidate/CandidateProfile";
-import { CandidateResume } from "./pages/Dashboard/candidate/CandidateResume";
-import { CandidateAppliedJobs } from "./pages/Dashboard/candidate/CandidateAppliedJobs";
-import { CandidateSavedJobs } from "./pages/Dashboard/candidate/CandidateSavedJobs";
-import { CandidateFollowingCompanies } from "./pages/Dashboard/candidate/CandidateFollowingCompanies";
-import { CandidateMeetings } from "./pages/Dashboard/candidate/CandidateMeetings";
-import { CandidateJobAlerts } from "./pages/Dashboard/candidate/CandidateJobAlerts";
-import { CandidateSettings } from "./pages/Dashboard/candidate/CandidateSettings";
-import { CandidateShortlistedJobs } from "./pages/Dashboard/candidate/CandidateShortlistedJobs";
-import { CandidateMessages } from "./pages/Dashboard/candidate/CandidateMessages";
+// Applicant Routes
+import { ApplicantDashboard } from "./pages/Dashboard/applicant/ApplicantDashboard";
+import { ApplicantProfile } from "./pages/Dashboard/applicant/ApplicantProfile";
+import { ApplicantResume } from "./pages/Dashboard/applicant/ApplicantResume";
+import { ApplicantAppliedJobs } from "./pages/Dashboard/applicant/ApplicantAppliedJobs";
+import { ApplicantShortlistedJobs } from "./pages/Dashboard/applicant/ApplicantShortlistedJobs";
+import { ApplicantSavedJobs } from "./pages/Dashboard/applicant/ApplicantSavedJobs";
+import { ApplicantFollowingCompanies } from "./pages/Dashboard/applicant/ApplicantFollowingCompanies";
+import { ApplicantMeetings } from "./pages/Dashboard/applicant/ApplicantMeetings";
+import ApplicantMessages from "./pages/Dashboard/applicant/ApplicantMessages";
+import { ApplicantJobAlerts } from "./pages/Dashboard/applicant/ApplicantJobAlerts";
+import { ApplicantSettings } from "./pages/Dashboard/applicant/ApplicantSettings";
+
 
 // Company Routes
 import { CompanyDashboard } from "./pages/Dashboard/company/CompanyDashboard";
 import { CompanyProfile } from "./pages/Dashboard/company/CompanyProfile";
 import { CompanyPostJob } from "./pages/Dashboard/company/CompanyPostJob";
 import { CompanyManageJobs } from "./pages/Dashboard/company/CompanyManageJobs";
-import { CompanyAllCandidates } from "./pages/Dashboard/company/CompanyAllCandidates";
+import { CompanyAllApplicants } from "./pages/Dashboard/company/CompanyAllApplicants";
 import { CompanyShortlistedResumes } from "./pages/Dashboard/company/CompanyShortlistedResumes";
 import { CompanyMessages } from "./pages/Dashboard/company/CompanyMessages";
 import { CompanyMeetings } from "./pages/Dashboard/company/CompanyMeetings";
 import { CompanyResumeAlerts } from "./pages/Dashboard/company/CompanyResumeAlerts";
 import { CompanySettings } from "./pages/Dashboard/company/CompanySettings";
+
+// admin Routes
 import { AdminDashboard } from "./pages/Dashboard/admin/AdminDashboard";
-import { AdminManageCandidates } from "./pages/Dashboard/admin/users/AdminManageCandidates";
+import { AdminManageApplicants } from "./pages/Dashboard/admin/users/AdminManageApplicants";
 import { AdminManageCompanies } from "./pages/Dashboard/admin/users/AdminManageCompanies";
 import { AdminManageUnauthorized } from "./pages/Dashboard/admin/users/AdminManageUnauthorized";
 import { AdminViewArticles } from "./pages/Dashboard/admin/articles/AdminViewArticles";
@@ -33,21 +36,22 @@ import { AdminPostArticle } from "./pages/Dashboard/admin/articles/AdminPostArti
 import { AdminPostRequirement } from "./pages/Dashboard/admin/AdminPostRequirement";
 import { AdminSettings } from "./pages/Dashboard/admin/AdminSettings";
 
+
 export const DashboardRoutes = (
     <>
-    {/* Candidate Routes */}
-    <Route path="candidate">
-      <Route index element={<CandidateDashboard />} />
-      <Route path="profile" element={<CandidateProfile />} />
-      <Route path="resume" element={<CandidateResume />} />
-      <Route path="applied-jobs" element={<CandidateAppliedJobs />} />
-      <Route path="shortlisted-jobs" element={<CandidateShortlistedJobs />} />
-      <Route path="saved-jobs" element={<CandidateSavedJobs />} />
-      <Route path="following-companies" element={<CandidateFollowingCompanies />} />
-      <Route path="meetings" element={<CandidateMeetings />} />
-      <Route path="messages" element={<CandidateMessages />} />
-      <Route path="job-alerts" element={<CandidateJobAlerts />} />
-      <Route path="settings" element={<CandidateSettings />} />
+    {/* Applicant Routes */}
+    <Route path="applicant">
+      <Route index element={<ApplicantDashboard />} />
+      <Route path="profile" element={<ApplicantProfile />} />
+      <Route path="resume" element={<ApplicantResume />} />
+      <Route path="applied-jobs" element={<ApplicantAppliedJobs />} />
+      <Route path="shortlisted-jobs" element={<ApplicantShortlistedJobs />} />
+      <Route path="saved-jobs" element={<ApplicantSavedJobs />} />
+      <Route path="following-companies" element={<ApplicantFollowingCompanies />} />
+      <Route path="meetings" element={<ApplicantMeetings />} />
+      <Route path="messages" element={<ApplicantMessages />} />
+      <Route path="job-alerts" element={<ApplicantJobAlerts />} />
+      <Route path="settings" element={<ApplicantSettings />} />
     </Route>
 
     {/* Company Routes */}
@@ -56,7 +60,7 @@ export const DashboardRoutes = (
       <Route path="profile" element={<CompanyProfile />} />
       <Route path="post-job" element={<CompanyPostJob />} />
       <Route path="manage-jobs" element={<CompanyManageJobs />} />
-      <Route path="candidates" element={<CompanyAllCandidates />} />
+      <Route path="applicants" element={<CompanyAllApplicants />} />
       <Route path="shortlisted-resume" element={<CompanyShortlistedResumes />} />
       <Route path="messages" element={<CompanyMessages />} />
       <Route path="meetings" element={<CompanyMeetings />} />
@@ -67,7 +71,7 @@ export const DashboardRoutes = (
     {/* Admin Routes */}
     <Route path="admin">
       <Route index element={<AdminDashboard />} />
-      <Route path="users-candidates" element={<AdminManageCandidates />} />
+      <Route path="users-applicants" element={<AdminManageApplicants />} />
       <Route path="users-companies" element={<AdminManageCompanies />} />
       <Route path="users-unauthorized" element={<AdminManageUnauthorized />} />
       <Route path="articles" element={<AdminViewArticles />} />

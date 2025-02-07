@@ -52,7 +52,7 @@ const SettingsSection = ({ icon: Icon, title, description, children }) => (
   </Card>
 );
 
-export const CandidateSettings = () => {
+export const ApplicantSettings = () => {
   const [activeTab, setActiveTab] = useState("account");
 
   const fadeIn = {

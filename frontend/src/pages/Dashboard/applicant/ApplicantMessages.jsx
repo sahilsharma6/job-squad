@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
 import { Send, Phone, Video, MoreVertical, Search, Menu } from "lucide-react";
 
-export const CandidateMessages = () => {
+export const ApplicantMessages = () => {
   const [messages, setMessages] = React.useState([
     { id: 1, text: "Hey, how are you?", sender: "other", time: "9:41 AM" },
     { id: 2, text: "I'm good, thanks! How about you?", sender: "self", time: "9:42 AM" },
@@ -194,4 +194,4 @@ export const CandidateMessages = () => {
   );
 };
 
-export default CandidateMessages;
+export default ApplicantMessages;

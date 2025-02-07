@@ -28,7 +28,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Eye, Trash2, Download } from "lucide-react";
 
-export const CandidateAppliedJobs = () => {
+export const ApplicantShortlistedJobs = () => {
   const [currentPage, setCurrentPage] = React.useState(1);
   const itemsPerPage = 5;
   

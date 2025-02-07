@@ -96,7 +96,7 @@ export const CompanyResumeAlerts = () => {
   return (
     <div className="w-full mx-auto p-4">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold">Candidates Alerts ({alerts.length})</h2>
+        <h2 className="text-2xl font-bold">Applicants Alerts ({alerts.length})</h2>
       </div>
 
       <div className="border rounded-lg">

@@ -148,7 +148,7 @@ const jobListings = [
   // Add more job listings as needed
 ];
 
-const CandidateCard = ({ applicant }) => (
+const ApplicantCard = ({ applicant }) => (
   <div className="p-4 shadow-sm rounded-lg border bg-white">
     <div className="flex justify-between items-center">
       <div className="flex items-center space-x-4">
@@ -206,7 +206,7 @@ const JobCard = ({ job }) => (
     <div className="mt-4">
       <h4 className="text-lg font-semibold">Applicants</h4>
       {job.applicants.map((applicant, index) => (
-        <CandidateCard key={index} applicant={applicant} />
+        <ApplicantCard key={index} applicant={applicant} />
       ))}
     </div>
 

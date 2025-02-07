@@ -85,7 +85,7 @@ const DashboardSidebar = ({ open, setOpen }) => {
           {/* Header */}
           <div className="flex items-center justify-center h-16 border-b bg-gray-50">
             <span className="text-xl font-semibold text-gray-800 capitalize">
-              {role === 'applicant' ? 'Candidate' : role} Portal
+              {role === 'applicant' ? 'Applicant' : role} Portal
             </span>
           </div>
 

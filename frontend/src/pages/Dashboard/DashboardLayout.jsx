@@ -4,7 +4,7 @@ import { Outlet, useLocation } from "react-router";
 
 const DashboardLayout = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
-    const [currentRole, setCurrentRole] = useState('candidate');
+    const [currentRole, setCurrentRole] = useState('applicant');
     const location = useLocation();
 
     useEffect(() => {
@@ -14,7 +14,7 @@ const DashboardLayout = () => {
         } else if (path.includes('/dashboard/admin')) {
             setCurrentRole('admin');
         } else {
-            setCurrentRole('candidate');
+            setCurrentRole('applicant');
         }
     }, [location]);
 
