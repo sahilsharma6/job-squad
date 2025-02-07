@@ -65,7 +65,7 @@ const ExploreMarketplace = () => {
             Explore the Marketplace
           </h2>
           <p className="mt-4 text-base sm:text-lg opacity-90 font-lato font-normal">
-            Search and connect with the right candidates faster. Tell us what you are looking for, and we will get to work for you.
+            Search and connect with the right applicants faster. Tell us what you are looking for, and we will get to work for you.
           </p>
           <Button className="mt-6 bg-white text-primary-ultra hover:bg-primary-light hover:text-white transition-all duration-300 group">
             Explore

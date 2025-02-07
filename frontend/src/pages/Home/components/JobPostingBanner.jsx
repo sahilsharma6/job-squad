@@ -69,7 +69,7 @@ const JobPostingBanner = () => {
               </div>
               <div className="flex items-center">
                 <PlusCircle className="w-6 h-6 mr-2 text-primary-light" />
-                <span>Quality Candidates</span>
+                <span>Quality Applicants</span>
               </div>
             </div>
           </div>

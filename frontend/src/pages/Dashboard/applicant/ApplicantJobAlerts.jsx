@@ -21,7 +21,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
-export const CandidateJobAlerts = () => {
+export const ApplicantJobAlerts = () => {
   const [currentPage, setCurrentPage] = React.useState(1);
   const itemsPerPage = 5;
   

@@ -5,21 +5,21 @@ import { AdminPostRequirement } from "@/pages/Dashboard/admin/AdminPostRequireme
 import { AdminSettings } from "@/pages/Dashboard/admin/AdminSettings"
 import { AdminPostArticle } from "@/pages/Dashboard/admin/articles/AdminPostArticle"
 import { AdminViewArticles } from "@/pages/Dashboard/admin/articles/AdminViewArticles"
-import { AdminManageCandidates } from "@/pages/Dashboard/admin/users/AdminManageCandidates"
+import { AdminManageApplicants } from "@/pages/Dashboard/admin/users/AdminManageApplicants"
 import { AdminManageCompanies } from "@/pages/Dashboard/admin/users/AdminManageCompanies"
 import { AdminManageUnauthorized } from "@/pages/Dashboard/admin/users/AdminManageUnauthorized"
-import { CandidateAppliedJobs } from "@/pages/Dashboard/candidate/CandidateAppliedJobs"
-import CandidateDashboard from "@/pages/Dashboard/candidate/CandidateDashboard"
-import { CandidateFollowingCompanies } from "@/pages/Dashboard/candidate/CandidateFollowingCompanies"
-import { CandidateJobAlerts } from "@/pages/Dashboard/candidate/CandidateJobAlerts"
-import { CandidateMeetings } from "@/pages/Dashboard/candidate/CandidateMeetings"
-import { CandidateMessages } from "@/pages/Dashboard/candidate/CandidateMessages"
-import { CandidateProfile } from "@/pages/Dashboard/candidate/CandidateProfile"
-import { CandidateResume } from "@/pages/Dashboard/candidate/CandidateResume"
-import { CandidateSavedJobs } from "@/pages/Dashboard/candidate/CandidateSavedJobs"
-import { CandidateSettings } from "@/pages/Dashboard/candidate/CandidateSettings"
-import { CandidateShortlistedJobs } from "@/pages/Dashboard/candidate/CandidateShortlistedJobs"
-import { CompanyAllCandidates } from "@/pages/Dashboard/company/CompanyAllCandidates"
+import { ApplicantAppliedJobs } from "@/pages/Dashboard/applicant/ApplicantAppliedJobs"
+import ApplicantDashboard from "@/pages/Dashboard/applicant/ApplicantDashboard"
+import { ApplicantFollowingCompanies } from "@/pages/Dashboard/applicant/ApplicantFollowingCompanies"
+import { ApplicantJobAlerts } from "@/pages/Dashboard/applicant/ApplicantJobAlerts"
+import { ApplicantMeetings } from "@/pages/Dashboard/applicant/ApplicantMeetings"
+import { ApplicantMessages } from "@/pages/Dashboard/applicant/ApplicantMessages"
+import { ApplicantProfile } from "@/pages/Dashboard/applicant/ApplicantProfile"
+import { ApplicantResume } from "@/pages/Dashboard/applicant/ApplicantResume"
+import { ApplicantSavedJobs } from "@/pages/Dashboard/applicant/ApplicantSavedJobs"
+import { ApplicantSettings } from "@/pages/Dashboard/applicant/ApplicantSettings"
+import { ApplicantShortlistedJobs } from "@/pages/Dashboard/applicant/ApplicantShortlistedJobs"
+import { CompanyAllApplicants } from "@/pages/Dashboard/company/CompanyAllApplicants"
 import { CompanyDashboard } from "@/pages/Dashboard/company/CompanyDashboard"
 import { CompanyManageJobs } from "@/pages/Dashboard/company/CompanyManageJobs"
 import { CompanyMeetings } from "@/pages/Dashboard/company/CompanyMeetings"
@@ -36,19 +36,19 @@ import DashboardLayout from "@/pages/Dashboard/DashboardLayout"
 export default function DashboardRoutes() {
   return (
       <Route element={<DashboardLayout />}>
-      {/* Candidate Routes */}
-      <Route path="candidate">
-        <Route index element={<CandidateDashboard />} />
-        <Route path="profile" element={<CandidateProfile />} />
-        <Route path="resume" element={<CandidateResume />} />
-        <Route path="applied-jobs" element={<CandidateAppliedJobs />} />
-        <Route path="shortlisted-jobs" element={<CandidateShortlistedJobs />} />
-        <Route path="saved-jobs" element={<CandidateSavedJobs />} />
-        <Route path="following-companies" element={<CandidateFollowingCompanies />} />
-        <Route path="meetings" element={<CandidateMeetings />} />
-        <Route path="messages" element={<CandidateMessages />} />
-        <Route path="job-alerts" element={<CandidateJobAlerts />} />
-        <Route path="settings" element={<CandidateSettings />} />
+      {/* Applicant Routes */}
+      <Route path="applicant">
+        <Route index element={<ApplicantDashboard />} />
+        <Route path="profile" element={<ApplicantProfile />} />
+        <Route path="resume" element={<ApplicantResume />} />
+        <Route path="applied-jobs" element={<ApplicantAppliedJobs />} />
+        <Route path="shortlisted-jobs" element={<ApplicantShortlistedJobs />} />
+        <Route path="saved-jobs" element={<ApplicantSavedJobs />} />
+        <Route path="following-companies" element={<ApplicantFollowingCompanies />} />
+        <Route path="meetings" element={<ApplicantMeetings />} />
+        <Route path="messages" element={<ApplicantMessages />} />
+        <Route path="job-alerts" element={<ApplicantJobAlerts />} />
+        <Route path="settings" element={<ApplicantSettings />} />
       </Route>
 
       {/* Company Routes */}
@@ -57,7 +57,7 @@ export default function DashboardRoutes() {
         <Route path="profile" element={<CompanyProfile />} />
         <Route path="post-job" element={<CompanyPostJob />} />
         <Route path="manage-jobs" element={<CompanyManageJobs />} />
-        <Route path="candidates" element={<CompanyAllCandidates />} />
+        <Route path="applicants" element={<CompanyAllApplicants />} />
         <Route path="shortlisted-resume" element={<CompanyShortlistedResumes />} />
         <Route path="messages" element={<CompanyMessages />} />
         <Route path="meetings" element={<CompanyMeetings />} />
@@ -68,7 +68,7 @@ export default function DashboardRoutes() {
       {/* Admin Routes */}
       <Route path="admin">
         <Route index element={<AdminDashboard />} />
-        <Route path="users-candidates" element={<AdminManageCandidates />} />
+        <Route path="users-applicants" element={<AdminManageApplicants />} />
         <Route path="users-companies" element={<AdminManageCompanies />} />
         <Route path="users-unauthorized" element={<AdminManageUnauthorized />} />
         <Route path="articles" element={<AdminViewArticles />} />

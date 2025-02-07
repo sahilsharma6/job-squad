@@ -64,19 +64,19 @@ createRoot(document.getElementById("root")).render(
 
             {/* Dashboard Routes - Single DashboardLayout */}
             {/* <Route path="/dashboard" element={<DashboardLayout />}>
-              Candidate Routes
-              <Route path="candidate">
-                <Route index element={<CandidateDashboard />} />
-                <Route path="profile" element={<CandidateProfile />} />
-                <Route path="resume" element={<CandidateResume />} />
-                <Route path="applied-jobs" element={<CandidateAppliedJobs />} />
-                <Route path="shortlisted-jobs" element={<CandidateShortlistedJobs />} />
-                <Route path="saved-jobs" element={<CandidateSavedJobs />} />
-                <Route path="following-companies" element={<CandidateFollowingCompanies />} />
-                <Route path="meetings" element={<CandidateMeetings />} />
-                <Route path="messages" element={<CandidateMessages />} />
-                <Route path="job-alerts" element={<CandidateJobAlerts />} />
-                <Route path="settings" element={<CandidateSettings />} />
+              Applicant Routes
+              <Route path="applicant">
+                <Route index element={<ApplicantDashboard />} />
+                <Route path="profile" element={<ApplicantProfile />} />
+                <Route path="resume" element={<ApplicantResume />} />
+                <Route path="applied-jobs" element={<ApplicantAppliedJobs />} />
+                <Route path="shortlisted-jobs" element={<ApplicantShortlistedJobs />} />
+                <Route path="saved-jobs" element={<ApplicantSavedJobs />} />
+                <Route path="following-companies" element={<ApplicantFollowingCompanies />} />
+                <Route path="meetings" element={<ApplicantMeetings />} />
+                <Route path="messages" element={<ApplicantMessages />} />
+                <Route path="job-alerts" element={<ApplicantJobAlerts />} />
+                <Route path="settings" element={<ApplicantSettings />} />
               </Route>
 
               Company Routes
@@ -85,7 +85,7 @@ createRoot(document.getElementById("root")).render(
                 <Route path="profile" element={<CompanyProfile />} />
                 <Route path="post-job" element={<CompanyPostJob />} />
                 <Route path="manage-jobs" element={<CompanyManageJobs />} />
-                <Route path="candidates" element={<CompanyAllCandidates />} />
+                <Route path="applicants" element={<CompanyAllApplicants />} />
                 <Route path="shortlisted-resume" element={<CompanyShortlistedResumes />} />
                 <Route path="messages" element={<CompanyMessages />} />
                 <Route path="meetings" element={<CompanyMeetings />} />
@@ -96,7 +96,7 @@ createRoot(document.getElementById("root")).render(
               Admin Routes
               <Route path="admin">
                 <Route index element={<AdminDashboard />} />
-                <Route path="users-candidates" element={<AdminManageCandidates />} />
+                <Route path="users-applicants" element={<AdminManageApplicants />} />
                 <Route path="users-companies" element={<AdminManageCompanies />} />
                 <Route path="users-unauthorized" element={<AdminManageUnauthorized />} />
                 <Route path="articles" element={<AdminViewArticles />} />

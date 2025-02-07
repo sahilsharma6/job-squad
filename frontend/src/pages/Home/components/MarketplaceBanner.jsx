@@ -68,7 +68,7 @@ const MarketplaceBanner = () => {
                                 Explore the Marketplace
                             </h1>
                             <p className="text-base sm:text-lg lg:text-xl text-gray-200 max-w-xl leading-relaxed">
-                                Search and connect with the right candidates faster. Tell us what you are looking
+                                Search and connect with the right applicants faster. Tell us what you are looking
                                 for and we will get to work for you.
                             </p>
                         </div>

@@ -38,7 +38,7 @@ const RecruiterChoiceCard = () => {
                   Are you a Recruiter?
                 </h2>
                 <p className="text-gray-600">
-                  Join our platform to find the perfect candidates for your organization
+                  Join our platform to find the perfect applicants for your organization
                 </p>
               </div>
 

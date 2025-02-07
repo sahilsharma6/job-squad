@@ -21,7 +21,7 @@ const profileData = {
   bio: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.",
 };
 
-export const CandidateProfile = () => (
+export const ApplicantProfile = () => (
   <div className="p-6 bg-gray-100 min-h-screen">
     {/* Profile Basic Info */}
     <Card className="p-5 shadow-md rounded-lg border bg-white">

@@ -48,7 +48,7 @@ const Navbar = () => {
   
     switch (user.role) {
       case "applicant":
-        return user.firstName || "Candidate";
+        return user.firstName || "Applicant";
       case "company":
         return user.companyName || "Company";
       case "admin":
@@ -65,22 +65,22 @@ const Navbar = () => {
     switch (user.role) {
       case 'applicant':
         return [
-          { label: "My Profile", link: "/dashboard/candidate/profile", icon: User },
-          { label: "My Resume", link: "/dashboard/candidate/resume", icon: BookOpen },
-          { label: "Applied Jobs", link: "/dashboard/candidate/applied-jobs", icon: Building },
-          { label: "Saved Jobs", link: "/dashboard/candidate/saved-jobs", icon: Bookmark },
-          { label: "Job Alerts", link: "/dashboard/candidate/job-alerts", icon: Bell },
-          { label: "Meetings", link: "/dashboard/candidate/meetings", icon: Calendar },
-          { label: "Messages", link: "/dashboard/candidate/messages", icon: Mail },
-          { label: "Following Companies", link: "/dashboard/candidate/following-companies", icon: Heart },
-          { label: "Settings", link: "/dashboard/candidate/settings", icon: Settings }
+          { label: "My Profile", link: "/dashboard/applicant/profile", icon: User },
+          { label: "My Resume", link: "/dashboard/applicant/resume", icon: BookOpen },
+          { label: "Applied Jobs", link: "/dashboard/applicant/applied-jobs", icon: Building },
+          { label: "Saved Jobs", link: "/dashboard/applicant/saved-jobs", icon: Bookmark },
+          { label: "Job Alerts", link: "/dashboard/applicant/job-alerts", icon: Bell },
+          { label: "Meetings", link: "/dashboard/applicant/meetings", icon: Calendar },
+          { label: "Messages", link: "/dashboard/applicant/messages", icon: Mail },
+          { label: "Following Companies", link: "/dashboard/applicant/following-companies", icon: Heart },
+          { label: "Settings", link: "/dashboard/applicant/settings", icon: Settings }
         ];
       case 'company':
         return [
           { label: "Company Profile", link: "/dashboard/company/profile", icon: Building },
           { label: "Post a Job", link: "/dashboard/company/post-job", icon: BookOpen },
           { label: "Manage Jobs", link: "/dashboard/company/manage-jobs", icon: Settings },
-          { label: "All Candidates", link: "/dashboard/company/candidates", icon: User },
+          { label: "All Applicants", link: "/dashboard/company/applicants", icon: User },
           { label: "Shortlisted Resumes", link: "/dashboard/company/shortlisted-resume", icon: Heart },
           { label: "Messages", link: "/dashboard/company/messages", icon: Mail },
           { label: "Meetings", link: "/dashboard/company/meetings", icon: Calendar },
@@ -90,7 +90,7 @@ const Navbar = () => {
       case 'admin':
         return [
           { label: "Dashboard", link: "/dashboard/admin", icon: Building },
-          { label: "Manage Candidates", link: "/dashboard/admin/users-candidates", icon: User },
+          { label: "Manage Applicants", link: "/dashboard/admin/users-applicants", icon: User },
           { label: "Manage Companies", link: "/dashboard/admin/users-companies", icon: Building },
           { label: "Manage Unauthorized", link: "/dashboard/admin/users-unauthorized", icon: Settings },
           { label: "View Articles", link: "/dashboard/admin/articles", icon: BookOpen },
@@ -139,14 +139,14 @@ const Navbar = () => {
       ],
     },
     {
-      label: "Candidates",
+      label: "Applicants",
       dropdown: [
         {
           title: "Explore",
           items: [
-            { label: "Create Resume", link: "/candidates/resume" },
-            { label: "Job Alerts", link: "/candidates/job-alerts" },
-            { label: "My Applications", link: "/candidates/applications" },
+            { label: "Create Resume", link: "/applicants/resume" },
+            { label: "Job Alerts", link: "/applicants/job-alerts" },
+            { label: "My Applications", link: "/applicants/applications" },
           ],
         },
       ],

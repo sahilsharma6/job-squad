@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { BarChart3, Eye, Layers, Briefcase, Mail, MessageCircle } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 
-export const CandidateDashboard = () => {
+export const ApplicantDashboard = () => {
   // Sample data for the profile views chart
   const profileViewsData = [
     { name: "Jan", views: 130 },
