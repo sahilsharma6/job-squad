@@ -13,7 +13,7 @@ import JobLayout from "./pages/Jobs/JobLayout";
 import SignupForm from "./pages/Register/Register";
 import LoginPage from "./pages/Login/login";
 import ResetPasswordPage from "./pages/Reset/Reset";
-import Company from "./pages/Company/Company";
+import Company from "./pages/Company/Companies";
 // import Loader from "./pages/Register/Loader";
 import ViewJobDetailsLayout from "./pages/Jobs/ViewJobDetailsLayout";
 import ScrollToTop from "./components/ScrollToTop";
@@ -29,6 +29,9 @@ import { store } from "./store";
 import ComingSoon from "./components/ComingSoon";
 import NotFound from "./components/NotFound";
 import BlogDetailsLayout from "./pages/Blogs/BlogDetails/BlogDetailsLayout";
+import CompanyDetailsLayout from "./pages/Company/CompanyDetailsLayout";
+import CompanyPage from "./pages/Company/companydetailsui";
+
 // List of paths that should show the coming soon page
 const comingSoonPaths = [
   '/marketplace',
@@ -56,11 +59,16 @@ createRoot(document.getElementById("root")).render(
             <Route path="/blog/:id" element={<BlogDetailsLayout />} />
 
             <Route path="/jobs" element={<JobLayout />} />
-            <Route path="/jobs/:jobId" element={<ViewJobDetailsLayout />} />
+            <Route path="/jobs/jobs:id" element={<ViewJobDetailsLayout />} />
             <Route path="/register" element={<SignupForm />} />
             <Route path="/signin" element={<LoginPage />} />
             <Route path="/reset" element={<ResetPasswordPage />} />
-            <Route path="/company" element={<Company />} />
+            <Route path="/companies" element={<Company />} />
+            <Route path="/company" element={<CompanyDetailsLayout />} />
+
+
+            {/* for ui company details */}
+            <Route path="/companydetailsui" element={<CompanyPage />} />
 
             {/* Dashboard Routes - Single DashboardLayout */}
             {/* <Route path="/dashboard" element={<DashboardLayout />}>

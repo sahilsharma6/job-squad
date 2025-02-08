@@ -20,7 +20,7 @@ const Navbar = () => {
   const handleLogout = useLogout();
   const { isAuthenticated,role ,user} = useAuth();
   
-  console.log(isAuthenticated)
+  console.log("isAuthenticated",isAuthenticated)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [mobileDropdownOpen, setMobileDropdownOpen] = useState({});
   const [logout] = useLogoutMutation();
@@ -128,6 +128,13 @@ const Navbar = () => {
     {
       label: "Recruiters",
       dropdown: [
+        {
+          title: "Explore",
+          items: [
+            { label: "Top Companies", link: "/companies" },
+            { label: "Post a Job", link: "/recruiters/post-job" },
+          ],
+        },
         {
           title: "Explore",
           items: [

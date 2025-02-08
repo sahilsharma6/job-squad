@@ -1,34 +1,36 @@
-// store.js
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import authReducer from './features/auth/authSlice';
+import jobsReducer from './features/jobs/jobsSlice';
+import companiesReducer from './features/company/companiesSlice';
 import { authApi } from './services/authApi';
-import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
+import { jobsApi } from './features/jobs/jobsApi';
+import { companiesApi } from './features/company/companiesApi';
+import storage from 'redux-persist/lib/storage';
 import { persistStore, persistReducer } from 'redux-persist';
 
-// Configure persist settings. Here, only the auth slice is persisted.
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['auth'],
+  whitelist: ['auth', 'jobs', 'companies'],
 };
 
-// Combine your reducers
 const rootReducer = combineReducers({
   auth: authReducer,
+  jobs: jobsReducer,
+  companies: companiesReducer,
   [authApi.reducerPath]: authApi.reducer,
+  [jobsApi.reducerPath]: jobsApi.reducer,
+  [companiesApi.reducerPath]: companiesApi.reducer,
 });
 
-// Create a persisted reducer
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      // Disable serializableCheck for redux-persist actions
       serializableCheck: false,
-    }).concat(authApi.middleware),
+    }).concat(authApi.middleware, jobsApi.middleware, companiesApi.middleware),
 });
 
-// Create a persistor linked to your store
 export const persistor = persistStore(store);

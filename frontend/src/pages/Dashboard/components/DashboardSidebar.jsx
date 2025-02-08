@@ -83,10 +83,11 @@ const DashboardSidebar = ({ open, setOpen }) => {
       >
         <div className="flex flex-col h-full">
           {/* Header */}
-          <div className="flex items-center justify-center h-16 border-b bg-gray-50">
-            <span className="text-xl font-semibold text-gray-800 capitalize">
+          <div className="flex flex-col items-center justify-center h-16 border-b bg-gray-50">
+            <h1 className='text-xl font-semibold capitalize'>{user?.firstName} {user?.lastName}</h1> <span className='capitalize text-xs mx-2 text-grey-muted'>( {user?.role} portal)</span>
+            {/* <span className="text-xl font-semibold text-gray-800 capitalize">
               {role === 'applicant' ? 'Applicant' : role} Portal
-            </span>
+            </span> */}
           </div>
 
           {/* Navigation */}

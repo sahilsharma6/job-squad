@@ -13,7 +13,7 @@ const AuthHandler = () => {
   useEffect(() => {
     if (user) {
       dispatch(setCredentials(user));
-      navigate("/dashboard");
+      navigate(`/dashboard/${user.role}`);
     }
     if (error) {
       console.error("Authentication failed:", error);

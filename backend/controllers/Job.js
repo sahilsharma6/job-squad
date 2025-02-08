@@ -124,8 +124,6 @@ export async function getJobByCompanyId(req, res) {
 }
 
 
-
-
 // Create a new job
 export async function createJob(req, res) {
     try {
