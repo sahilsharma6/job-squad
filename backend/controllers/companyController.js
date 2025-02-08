@@ -2,6 +2,8 @@ import express from 'express'
 import Company from '../models/Company.js'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
+import fs from 'fs';
+import path from 'path';
 
 export const signUp = async (req, res) => {
 
@@ -11,8 +13,7 @@ export const signUp = async (req, res) => {
                return res.status(400).json({message: 'All fields are required'})
            }
 
-           const images = req.files.map(file => file.path);
-           
+            const images = req.files.map(file => file.path);
          const companyExist = await Company.findOne({contactPersonEmail});
             if(companyExist){
                 return res.status(400).json({message: 'Company already exists with this email'})
@@ -24,7 +25,7 @@ export const signUp = async (req, res) => {
 
            const company =  new Company({
                companyName,
-               companyLogo: images,
+               companyLogo: images[0],
                companyDescription,
                companyWebsite,
                contactPersonName,
@@ -150,7 +151,7 @@ export const updateCompany = async (req, res) => {
         company.contactPersonEmail = contactPersonEmail;
         company.contactPersonPhone = contactPersonPhone;
         if(images.length !== 0){
-            company.companyLogo = images;
+            company.companyLogo = images[0];
         }
         await company.save();
         res.status(200).json({company})
