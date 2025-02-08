@@ -1,5 +1,5 @@
-import React from 'react'
-import { useParams } from 'react-router';
+import React from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { jobData } from './jobs-data';
 import JobDetailsPage from './JobDetailsPage';
 import SimilarJobs from './components/SimilarJobs';
@@ -7,10 +7,15 @@ import FeaturedJobs from './components/featureJob/FeaturedJobs';
 import NewsletterSection from '../Home/components/Newletter';
 
 const ViewJobDetailsLayout = () => {
-  const { jobId } = useParams();
+  const [searchParams] = useSearchParams();
+  const company = searchParams.get('company');
+  const position = searchParams.get('position');
 
-  // Convert jobId to number for comparison
-  const job = jobData.find((job) => job?.id === Number(jobId));
+  // Find the job based on company and position instead of jobId
+  const job = jobData.find((job) => 
+    job?.companyId === decodeURIComponent(company) && 
+    job?.jobTitle === decodeURIComponent(position)
+  );
 
   if (!job) {
     return <div className="text-center p-4">Job not found</div>;
@@ -33,7 +38,7 @@ const ViewJobDetailsLayout = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <p className="text-sm text-grey-muted">Location</p>
-                <p className="font-semibold">{job.location}</p>
+                <p className="font-semibold">{job.jobLocation}</p>
               </div>
               <div>
                 <p className="text-sm text-grey-muted">Phone</p>
@@ -63,7 +68,7 @@ const ViewJobDetailsLayout = () => {
         <NewsletterSection />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ViewJobDetailsLayout
+export default ViewJobDetailsLayout;

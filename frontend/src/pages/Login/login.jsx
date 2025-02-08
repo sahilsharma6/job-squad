@@ -60,9 +60,9 @@ const LoginPage = () => {
     if (validateForm()) {
       try {
         const response = await login(formData);
+        const user = response.data.user;
         if (response.data) {
-          const { token } = response.data;
-          navigate('/dashboard');
+          navigate(`/dashboard/${user.role}`);
         }
       } catch (error) {
         console.error('Login failed:', error);

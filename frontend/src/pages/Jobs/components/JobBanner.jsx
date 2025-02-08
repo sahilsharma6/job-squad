@@ -1,8 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import SearchBarApp from '@/components/SearchBarApp';
+import { useJobs } from '@/hooks/useJobs';
 
 const JobBanner = () => {
+
+    const { jobs } = useJobs();
+    
     const containerVariants = {
         hidden: { opacity: 0, y: 20 },
         visible: {
@@ -72,7 +76,7 @@ const JobBanner = () => {
                         className="text-2xl md:text-4xl font-bold text-gray-900"
                         variants={itemVariants}
                     >
-                        <motion.span className="text-primary-dark">22 Jobs</motion.span> Available Now
+                        <motion.span className="text-primary-dark">{jobs.length} Jobs</motion.span> Available Now
                     </motion.h1>
 
                     <motion.p

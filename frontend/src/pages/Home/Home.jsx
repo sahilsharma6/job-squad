@@ -16,29 +16,13 @@ import FAQSection from "./components/Faq";
 import StatsSection from "./components/StatsSection";
 import RecruiterChoiceCard from "./components/AreyouRecuiter";
 import JobPostingBanner from "./components/JobPostingBanner";
+import { useJobSectors } from '@/hooks/useJobSectors';
+import { useCompanies } from '@/hooks/useCompanies';
 
 const HomePage = () => {
-  const navigate = useNavigate();
-  const { getJobIndustries } = useGetJobs();
 
-  // Count jobs by industry
-  const getIndustryJobCount = (industry) => {
-    return jobData.filter(job => job.industry === industry).length;
-  };
-
-  // Handle industry click
-  const handleIndustryClick = (industry) => {
-    const encodedIndustry = encodeURIComponent(industry);
-    navigate(`/jobs?industries=${encodedIndustry}`);
-  };
-
-  // Transform industries into the format expected by SlidingBanner
-  const industryCategories = getJobIndustries().map(industry => ({
-    title: industry,
-    subtitle: `${getIndustryJobCount(industry)} jobs available`,
-    icon: Building2,
-    onClick: () => handleIndustryClick(industry)
-  }));
+  const { sectorStats, isLoading } = useJobSectors();
+  const { companiesForBanner, isCompanyLoading } = useCompanies();
 
   return (
     <div>
@@ -49,12 +33,17 @@ const HomePage = () => {
       </div>
 
       <div className="py-16">
-        <SlidingBanner
-          title="Browse by category"
-          subtitle="Find the job that's perfect for you. about 800+ new jobs everyday"
-          items={industryCategories}
-          isVerticalCard={true}
-        />
+        {/* {!isLoading && ( */}
+          <div className="py-16">
+            <SlidingBanner
+              title="Browse by category"
+              subtitle="Find the job that's perfect for you"
+              items={sectorStats}
+              isLoading={isLoading}
+              isVerticalCard={true}
+            />
+          </div>
+        {/* )} */}
       </div>
 
       <div>
@@ -64,7 +53,9 @@ const HomePage = () => {
       <div className="py-16">
         <SlidingBanner
           title="Top companies hiring now"
-          items={companies}
+          subtitle="Join leading companies in your industry"
+          items={companiesForBanner}
+          isLoading={isCompanyLoading}
           isVerticalCard={false}
         />
       </div>
