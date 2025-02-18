@@ -15,7 +15,7 @@ CompanyRoutes.get('/logout',signOut);
 
 CompanyRoutes.get('/all-companies',isAuthenticated,AccessRole(['admin']),getAllCompanies);
 CompanyRoutes.get('/all',getValidCompanies);
-CompanyRoutes.get('/:id',isAuthenticated,AccessRole(['company','admin']),getCompanyById); // get company by id   (id is company id)
+CompanyRoutes.get('/:id',getCompanyById); // get company by id   (id is company id)
 CompanyRoutes.put('/update/:id',isAuthenticated,AccessRole(['company','admin']),updateCompany); // update company by id   (id is company id)
 CompanyRoutes.put('/validate/:id',isAuthenticated,AccessRole(['admin']),approveCompany); // validate company by id   (id is company id)
 CompanyRoutes.delete('/delete/:id',isAuthenticated,AccessRole(['admin']),deleteCompany); // delete company by id   (id is company id)
