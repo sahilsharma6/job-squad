@@ -2,7 +2,8 @@ import ApplicationSchema from "../models/Application.js";
 import JobSchema from "../models/Job.js";
 import ApplicantSchema from "../models/Applicant.js";
 import AnswerValidation from "../config/QustionValidation.js";
-
+import fs from 'fs';
+import path from 'path';
 // Controller functions
 
 // GET
@@ -45,6 +46,7 @@ export const getApplicationById = async (req, res) => {
 export const createApplication = async (req, res) => { 
      try {
     const { jobId } = req.params;
+
     const getJob = await JobSchema.findById(jobId);
     if (!getJob._id) {
         return res.status(404).json({ message: "Job not found", success: false });
@@ -54,6 +56,7 @@ export const createApplication = async (req, res) => {
         return res.status(404).json({ message: "Applicant not found", success: false });
     }
     let jobAnswers = [];
+
     if (getJob.length !== 0) {
         if (req.body.jobAnswers.length !== getJob.jobQuestions.length) {
             return res.status(404).json({ message: "Please provide all the answers", success: false });
@@ -64,12 +67,15 @@ export const createApplication = async (req, res) => {
         }
         jobAnswers = req.body.jobAnswers;
     }
+
+    const resume = req.file.path;
+
     const newApplication = new ApplicationSchema(
         {
             applicantId: req.user.userId,
             jobId: jobId,
             companyId: getJob.companyId,
-            resume: applicantDetail.resume,
+            resume: resume,
             coverLetter: req.body.coverLetter,
             chat: false,
             jobAnswers: jobAnswers
@@ -101,3 +107,60 @@ export const deleteApplication = async (req, res) => {
     await ApplicationSchema.findOneAndDelete({ _id: appId,applicantId:req.user.userId });
     res.json({ message: "ApplicationSchema deleted successfully.",success:true });
 };
+
+
+export const downloadResume = async (req, res) => {
+ try{
+    const { appId } = req.params;
+    const application = await ApplicationSchema.findById(appId);
+    if (!application) {
+        return res.status(404).json({ message: "Application not found", success: false });
+    }
+    const applicant = await ApplicantSchema.findById(application.applicantId);
+    if (!applicant) {
+        return res.status(404).json({ message: "Applicant not found", success: false });
+    } 
+    const file = application.resume;
+    res.status(200).download(file);
+ }
+ catch(error){
+    res.status(500).json({ message: error.message, success: false });
+ }
+}
+
+export const getApplicationByJobId = async (req, res) => {
+    try {
+        const { jobId } = req.params;
+        const applications = await ApplicationSchema.find({ jobId });
+        res.status(200).json({ applications, success: true });
+    } catch (error) {
+        res.status(404).json({ message: error.message, success: false });
+    }
+};
+
+export const getApplicationByApplicantId = async (req, res) => {
+    try {
+        const { applicantId } = req.params;
+        const applications = await ApplicationSchema.find({ applicantId });
+        res.status(200).json({ applications, success: true });
+    } catch (error) {
+        res.status(404).json({ message: error.message, success: false });
+    }
+};
+
+export const getApplicationByCompanyId = async (req, res) => {
+    try {
+        const { companyId } = req.params;
+        const applications = await ApplicationSchema.find({ companyId });
+        res.status(200).json({ applications, success: true });
+    }
+    catch (error) {
+        res.status(404).json({ message: error.message, success: false });
+    }
+};
+
+
+
+
+
+
