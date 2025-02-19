@@ -4,6 +4,7 @@ import Applicant from '../models/Applicant.js'
 import Address from '../models/Address.js'
 import Education from '../models/Education.js'
 import Experience from '../models/Experience.js'
+import Company from '../models/Company.js'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { OAuth2Client } from 'google-auth-library';
@@ -23,7 +24,7 @@ export const signUp = async (req, res) => {
         }
 
         const hashedPassword = await bcrypt.hash(password, 12);
-        const user = new Applicant({ firstName, lastName, phoneNo, email, password: hashedPassword, role: 'applicant' });
+        const user = new Applicant({ firstName, lastName, phoneNo, email, password: hashedPassword, role: 'applicant',joiningDate: new Date().toISOString() });
         await user.save();
 
         res.status(200).json({message: 'User registered'});
@@ -36,7 +37,7 @@ export const signUp = async (req, res) => {
 
 export const signIn = async (req, res) => {
         try{
-        const {email, password} = req.body;
+        const {email , password} = req.body;
         if(!email || !password){
             return res.status(400).json({message: 'All fields are required'});
         }
@@ -176,6 +177,7 @@ export const signIn = async (req, res) => {
             firstName: given_name,
             lastName: family_name,
             role: 'applicant',
+            joiningDate: new Date().toISOString(),
           });
       
           await user.save();
@@ -215,6 +217,106 @@ export const signIn = async (req, res) => {
             res.status(500).json({message: 'Internal server error'})
         }
     };
+
+
+export const updateProfile = async (req, res) => {
+    try {
+        const { firstName, lastName,userName,email,password, phoneNo, bio, skills, personalWebsite ,dateOfBirth, gender,educationLevel , languages, experience,jobCategory ,currentMinSalary ,currentMaxSalary , expectedMinSalary, expectedMaxSalary } = req.body;
+         const {id} = req.params;
+         let user = await Applicant.findById(id);
+         if(!user){
+             return res.status(400).json({message: 'User not found'});
+         }
+
+         if(userName && user.userName !== userName){
+             const userNameExist = await Applicant.findOne({userName});
+              if(userNameExist){
+                  return res.status(400).json({message: 'Username already exists'});
+              }
+          }
+
+          user.firstName = firstName || "";
+          user.lastName = lastName || "";
+          user.userName = userName || "";
+          user.email = email; 
+          user.phoneNo = phoneNo;
+          user.bio = bio || "";
+          user.skills = skills || [];
+          user.personalWebsite = personalWebsite || "";
+          user.dateOfBirth = dateOfBirth || "";
+          user.gender = gender || "";
+          user.educationLevel = educationLevel || "";
+          user.languages = languages || [];
+          user.experience = experience || "";
+          user.jobCategory = jobCategory || "";
+          user.currentMinSalary = currentMinSalary || "";
+          user.currentMaxSalary = currentMaxSalary || "";
+          user.expectedMinSalary = expectedMinSalary || "";
+          user.expectedMaxSalary = expectedMaxSalary || "";
+          await user.save();
+          res.status(200).json({message: 'Profile updated successfully'});
+      }
+    catch(err){
+        console.log(err)
+        res.status(500).json({message: 'Internal server error'})
+    }
+}
+
+
+export const followCompany = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const applicantId = req.user.userId;
+        if (!id || !applicantId) {
+            return res.status(400).json({ message: 'All fields are required' });
+        }
+        const user = await Applicant.findById(applicantId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        const company = await Company
+            .findById(id);
+        if (!company) {
+            return res.status(404).json({ message: 'Company not found' });
+        }
+        const followingCompaniesList = user.followingCompanies.companies;
+        if (followingCompaniesList.some((company) => company.toString() === id)) {
+            user.followingCompanies.companies = followingCompaniesList.filter(
+                (company) => company.toString() !== id
+            );
+          }
+          else {
+            user.followingCompanies.companies.push(id);
+          }
+          await user.save();
+          res.status(200).json({ message: 'Company followed successfully' });
+        } catch (err) {
+          console.error(err);
+          res.status(500).json({ message: 'Internal server error' });
+        }
+      }
+
+
+      export const followedCompanies = async (req, res) => {
+        try {
+          const applicantId = req.user.userId;
+          if (!applicantId) {
+            return res.status(401).json({ message: 'Unauthorized' });
+          }
+
+          const user = await Applicant
+            .findById(applicantId).populate('followingCompanies.companies');
+          if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+          }
+
+          res.status(200).json({ followingCompanies: user.followingCompanies.companies });
+        } catch (err) {
+          console.error(err);
+          res.status(500).json({ message: 'Internal server error' });
+        }
+      }
+      
 
 
     export const setAddress = async (req, res) => {

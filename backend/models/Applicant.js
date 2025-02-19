@@ -1,4 +1,6 @@
+import exp from 'constants';
 import mongoose from 'mongoose';
+import { join } from 'path';
 
 const applicantSchema = new mongoose.Schema({
     firstName: {
@@ -50,7 +52,50 @@ const applicantSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Job'
         },],
-    }
+    },
+    personalWebsite:{
+        type: String,
+    },
+    dateOfBirth:{
+        type: Date,
+    },
+    gender:{
+        type: String,
+    },
+    joiningDate:{
+        type: Date,
+    },
+    educationLevel:{
+        type: String,
+    },
+    languages:{
+        type: [String],
+    },
+    experience:{
+        type: String,
+    },
+    jobCategory:{
+        type: String,
+    },
+    currentMinSalary:{
+        type: Number,
+    },
+    currentMaxSalary:{
+        type: Number,
+    },
+    expectedMinSalary:{
+        type: Number,
+    },
+    expectedMaxSalary:{
+        type: Number,
+    },
+    followingCompanies:{
+        companies:[{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Company'
+        },],
+    },
+
 });
 
 const Applicant = mongoose.model('Applicant', applicantSchema);
