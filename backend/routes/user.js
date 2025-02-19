@@ -1,5 +1,5 @@
 import express from 'express';
-import { addEducation, addExperience, deleteAddress, deleteEducation, deleteExperience, getAddress, getdata, getEducation, getExperience, getResume, getSavedJobs, googleSignIn, request, saveJob, setAddress, signIn, signOut, signUp, updateAddress, updateEducation, updateExperience, uploadResume,} from '../controllers/userController.js';
+import { addEducation, addExperience, deleteAddress, deleteEducation, deleteExperience, followCompany, followedCompanies, getAddress, getdata, getEducation, getExperience, getResume, getSavedJobs, googleSignIn, request, saveJob, setAddress, signIn, signOut, signUp, updateAddress, updateEducation, updateExperience, updateProfile, uploadResume,} from '../controllers/userController.js';
 import isAuthenticated from '../middleware/isAuthenticated.js';
 import ApplicationRouter from './application.js';
 import uploadResumeMiddleware from '../middleware/uploadResumeMiddleware.js';
@@ -12,6 +12,10 @@ UserRoutes.post('/signin',signIn)
 UserRoutes.get('/logout',signOut)
 UserRoutes.get('/googlelogin',googleSignIn);
 UserRoutes.post('/request',request);
+UserRoutes.put('/update',isAuthenticated, AccessRole(["applicant","admin"]),updateProfile);
+
+UserRoutes.post('/followCompany/:id',isAuthenticated,AccessRole(['applicant','admin']),followCompany);
+UserRoutes.get('/followingCompanies',isAuthenticated,AccessRole(['applicant','admin']),followedCompanies);
 
 // address routes
 UserRoutes.post('/setaddress',isAuthenticated,setAddress);
