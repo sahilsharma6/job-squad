@@ -263,6 +263,52 @@ export const updateProfile = async (req, res) => {
 }
 
 
+export const SetjobPreference = async (req, res) => {
+    try {
+        const { jobPreference, expectedMinSalary, expectedMaxSalary } = req.body;
+        const { id } = req.params;
+        if (!jobPreference ) {
+            return res.status(400).json({ message: 'All fields are required' });
+        }
+        const user = await Applicant
+            .findById(id);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        user.jobPreference = jobPreference;
+        user.expectedMinSalary = expectedMinSalary;
+        user.expectedMaxSalary = expectedMaxSalary;
+        await user.save();
+        res.status(200).json({ message: 'Job preference set successfully' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+export const getjobPreference = async (req, res) => {
+    try {
+        const applicantId = req.user.userId;
+        if (!applicantId) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
+
+        const user = await Applicant
+            .findById(applicantId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        res.status(200).json({ jobPreference: user.jobPreference , expectedMinSalary: user.expectedMinSalary, expectedMaxSalary: user.expectedMaxSalary });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+
+
+
 export const followCompany = async (req, res) => {
     try {
         const { id } = req.params;
