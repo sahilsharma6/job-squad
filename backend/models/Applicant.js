@@ -95,6 +95,9 @@ const applicantSchema = new mongoose.Schema({
             ref: 'Company'
         },],
     },
+    jobPreference:{
+        type: String,
+    },
 
 });
 
